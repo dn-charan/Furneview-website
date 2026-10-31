@@ -12,10 +12,10 @@
     "hero": {
       "type": "fv-hero",
       "settings": {
-        "eyebrow": "Festive Home Sale",
-        "heading": "Make room for a better view",
+        "eyebrow": "",
+        "heading": "Coming Soon",
         "text": "Sofas, beds and dining sets delivered and installed free.",
-        "sale_end": "2026-11-15",
+        "sale_end": "2026-11-05",
         "button_label": "Shop the sale",
         "button_link": "",
         "tile1_eyebrow": "New in",
