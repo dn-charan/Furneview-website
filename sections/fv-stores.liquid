@@ -1,0 +1,70 @@
+{{ 'furneview.css' | asset_url | stylesheet_tag }}
+<section class="fv" id="fv-visit">
+  <div class="page-width">
+    <div class="fv-head"><div><span class="fv-eyebrow">{{ section.settings.eyebrow }}</span><h2>{{ section.settings.heading }}</h2></div></div>
+    <div class="fv-cities">
+      {%- for block in section.blocks -%}
+        <a class="fv-city" {% if block.settings.map_link != blank %}href="{{ block.settings.map_link }}" target="_blank" rel="noopener"{% endif %} {{ block.shopify_attributes }}><b>{{ block.settings.name }}</b><small>{{ block.settings.detail }}</small></a>
+      {%- endfor -%}
+    </div>
+    <div class="fv-visit">
+      <div class="fv-box">
+        <h3>{{ section.settings.form_heading }}</h3>
+        <p style="color:var(--fv-muted)">{{ section.settings.form_text }}</p>
+        {%- form 'contact', class: 'fv-form', id: 'fv-visit-form' -%}
+          {%- if form.posted_successfully? -%}
+            <p class="fv-ok fv-full">Thanks! Your visit request is in. We'll call you to confirm.</p>
+          {%- elsif form.errors -%}
+            <p class="fv-err fv-full">{{ form.errors | default_errors }}</p>
+          {%- endif -%}
+          <input type="hidden" name="contact[subject]" value="Store visit booking">
+          <label for="fv-name">Name<input id="fv-name" name="contact[name]" required autocomplete="name"></label>
+          <label for="fv-phone">Phone<input id="fv-phone" name="contact[phone]" type="tel" required autocomplete="tel"></label>
+          <label for="fv-email">Email<input id="fv-email" name="contact[email]" type="email" required autocomplete="email"></label>
+          <label for="fv-store">Store
+            <select id="fv-store" name="contact[Store]">
+              {%- for block in section.blocks -%}<option>{{ block.settings.name }}</option>{%- endfor -%}
+            </select>
+          </label>
+          <label for="fv-date" class="fv-full">Preferred date<input id="fv-date" name="contact[Preferred date]" type="date"></label>
+          <div class="fv-full"><button class="fv-btn fv-btn--orange" type="submit">Book my visit</button></div>
+        {%- endform -%}
+      </div>
+      <div class="fv-bulk">
+        <span class="fv-eyebrow">{{ section.settings.bulk_eyebrow }}</span>
+        <h3>{{ section.settings.bulk_heading }}</h3>
+        <p>{{ section.settings.bulk_text }}</p>
+        <a class="fv-btn fv-btn--light" href="{{ section.settings.bulk_link | default: routes.root_url }}">{{ section.settings.bulk_button }}</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Furneview stores",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Small label", "default": "Visit us" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Furneview experience stores" },
+    { "type": "text", "id": "form_heading", "label": "Form heading", "default": "Book a store visit" },
+    { "type": "text", "id": "form_text", "label": "Form text", "default": "A design consultant will have your shortlist ready when you arrive." },
+    { "type": "header", "content": "Bulk orders box" },
+    { "type": "text", "id": "bulk_eyebrow", "label": "Small label", "default": "Offices · Hotels · Hostels" },
+    { "type": "text", "id": "bulk_heading", "label": "Heading", "default": "Furneview for Business" },
+    { "type": "text", "id": "bulk_text", "label": "Text", "default": "Special pricing and custom sizes for bulk orders of 20 pieces or more." },
+    { "type": "text", "id": "bulk_button", "label": "Button label", "default": "Request a quote" },
+    { "type": "url", "id": "bulk_link", "label": "Button link" }
+  ],
+  "max_blocks": 12,
+  "blocks": [{ "type": "store", "name": "Store", "settings": [
+    { "type": "text", "id": "name", "label": "Store name", "default": "Indiranagar, Bengaluru" },
+    { "type": "text", "id": "detail", "label": "Address or timings", "default": "Open 10 AM – 9 PM" },
+    { "type": "url", "id": "map_link", "label": "Google Maps link" }
+  ]}],
+  "presets": [{ "name": "Furneview stores", "blocks": [
+    {"type":"store","settings":{"name":"Indiranagar, Bengaluru","detail":"Open 10 AM – 9 PM"}},
+    {"type":"store","settings":{"name":"Whitefield, Bengaluru","detail":"Open 10 AM – 9 PM"}},
+    {"type":"store","settings":{"name":"JP Nagar, Bengaluru","detail":"Open 10 AM – 9 PM"}}
+  ]}]
+}
+{% endschema %}

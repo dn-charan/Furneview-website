@@ -1,0 +1,84 @@
+{{ 'furneview.css' | asset_url | stylesheet_tag }}
+<section class="fv">
+  <div class="page-width">
+    <div class="fv-hero">
+      <div class="fv-banner">
+        {%- if section.settings.image != blank -%}
+          {{ section.settings.image | image_url: width: 1600 | image_tag: class: 'fv-banner__img', loading: 'eager', sizes: '(min-width: 990px) 60vw, 100vw' }}<span class="fv-banner__shade"></span>
+        {%- else -%}
+          <div class="fv-banner__art">{% render 'fv-art', name: 'hero' %}</div>
+        {%- endif -%}
+        <div class="fv-banner__txt">
+          {%- if section.settings.eyebrow != blank -%}<span class="fv-eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+          <h1>{{ section.settings.heading }}</h1>
+          {%- if section.settings.text != blank -%}<p>{{ section.settings.text }}</p>{%- endif -%}
+          {%- if section.settings.sale_end != blank -%}
+            <div class="fv-clock" id="fv-clock-{{ section.id }}" data-end="{{ section.settings.sale_end }}" aria-label="Sale ends in"></div>
+          {%- endif -%}
+          {%- if section.settings.button_label != blank -%}
+            <a class="fv-btn fv-btn--light" href="{{ section.settings.button_link | default: routes.all_products_collection_url }}">{{ section.settings.button_label }} →</a>
+          {%- endif -%}
+        </div>
+      </div>
+      <div class="fv-side">
+        {%- for i in (1..2) -%}
+          {%- liquid
+            assign k_e = 'tile' | append: i | append: '_eyebrow'
+            assign k_t = 'tile' | append: i | append: '_title'
+            assign k_l = 'tile' | append: i | append: '_link_label'
+            assign k_u = 'tile' | append: i | append: '_link'
+            assign k_i = 'tile' | append: i | append: '_image'
+          -%}
+          <a class="fv-mini{% if i == 2 %} fv-mini--leaf{% endif %}" href="{{ section.settings[k_u] | default: '#' }}">
+            {%- if section.settings[k_i] != blank -%}
+              {{ section.settings[k_i] | image_url: width: 800 | image_tag: class: 'fv-mini__img', loading: 'lazy' }}
+            {%- else -%}
+              <div class="fv-mini__art">{% if i == 1 %}{% render 'fv-art', name: 'dining' %}{% else %}{% render 'fv-art', name: 'decor' %}{% endif %}</div>
+            {%- endif -%}
+            <div><span class="fv-eyebrow">{{ section.settings[k_e] }}</span><h3>{{ section.settings[k_t] }}</h3></div>
+            <span class="fv-mini__lnk">{{ section.settings[k_l] }} →</span>
+          </a>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+{%- if section.settings.sale_end != blank -%}
+<script>
+(function(){
+  var el=document.getElementById('fv-clock-{{ section.id }}'); if(!el) return;
+  var end=new Date(el.dataset.end+'T23:59:59+05:30');
+  function t(){var s=Math.max(0,Math.floor((end-new Date())/1000));var d=Math.floor(s/86400);s%=86400;var h=Math.floor(s/3600);s%=3600;var m=Math.floor(s/60);s%=60;
+    el.innerHTML=[[d,'Days'],[h,'Hrs'],[m,'Mins'],[s,'Sec']].map(function(x){return '<span><b>'+String(x[0]).padStart(2,'0')+'</b><small>'+x[1]+'</small></span>'}).join('');}
+  t(); setInterval(t,1000);
+})();
+</script>
+{%- endif -%}
+{% schema %}
+{
+  "name": "Furneview hero",
+  "tag": "div",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Banner photo (optional)", "info": "Leave empty to use the orange illustrated banner." },
+    { "type": "text", "id": "eyebrow", "label": "Small label", "default": "Festive Home Sale" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Make room for a better view" },
+    { "type": "text", "id": "text", "label": "Text", "default": "Sofas, beds and dining sets delivered and installed free." },
+    { "type": "text", "id": "sale_end", "label": "Sale end date (YYYY-MM-DD)", "default": "2026-11-15", "info": "Shows a countdown. Leave empty to hide." },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop the sale" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "header", "content": "Side tile 1" },
+    { "type": "text", "id": "tile1_eyebrow", "label": "Small label", "default": "New in" },
+    { "type": "text", "id": "tile1_title", "label": "Title", "default": "Solid sheesham dining sets" },
+    { "type": "text", "id": "tile1_link_label", "label": "Link label", "default": "Shop now" },
+    { "type": "url", "id": "tile1_link", "label": "Link" },
+    { "type": "image_picker", "id": "tile1_image", "label": "Photo (optional)" },
+    { "type": "header", "content": "Side tile 2" },
+    { "type": "text", "id": "tile2_eyebrow", "label": "Small label", "default": "Try before you buy" },
+    { "type": "text", "id": "tile2_title", "label": "Title", "default": "Book a free store visit" },
+    { "type": "text", "id": "tile2_link_label", "label": "Link label", "default": "Pick a slot" },
+    { "type": "url", "id": "tile2_link", "label": "Link", "default": "#fv-visit" },
+    { "type": "image_picker", "id": "tile2_image", "label": "Photo (optional)" }
+  ],
+  "presets": [{ "name": "Furneview hero" }]
+}
+{% endschema %}

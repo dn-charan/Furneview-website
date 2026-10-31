@@ -1,0 +1,26 @@
+{{ 'furneview.css' | asset_url | stylesheet_tag }}
+<section class="fv" style="padding-block:0 12px">
+  <div class="page-width"><div class="fv-usps">
+    {%- for block in section.blocks -%}
+      <div class="fv-usp" {{ block.shopify_attributes }}><span class="fv-usp__ic" aria-hidden="true">{{ block.settings.icon }}</span><div><b>{{ block.settings.title }}</b><small>{{ block.settings.text }}</small></div></div>
+    {%- endfor -%}
+  </div></div>
+</section>
+{% schema %}
+{
+  "name": "Furneview benefits",
+  "tag": "div",
+  "max_blocks": 4,
+  "blocks": [{ "type": "usp", "name": "Benefit", "settings": [
+    { "type": "text", "id": "icon", "label": "Icon (symbol)", "default": "✓" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Free delivery & install" },
+    { "type": "text", "id": "text", "label": "Text", "default": "On orders above ₹9,999" }
+  ]}],
+  "presets": [{ "name": "Furneview benefits", "blocks": [
+    { "type": "usp", "settings": { "icon": "🚚", "title": "Free delivery & install", "text": "On orders above ₹9,999" } },
+    { "type": "usp", "settings": { "icon": "🛡", "title": "Up to 10-year warranty", "text": "On frames and mattresses" } },
+    { "type": "usp", "settings": { "icon": "₹", "title": "No-cost EMI", "text": "From ₹1,499 a month" } },
+    { "type": "usp", "settings": { "icon": "↺", "title": "30-night trial", "text": "Easy returns on mattresses" } }
+  ]}]
+}
+{% endschema %}

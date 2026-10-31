@@ -1,0 +1,345 @@
+{
+  "sections": {
+    "hero": {
+      "type": "fv-hero",
+      "settings": {}
+    },
+    "usps": {
+      "type": "fv-usps",
+      "blocks": {
+        "u0": {
+          "type": "usp",
+          "settings": {
+            "icon": "🚚",
+            "title": "Free delivery & install",
+            "text": "On orders above ₹9,999"
+          }
+        },
+        "u1": {
+          "type": "usp",
+          "settings": {
+            "icon": "🛡",
+            "title": "Up to 10-year warranty",
+            "text": "On frames and mattresses"
+          }
+        },
+        "u2": {
+          "type": "usp",
+          "settings": {
+            "icon": "₹",
+            "title": "No-cost EMI",
+            "text": "From ₹1,499 a month"
+          }
+        },
+        "u3": {
+          "type": "usp",
+          "settings": {
+            "icon": "↺",
+            "title": "30-night trial",
+            "text": "Easy returns on mattresses"
+          }
+        }
+      },
+      "block_order": [
+        "u0",
+        "u1",
+        "u2",
+        "u3"
+      ],
+      "settings": {}
+    },
+    "categories": {
+      "type": "fv-categories",
+      "settings": {},
+      "blocks": {
+        "c0": {
+          "type": "category",
+          "settings": {
+            "title": "Sofas",
+            "icon": "sofa"
+          }
+        },
+        "c1": {
+          "type": "category",
+          "settings": {
+            "title": "Beds",
+            "icon": "bed"
+          }
+        },
+        "c2": {
+          "type": "category",
+          "settings": {
+            "title": "Mattresses",
+            "icon": "mattress"
+          }
+        },
+        "c3": {
+          "type": "category",
+          "settings": {
+            "title": "Dining",
+            "icon": "dining"
+          }
+        },
+        "c4": {
+          "type": "category",
+          "settings": {
+            "title": "Wardrobes",
+            "icon": "wardrobe"
+          }
+        },
+        "c5": {
+          "type": "category",
+          "settings": {
+            "title": "Recliners",
+            "icon": "recliner"
+          }
+        },
+        "c6": {
+          "type": "category",
+          "settings": {
+            "title": "TV Units",
+            "icon": "tv"
+          }
+        },
+        "c7": {
+          "type": "category",
+          "settings": {
+            "title": "Coffee Tables",
+            "icon": "coffee"
+          }
+        },
+        "c8": {
+          "type": "category",
+          "settings": {
+            "title": "Study Tables",
+            "icon": "study"
+          }
+        },
+        "c9": {
+          "type": "category",
+          "settings": {
+            "title": "Office Chairs",
+            "icon": "chair"
+          }
+        },
+        "c10": {
+          "type": "category",
+          "settings": {
+            "title": "Decor",
+            "icon": "decor"
+          }
+        },
+        "c11": {
+          "type": "category",
+          "settings": {
+            "title": "Lighting",
+            "icon": "lamp"
+          }
+        }
+      },
+      "block_order": [
+        "c0",
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6",
+        "c7",
+        "c8",
+        "c9",
+        "c10",
+        "c11"
+      ]
+    },
+    "bestsellers": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Bestsellers this week",
+        "heading_size": "h2",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "collection": "all",
+        "products_to_show": 8,
+        "columns_desktop": 4,
+        "color_scheme": "scheme-1",
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "link",
+        "enable_desktop_slider": true,
+        "swipe_on_mobile": true,
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": true,
+        "columns_mobile": "2",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "quick_add": "standard"
+      }
+    },
+    "rooms": {
+      "type": "fv-rooms",
+      "settings": {},
+      "blocks": {
+        "r0": {
+          "type": "room",
+          "settings": {
+            "title": "Living room",
+            "icon": "sofa",
+            "bg": "#F6E3D3"
+          }
+        },
+        "r1": {
+          "type": "room",
+          "settings": {
+            "title": "Bedroom",
+            "icon": "bed",
+            "bg": "#E3EEE6"
+          }
+        },
+        "r2": {
+          "type": "room",
+          "settings": {
+            "title": "Dining",
+            "icon": "dining",
+            "bg": "#F3ECDF"
+          }
+        },
+        "r3": {
+          "type": "room",
+          "settings": {
+            "title": "Home office",
+            "icon": "study",
+            "bg": "#E8E6E3"
+          }
+        }
+      },
+      "block_order": [
+        "r0",
+        "r1",
+        "r2",
+        "r3"
+      ]
+    },
+    "offers": {
+      "type": "fv-offers",
+      "settings": {},
+      "blocks": {
+        "o0": {
+          "type": "offer",
+          "settings": {
+            "title": "Extra 10% off",
+            "text": "On your first order, up to ₹3,000",
+            "code": "FURNEVIEW10"
+          }
+        },
+        "o1": {
+          "type": "offer",
+          "settings": {
+            "title": "₹2,500 cashback",
+            "text": "With bank card EMI, min. ₹25,000",
+            "code": "BANKHOME"
+          }
+        },
+        "o2": {
+          "type": "offer",
+          "settings": {
+            "title": "Buy 2, save 15%",
+            "text": "Mix any bedroom furniture and mattress",
+            "code": "BEDROOM15"
+          }
+        }
+      },
+      "block_order": [
+        "o0",
+        "o1",
+        "o2"
+      ]
+    },
+    "why": {
+      "type": "fv-why",
+      "settings": {},
+      "blocks": {
+        "s0": {
+          "type": "stat",
+          "settings": {
+            "number": "25,000+",
+            "label": "Homes furnished"
+          }
+        },
+        "s1": {
+          "type": "stat",
+          "settings": {
+            "number": "4.6 / 5",
+            "label": "Average customer rating"
+          }
+        },
+        "s2": {
+          "type": "stat",
+          "settings": {
+            "number": "48 hrs",
+            "label": "Delivery in Bengaluru"
+          }
+        },
+        "s3": {
+          "type": "stat",
+          "settings": {
+            "number": "800+",
+            "label": "Designs in stock"
+          }
+        }
+      },
+      "block_order": [
+        "s0",
+        "s1",
+        "s2",
+        "s3"
+      ]
+    },
+    "stores": {
+      "type": "fv-stores",
+      "settings": {},
+      "blocks": {
+        "st0": {
+          "type": "store",
+          "settings": {
+            "name": "Indiranagar, Bengaluru",
+            "detail": "Open 10 AM – 9 PM"
+          }
+        },
+        "st1": {
+          "type": "store",
+          "settings": {
+            "name": "Whitefield, Bengaluru",
+            "detail": "Open 10 AM – 9 PM"
+          }
+        },
+        "st2": {
+          "type": "store",
+          "settings": {
+            "name": "JP Nagar, Bengaluru",
+            "detail": "Open 10 AM – 9 PM"
+          }
+        }
+      },
+      "block_order": [
+        "st0",
+        "st1",
+        "st2"
+      ]
+    }
+  },
+  "order": [
+    "hero",
+    "usps",
+    "categories",
+    "bestsellers",
+    "rooms",
+    "offers",
+    "why",
+    "stores"
+  ]
+}

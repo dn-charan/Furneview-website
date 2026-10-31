@@ -1,0 +1,38 @@
+{{ 'furneview.css' | asset_url | stylesheet_tag }}
+<section class="fv fv--why">
+  <div class="page-width fv-why">
+    <div>
+      <span class="fv-eyebrow">{{ section.settings.eyebrow }}</span>
+      <h2>{{ section.settings.heading }}</h2>
+      <p>{{ section.settings.text }}</p>
+      {%- if section.settings.button_label != blank -%}<a class="fv-btn fv-btn--outline" href="{{ section.settings.button_link | default: '#' }}">{{ section.settings.button_label }}</a>{%- endif -%}
+    </div>
+    <div class="fv-stats">
+      {%- for block in section.blocks -%}<div class="fv-stat" {{ block.shopify_attributes }}><b>{{ block.settings.number }}</b><span>{{ block.settings.label }}</span></div>{%- endfor -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Furneview why us",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Small label", "default": "Why Furneview" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Furniture made for a better view" },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Every piece is built from kiln-dried wood and high-resilience foam, checked at our workshop, and installed by our own team. Sit on it in a store first, or order online and try it at home." },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Our story" },
+    { "type": "url", "id": "button_link", "label": "Button link" }
+  ],
+  "max_blocks": 4,
+  "blocks": [{ "type": "stat", "name": "Number", "settings": [
+    { "type": "text", "id": "number", "label": "Number", "default": "25,000+" },
+    { "type": "text", "id": "label", "label": "Label", "default": "Homes furnished" }
+  ]}],
+  "presets": [{ "name": "Furneview why us", "blocks": [
+    {"type":"stat","settings":{"number":"25,000+","label":"Homes furnished"}},
+    {"type":"stat","settings":{"number":"4.6 / 5","label":"Average customer rating"}},
+    {"type":"stat","settings":{"number":"48 hrs","label":"Delivery in Bengaluru"}},
+    {"type":"stat","settings":{"number":"800+","label":"Designs in stock"}}
+  ]}]
+}
+{% endschema %}

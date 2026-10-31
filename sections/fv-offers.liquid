@@ -1,0 +1,37 @@
+{{ 'furneview.css' | asset_url | stylesheet_tag }}
+<section class="fv">
+  <div class="page-width">
+    <div class="fv-head"><div><span class="fv-eyebrow">{{ section.settings.eyebrow }}</span><h2>{{ section.settings.heading }}</h2></div></div>
+    <div class="fv-offers">
+      {%- for block in section.blocks -%}
+        <div class="fv-offer" {{ block.shopify_attributes }}><b>{{ block.settings.title }}</b><span>{{ block.settings.text }}</span>
+          {%- if block.settings.code != blank -%}<div class="fv-code">{{ block.settings.code }}<button type="button" data-fv-copy="{{ block.settings.code | escape }}">Copy</button></div>{%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+<script>
+document.querySelectorAll('[data-fv-copy]').forEach(function(b){b.onclick=function(){var c=b.dataset.fvCopy;if(navigator.clipboard){navigator.clipboard.writeText(c).then(function(){b.textContent='Copied'})}else{b.textContent=c}}});
+</script>
+{% schema %}
+{
+  "name": "Furneview offers",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Small label", "default": "Save more" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Offers & bank deals" }
+  ],
+  "max_blocks": 6,
+  "blocks": [{ "type": "offer", "name": "Offer", "settings": [
+    { "type": "text", "id": "title", "label": "Title", "default": "Extra 10% off" },
+    { "type": "text", "id": "text", "label": "Details", "default": "On your first order" },
+    { "type": "text", "id": "code", "label": "Discount code", "info": "Create the same code in Shopify admin → Discounts." }
+  ]}],
+  "presets": [{ "name": "Furneview offers", "blocks": [
+    {"type":"offer","settings":{"title":"Extra 10% off","text":"On your first order, up to ₹3,000","code":"FURNEVIEW10"}},
+    {"type":"offer","settings":{"title":"₹2,500 cashback","text":"With bank card EMI, min. ₹25,000","code":"BANKHOME"}},
+    {"type":"offer","settings":{"title":"Buy 2, save 15%","text":"Mix any bedroom furniture and mattress","code":"BEDROOM15"}}
+  ]}]
+}
+{% endschema %}
