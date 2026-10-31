@@ -1,8 +1,32 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
       "type": "fv-hero",
-      "settings": {}
+      "settings": {
+        "eyebrow": "Festive Home Sale",
+        "heading": "Make room for a better view",
+        "text": "Sofas, beds and dining sets delivered and installed free.",
+        "sale_end": "2026-11-15",
+        "button_label": "Shop the sale",
+        "button_link": "",
+        "tile1_eyebrow": "New in",
+        "tile1_title": "Solid sheesham dining sets",
+        "tile1_link_label": "Shop now",
+        "tile1_link": "",
+        "tile2_eyebrow": "Try before you buy",
+        "tile2_title": "Book a free store visit",
+        "tile2_link_label": "Pick a slot",
+        "tile2_link": ""
+      }
     },
     "usps": {
       "type": "fv-usps",
@@ -50,12 +74,12 @@
     },
     "categories": {
       "type": "fv-categories",
-      "settings": {},
       "blocks": {
         "c0": {
           "type": "category",
           "settings": {
             "title": "Sofas",
+            "collection": "",
             "icon": "sofa"
           }
         },
@@ -63,6 +87,7 @@
           "type": "category",
           "settings": {
             "title": "Beds",
+            "collection": "",
             "icon": "bed"
           }
         },
@@ -70,6 +95,7 @@
           "type": "category",
           "settings": {
             "title": "Mattresses",
+            "collection": "",
             "icon": "mattress"
           }
         },
@@ -77,6 +103,7 @@
           "type": "category",
           "settings": {
             "title": "Dining",
+            "collection": "",
             "icon": "dining"
           }
         },
@@ -84,6 +111,7 @@
           "type": "category",
           "settings": {
             "title": "Wardrobes",
+            "collection": "",
             "icon": "wardrobe"
           }
         },
@@ -91,6 +119,7 @@
           "type": "category",
           "settings": {
             "title": "Recliners",
+            "collection": "furniture-example-products",
             "icon": "recliner"
           }
         },
@@ -98,6 +127,7 @@
           "type": "category",
           "settings": {
             "title": "TV Units",
+            "collection": "",
             "icon": "tv"
           }
         },
@@ -105,6 +135,7 @@
           "type": "category",
           "settings": {
             "title": "Coffee Tables",
+            "collection": "",
             "icon": "coffee"
           }
         },
@@ -112,6 +143,7 @@
           "type": "category",
           "settings": {
             "title": "Study Tables",
+            "collection": "",
             "icon": "study"
           }
         },
@@ -119,6 +151,7 @@
           "type": "category",
           "settings": {
             "title": "Office Chairs",
+            "collection": "",
             "icon": "chair"
           }
         },
@@ -126,6 +159,7 @@
           "type": "category",
           "settings": {
             "title": "Decor",
+            "collection": "",
             "icon": "decor"
           }
         },
@@ -133,6 +167,7 @@
           "type": "category",
           "settings": {
             "title": "Lighting",
+            "collection": "",
             "icon": "lamp"
           }
         }
@@ -150,70 +185,77 @@
         "c9",
         "c10",
         "c11"
-      ]
+      ],
+      "settings": {
+        "eyebrow": "Browse",
+        "heading": "Shop by category"
+      }
     },
     "bestsellers": {
       "type": "featured-collection",
       "settings": {
+        "collection": "all",
+        "products_to_show": 8,
         "title": "Bestsellers this week",
         "heading_size": "h2",
         "description": "",
         "show_description": false,
         "description_style": "body",
-        "collection": "all",
-        "products_to_show": 8,
         "columns_desktop": 4,
-        "color_scheme": "scheme-1",
+        "enable_desktop_slider": true,
         "full_width": false,
         "show_view_all": true,
         "view_all_style": "link",
-        "enable_desktop_slider": true,
-        "swipe_on_mobile": true,
+        "color_scheme": "scheme-1",
         "image_ratio": "square",
         "image_shape": "default",
         "show_secondary_image": true,
         "show_vendor": false,
         "show_rating": true,
+        "quick_add": "standard",
         "columns_mobile": "2",
+        "swipe_on_mobile": true,
         "padding_top": 36,
-        "padding_bottom": 36,
-        "quick_add": "standard"
+        "padding_bottom": 36
       }
     },
     "rooms": {
       "type": "fv-rooms",
-      "settings": {},
       "blocks": {
         "r0": {
           "type": "room",
           "settings": {
             "title": "Living room",
-            "icon": "sofa",
-            "bg": "#F6E3D3"
+            "collection": "",
+            "bg": "#f6e3d3",
+            "icon": "sofa"
           }
         },
         "r1": {
           "type": "room",
           "settings": {
             "title": "Bedroom",
-            "icon": "bed",
-            "bg": "#E3EEE6"
+            "collection": "",
+            "bg": "#e3eee6",
+            "icon": "bed"
           }
         },
         "r2": {
           "type": "room",
           "settings": {
             "title": "Dining",
-            "icon": "dining",
-            "bg": "#F3ECDF"
+            "collection": "",
+            "bg": "#f3ecdf",
+            "icon": "dining"
           }
         },
         "r3": {
           "type": "room",
           "settings": {
             "title": "Home office",
-            "icon": "study",
-            "bg": "#E8E6E3"
+            "collection": "",
+            "bg": "#e8e6e3",
+            "icon": "study"
           }
         }
       },
@@ -222,11 +264,14 @@
         "r1",
         "r2",
         "r3"
-      ]
+      ],
+      "settings": {
+        "eyebrow": "Get the look",
+        "heading": "Shop by room"
+      }
     },
     "offers": {
       "type": "fv-offers",
-      "settings": {},
       "blocks": {
         "o0": {
           "type": "offer",
@@ -257,11 +302,14 @@
         "o0",
         "o1",
         "o2"
-      ]
+      ],
+      "settings": {
+        "eyebrow": "Save more",
+        "heading": "Offers & bank deals"
+      }
     },
     "why": {
       "type": "fv-why",
-      "settings": {},
       "blocks": {
         "s0": {
           "type": "stat",
@@ -297,39 +345,41 @@
         "s1",
         "s2",
         "s3"
-      ]
+      ],
+      "settings": {
+        "eyebrow": "Why Furneview",
+        "heading": "Furniture made for a better view",
+        "text": "Every piece is built from kiln-dried wood and high-resilience foam, checked at our workshop, and installed by our own team. Sit on it in a store first, or order online and try it at home.",
+        "button_label": "Our story",
+        "button_link": ""
+      }
     },
     "stores": {
       "type": "fv-stores",
-      "settings": {},
       "blocks": {
         "st0": {
           "type": "store",
           "settings": {
-            "name": "Indiranagar, Bengaluru",
-            "detail": "Open 10 AM – 9 PM"
-          }
-        },
-        "st1": {
-          "type": "store",
-          "settings": {
-            "name": "Whitefield, Bengaluru",
-            "detail": "Open 10 AM – 9 PM"
-          }
-        },
-        "st2": {
-          "type": "store",
-          "settings": {
-            "name": "JP Nagar, Bengaluru",
-            "detail": "Open 10 AM – 9 PM"
+            "name": "banashankari, Bengaluru",
+            "detail": "Open 10 AM – 9 PM",
+            "map_link": ""
           }
         }
       },
       "block_order": [
-        "st0",
-        "st1",
-        "st2"
-      ]
+        "st0"
+      ],
+      "settings": {
+        "eyebrow": "Visit us",
+        "heading": "Furneview experience stores",
+        "form_heading": "Book a store visit",
+        "form_text": "A design consultant will have your shortlist ready when you arrive.",
+        "bulk_eyebrow": "Offices · Hotels · Hostels",
+        "bulk_heading": "Furneview for Business",
+        "bulk_text": "Special pricing and custom sizes for bulk orders of 20 pieces or more.",
+        "bulk_button": "Request a quote",
+        "bulk_link": ""
+      }
     }
   },
   "order": [
