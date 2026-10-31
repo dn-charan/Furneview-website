@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>Furneview · Furniture made for better view</title>
+<meta name="description" content="Sofas, beds, dining sets and wardrobes delivered and installed free in Bengaluru. Shop online or visit a Furneview store.">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="home">
+<main>
+<section class="hero"><div class="wrap">
+  <div class="hero-grid">
+    <div class="banner">
+      <div class="txt">
+        <span class="eyebrow">Festive Home Sale</span>
+        <h1>Make room for a better view</h1>
+        <p>Sofas, beds and dining sets made in Bengaluru, delivered and installed free.</p>
+        <div class="clock" id="clock" aria-label="Sale ends in"></div>
+        <a class="btn btn-light" href="#best">Shop the sale →</a>
+      </div>
+      <svg class="art" viewBox="0 0 400 300" aria-hidden="true">
+        <rect x="250" y="20" width="110" height="140" rx="6" fill="#fff" opacity=".14"/>
+        <path d="M305 20v40" stroke="#1E1A17" stroke-width="3"/><path d="M285 72a20 14 0 0 1 40 0z" fill="#1E1A17"/><ellipse cx="305" cy="74" rx="8" ry="4" fill="#F6B21A"/>
+        <rect x="40" y="150" width="270" height="70" rx="22" fill="#E2D3BB"/><rect x="58" y="112" width="234" height="60" rx="20" fill="#EBDFCB"/>
+        <rect x="28" y="140" width="40" height="88" rx="16" fill="#D7C4A5"/><rect x="282" y="140" width="40" height="88" rx="16" fill="#D7C4A5"/>
+        <rect x="88" y="120" width="56" height="38" rx="10" fill="#C9470A"/><rect x="200" y="122" width="60" height="38" rx="10" fill="#1F6B3B"/>
+        <rect x="60" y="228" width="8" height="22" fill="#6b4a2b"/><rect x="282" y="228" width="8" height="22" fill="#6b4a2b"/>
+        <path d="M352 250h30l-4-48h-22z" fill="#1F6B3B"/><path d="M366 204c-4-30 6-50 22-58-2 22-10 40-22 58zm0 0c-10-20-26-28-40-26 6 16 22 26 40 26z" fill="#2E8A4E"/>
+        <rect x="0" y="250" width="400" height="50" fill="#000" opacity=".1"/>
+      </svg>
+    </div>
+    <div class="side">
+      <a class="mini" href="shop.html?c=dining">
+        <div><span class="eyebrow">New in</span><h3>Solid sheesham dining sets</h3></div>
+        <span class="lnk">Shop dining →</span>
+        <svg class="art" viewBox="0 0 200 140" aria-hidden="true"><rect x="40" y="60" width="130" height="10" rx="3" fill="#8A5A34"/><rect x="50" y="70" width="8" height="55" fill="#6b4a2b"/><rect x="152" y="70" width="8" height="55" fill="#6b4a2b"/><rect x="10" y="40" width="30" height="50" rx="5" fill="#E2D3BB" stroke="#8A5A34" stroke-width="3"/><rect x="10" y="90" width="4" height="35" fill="#6b4a2b"/><rect x="36" y="90" width="4" height="35" fill="#6b4a2b"/><circle cx="105" cy="50" r="9" fill="#1F6B3B"/></svg>
+      </a>
+      <a class="mini leaf" href="#visit">
+        <div><span class="eyebrow">Try before you buy</span><h3>Book a free store visit</h3></div>
+        <span class="lnk">Pick a slot →</span>
+        <svg class="art" viewBox="0 0 200 140" aria-hidden="true"><rect x="40" y="30" width="130" height="100" rx="6" fill="#fff" opacity=".15"/><path d="M60 30l45-22 45 22" stroke="#fff" stroke-width="4" fill="none" opacity=".6"/><rect x="85" y="80" width="40" height="50" fill="#F25A0B"/><rect x="55" y="55" width="22" height="18" fill="#fff" opacity=".5"/><rect x="133" y="55" width="22" height="18" fill="#fff" opacity=".5"/></svg>
+      </a>
+    </div>
+  </div>
+  <div class="usps">
+    <div class="usp"><span class="ic">🚚</span><div><b>Free delivery &amp; install</b><small>On orders above ₹9,999</small></div></div>
+    <div class="usp"><span class="ic">🛡</span><div><b>Up to 10-year warranty</b><small>On frames and mattresses</small></div></div>
+    <div class="usp"><span class="ic">₹</span><div><b>No-cost EMI</b><small>From ₹1,499 a month</small></div></div>
+    <div class="usp"><span class="ic">↺</span><div><b>30-night trial</b><small>Easy returns on mattresses</small></div></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-head"><div><span class="eyebrow">Browse</span><h2>Shop by category</h2></div><a href="shop.html">View all furniture →</a></div>
+  <div class="cats" id="cats"></div>
+</div></section>
+
+<section id="best"><div class="wrap">
+  <div class="sec-head"><div><span class="eyebrow">Most loved</span><h2>Bestsellers this week</h2></div><div class="tabs" id="tabs"></div></div>
+  <div class="scroller" id="products"></div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-head"><div><span class="eyebrow">Get the look</span><h2>Shop by room</h2></div></div>
+  <div class="rooms" id="roomgrid"></div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-head"><div><span class="eyebrow">Save more</span><h2>Offers &amp; bank deals</h2></div></div>
+  <div class="offers" id="offers"></div>
+</div></section>
+
+<section class="why" id="why"><div class="wrap why-grid">
+  <div>
+    <span class="eyebrow">Why Furneview</span>
+    <h2 style="margin-top:6px">Furniture made for a better view</h2>
+    <p>Every piece is built from kiln-dried wood and high-resilience foam, checked at our Bengaluru workshop, and installed by our own team. Sit on it in a store first, or order online and try it at home.</p>
+    <a class="btn btn-ghost" href="#stores">Visit a store</a>
+  </div>
+  <div class="stats">
+    <div class="stat"><b>25,000+</b><span>Homes furnished</span></div>
+    <div class="stat"><b>4.6 / 5</b><span>Average customer rating</span></div>
+    <div class="stat"><b>48 hrs</b><span>Delivery in Bengaluru</span></div>
+    <div class="stat"><b>800+</b><span>Designs in stock</span></div>
+  </div>
+</div></section>
+
+<section id="stores"><div class="wrap">
+  <div class="sec-head"><div><span class="eyebrow">Visit us</span><h2>Furneview experience stores</h2></div></div>
+  <div class="cities" id="cities"></div>
+  <div class="visit" id="visit">
+    <div class="box">
+      <h3 style="font-size:20px">Book a store visit</h3>
+      <span class="meta">A design consultant will have your shortlist ready when you arrive.</span>
+      <form class="vf" id="vform">
+        <label for="vname">Name<input id="vname" required placeholder="Your name" autocomplete="name"></label>
+        <label for="vphone">Phone<input id="vphone" required inputmode="tel" placeholder="10-digit mobile" autocomplete="tel"></label>
+        <label for="vstore">Store<select id="vstore"></select></label>
+        <label for="vdate">Date<input id="vdate" type="date"></label>
+        <div class="full"><button class="btn btn-orange" type="submit">Book my visit</button> <span class="ok" id="vok" hidden></span></div>
+      </form>
+    </div>
+    <div class="bulk">
+      <span class="eyebrow">Offices · Hotels · Hostels</span>
+      <h3 style="font-size:22px">Furneview for Business</h3>
+      <p>Special pricing and custom sizes for bulk orders of 20 pieces or more.</p>
+      <a class="btn btn-light" href="#visit">Request a quote</a>
+    </div>
+  </div>
+</div></section>
+</main>
+<script src="assets/config.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
