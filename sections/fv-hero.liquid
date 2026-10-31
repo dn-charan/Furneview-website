@@ -29,7 +29,7 @@
             assign k_u = 'tile' | append: i | append: '_link'
             assign k_i = 'tile' | append: i | append: '_image'
           -%}
-          <a class="fv-mini{% if i == 2 %} fv-mini--leaf{% endif %}" href="{{ section.settings[k_u] | default: '#' }}">
+          <a class="fv-mini{% if i == 2 %} fv-mini--leaf{% endif %}" href="{% if section.settings[k_u] != blank %}{{ section.settings[k_u] }}{% elsif i == 2 %}#fv-visit{% else %}{{ routes.all_products_collection_url }}{% endif %}">
             {%- if section.settings[k_i] != blank -%}
               {{ section.settings[k_i] | image_url: width: 800 | image_tag: class: 'fv-mini__img', loading: 'lazy' }}
             {%- else -%}
@@ -76,7 +76,7 @@
     { "type": "text", "id": "tile2_eyebrow", "label": "Small label", "default": "Try before you buy" },
     { "type": "text", "id": "tile2_title", "label": "Title", "default": "Book a free store visit" },
     { "type": "text", "id": "tile2_link_label", "label": "Link label", "default": "Pick a slot" },
-    { "type": "url", "id": "tile2_link", "label": "Link", "default": "#fv-visit" },
+    { "type": "url", "id": "tile2_link", "label": "Link", "info": "Leave empty to jump to the store visit form." },
     { "type": "image_picker", "id": "tile2_image", "label": "Photo (optional)" }
   ],
   "presets": [{ "name": "Furneview hero" }]
