@@ -257,7 +257,12 @@
                 {%- for x in fab_series_prem -%}{%- if x != blank -%}<button type="button" class="fv-pill" data-ser="{{ x | escape }}" data-ser-tier="premium" hidden>{{ x }}</button>{%- endif -%}{%- endfor -%}
               </div>
             {%- endif -%}
-            <div class="fvp__swatches" data-swatches>{{ fab_swatches }}</div>
+            <div class="fvp__swrap">
+              <button type="button" class="fvp__swbtn fvp__swbtn--prev" data-swgo="-1" aria-label="Scroll fabrics left">‹</button>
+              <div class="fvp__swatches" data-swatches>{{ fab_swatches }}</div>
+              <button type="button" class="fvp__swbtn fvp__swbtn--next" data-swgo="1" aria-label="Scroll fabrics right">›</button>
+            </div>
+            <p class="fvp__swhint">Swipe to see more fabrics</p>
             <button type="button" class="fv-pill fvp__more" data-more hidden>Show all fabrics</button>
           </div>
         </div>
@@ -386,8 +391,9 @@
     var t=e.target.closest('.fvp__fabtab'); if(t){$$('.fvp__fabtab').forEach(function(x){x.classList.toggle('is-on',x===t)}); fv.tier=t.dataset.tier; fv.ser=''; fv.all=false; filterFab();}
     var sp=e.target.closest('[data-ser]'); if(sp){ fv.ser=sp.dataset.ser; fv.all=false; filterFab(); }
     if(e.target.closest('[data-more]')){ fv.all=!fv.all; filterFab(); }
+    var sg=e.target.closest('[data-swgo]'); if(sg){ var g=$('[data-swatches]'); g.scrollBy({left:+sg.dataset.swgo*g.clientWidth*0.8,behavior:'smooth'}); }
   });
-  var fv={tier:'standard',ser:'',all:false}, LIMIT=24;
+  var fv={tier:'standard',ser:'',all:true}, LIMIT=100000;
   function filterFab(){
     var shown=0, total=0;
     $$('[data-fab]').forEach(function(b){
@@ -396,6 +402,7 @@
       b.hidden=!ok; if(ok) shown++;
     });
     $$('[data-ser]').forEach(function(p){ p.hidden=!!p.dataset.serTier&&p.dataset.serTier!==fv.tier; p.classList.toggle('is-on',p.dataset.ser===fv.ser); });
+    var gr=$('[data-swatches]'); if(gr) gr.scrollLeft=0;
     var more=$('[data-more]'); if(more){ var extra=!fv.ser&&total>LIMIT; more.hidden=!extra; more.textContent=fv.all?'Show fewer fabrics':'Show all '+total+' fabrics'; }
   }
   filterFab();
