@@ -1,20 +1,47 @@
 {{ 'furneview.css' | asset_url | stylesheet_tag }}
-<section class="fv">
+<section class="fv" style="padding-block:24px">
   <div class="page-width">
     <div class="fv-head"><div><span class="fv-eyebrow">{{ section.settings.eyebrow }}</span><h2>{{ section.settings.heading }}</h2></div>
       <a href="{{ routes.collections_url }}">View all categories →</a></div>
+    {%- if section.settings.scroll -%}
+    <div class="fv-marq" style="--fv-dur:{{ section.blocks.size | times: section.settings.speed }}s">
+      <div class="fv-marq__track">
+        {%- for block in section.blocks -%}
+        {%- assign c = block.settings.collection -%}
+        <a class="fv-cat" href="{% if c != blank %}{{ c.url }}{% else %}{{ routes.collections_url }}{% endif %}" {{ block.shopify_attributes }}>
+          <span class="fv-cat__tile">
+            {%- if block.settings.image != blank -%}{{ block.settings.image | image_url: width: 400 | image_tag: loading: 'lazy', alt: '' }}
+            {%- else -%}{% render 'fv-art', name: block.settings.icon %}{%- endif -%}
+          </span>
+          {{ block.settings.title | default: c.title }}
+        </a>
+        {%- endfor -%}
+        {%- for block in section.blocks -%}
+        {%- assign c = block.settings.collection -%}
+        <a class="fv-cat" href="{% if c != blank %}{{ c.url }}{% else %}{{ routes.collections_url }}{% endif %}" aria-hidden="true" tabindex="-1">
+          <span class="fv-cat__tile">
+            {%- if block.settings.image != blank -%}{{ block.settings.image | image_url: width: 400 | image_tag: loading: 'lazy', alt: '' }}
+            {%- else -%}{% render 'fv-art', name: block.settings.icon %}{%- endif -%}
+          </span>
+          {{ block.settings.title | default: c.title }}
+        </a>
+        {%- endfor -%}
+      </div>
+    </div>
+    {%- else -%}
     <div class="fv-cats">
       {%- for block in section.blocks -%}
         {%- assign c = block.settings.collection -%}
         <a class="fv-cat" href="{% if c != blank %}{{ c.url }}{% else %}{{ routes.collections_url }}{% endif %}" {{ block.shopify_attributes }}>
           <span class="fv-cat__tile">
-            {%- if block.settings.image != blank -%}{{ block.settings.image | image_url: width: 400 | image_tag: loading: 'lazy' }}
+            {%- if block.settings.image != blank -%}{{ block.settings.image | image_url: width: 400 | image_tag: loading: 'lazy', alt: '' }}
             {%- else -%}{% render 'fv-art', name: block.settings.icon %}{%- endif -%}
           </span>
           {{ block.settings.title | default: c.title }}
         </a>
       {%- endfor -%}
     </div>
+    {%- endif -%}
   </div>
 </section>
 {% schema %}
@@ -22,6 +49,8 @@
   "name": "Furneview categories",
   "tag": "div",
   "settings": [
+    { "type": "checkbox", "id": "scroll", "label": "Scroll tiles right to left", "default": true },
+    { "type": "range", "id": "speed", "label": "Scroll speed (seconds per tile, higher is slower)", "min": 2, "max": 8, "step": 1, "default": 4 },
     { "type": "text", "id": "eyebrow", "label": "Small label", "default": "Browse" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Shop by category" }
   ],

@@ -190,7 +190,9 @@
       ],
       "settings": {
         "eyebrow": "Browse",
-        "heading": "Shop by category"
+        "heading": "Shop by category",
+        "scroll": true,
+        "speed": 4
       }
     },
     "bestsellers": {
@@ -509,10 +511,10 @@
   },
   "order": [
     "poster",
+    "categories",
     "promo",
     "trust",
     "browser",
-    "categories",
     "rooms",
     "offers",
     "why",

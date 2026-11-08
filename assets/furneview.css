@@ -251,3 +251,11 @@
 .fvp__desc{color:var(--fv-muted);line-height:1.7;font-size:1.5rem}
 /* keep slider layers inside the slider so they never sit above the header or menu */
 .fv-promo{isolation:isolate;z-index:0}
+/* category marquee: scrolls right to left, pauses on hover or touch */
+.fv-marq{overflow:hidden;margin-inline:calc(-1 * max(16px, env(safe-area-inset-left, 0px)));mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
+.fv-marq__track{display:flex;gap:16px;width:max-content;animation:fvslide var(--fv-dur,48s) linear infinite;padding:4px 0 8px}
+.fv-marq:hover .fv-marq__track,.fv-marq:focus-within .fv-marq__track,.fv-marq:active .fv-marq__track{animation-play-state:paused}
+.fv-marq .fv-cat{width:150px;flex:none}
+@keyframes fvslide{to{transform:translateX(calc(-50% - 8px))}}
+@media (max-width:600px){.fv-marq .fv-cat{width:120px}.fv-marq__track{gap:12px}@keyframes fvslide{to{transform:translateX(calc(-50% - 6px))}}}
+@media (prefers-reduced-motion:reduce){.fv-marq{overflow-x:auto}.fv-marq__track{animation:none}}
