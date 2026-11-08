@@ -413,7 +413,9 @@
             "heading": "Flat 15% off on fabric sofas",
             "text": "Pick from 36 fabrics. Free delivery and installation in Bengaluru.",
             "button": "Shop now",
-            "art": "sofa"
+            "art": "sofa",
+            "theme": "navy",
+            "badge": "15%|OFF"
           }
         },
         "s1": {
@@ -423,7 +425,9 @@
             "heading": "Extra 20% off a mattress with any storage bed",
             "text": "Hydraulic and box storage beds in solid wood.",
             "button": "Shop now",
-            "art": "bed"
+            "art": "bed",
+            "theme": "green",
+            "badge": "20%|OFF"
           }
         },
         "s2": {
@@ -433,7 +437,9 @@
             "heading": "Solid sheesham dining sets",
             "text": "4, 6 and 8 seaters, ready to deliver.",
             "button": "Shop now",
-            "art": "dining"
+            "art": "dining",
+            "theme": "orange",
+            "badge": "NEW"
           }
         }
       },

@@ -1,43 +1,84 @@
 {{ 'furneview.css' | asset_url | stylesheet_tag }}
-<section class="fv" style="padding-block:20px 12px">
+<style>
+  .fvb{position:relative;isolation:isolate;border-radius:22px;overflow:hidden;color:#fff;aspect-ratio:21/8;min-height:230px;max-width:100%;box-shadow:0 16px 36px rgba(30,26,23,.16)}
+  .fvb__slide{position:absolute;inset:0;display:grid;grid-template-columns:1.25fr 1fr;align-items:center;gap:12px;padding:72px 56px 44px;opacity:0;visibility:hidden;transition:opacity .6s,visibility .6s}
+  .fvb__slide.is-on{opacity:1;visibility:visible}
+  .fvb__slide--navy{background:radial-gradient(120% 140% at 85% 40%,#7A3A1C 0,#16213A 55%)}
+  .fvb__slide--green{background:radial-gradient(120% 140% at 85% 40%,#4E8A3A 0,#123F27 58%)}
+  .fvb__slide--orange{background:radial-gradient(120% 140% at 85% 40%,#FF9A4A 0,#C9470A 60%)}
+  .fvb__slide::before,.fvb__slide::after{content:"";position:absolute;border-radius:50%;pointer-events:none;z-index:-1}
+  .fvb__slide::before{width:420px;height:420px;right:-90px;top:-150px;border:1px solid rgba(255,255,255,.12)}
+  .fvb__slide::after{width:260px;height:260px;right:-10px;top:-70px;border:1px solid rgba(255,255,255,.18)}
+  .fvb__text{display:flex;flex-direction:column;align-items:flex-start;gap:10px;min-width:0}
+  .fvb__live{position:absolute;top:24px;left:56px;z-index:1;display:inline-flex;align-items:center;border-radius:99px;overflow:hidden;background:rgba(0,0,0,.28);font-weight:700;font-size:1.25rem;letter-spacing:.04em;box-shadow:inset 0 0 0 1px rgba(255,255,255,.15)}
+  .fvb__live b{display:inline-flex;align-items:center;gap:7px;background:#E5251B;padding:6px 12px;letter-spacing:.16em}
+  .fvb__live b i{width:7px;height:7px;border-radius:9px;background:#fff;animation:fvpulse 1.2s infinite}
+  .fvb__live span{padding:6px 12px;color:#FFD08A;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .fvb__tag{font-size:1.15rem;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:#FFD08A}
+  .fvb__slide--orange .fvb__tag{color:#FFF1C9}
+  .fvb h2{color:#fff;margin:0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;font-size:clamp(2.2rem,3.4vw,4.4rem);line-height:1.08;text-wrap:balance}
+  .fvb p{margin:0;opacity:.88;font-size:clamp(1.3rem,1.4vw,1.6rem);max-width:40ch;line-height:1.45}
+  .fvb__btn{display:inline-flex;align-items:center;gap:8px;margin-top:4px;background:#fff;color:#1E1A17!important;border-radius:99px;padding:11px 22px;font-weight:700;font-size:1.4rem;text-decoration:none;box-shadow:0 6px 16px rgba(0,0,0,.2);transition:transform .2s}
+  .fvb__btn:hover{transform:translateY(-2px)}
+  .fvb__media{position:relative;height:100%;display:flex;align-items:center;justify-content:center;min-width:0}
+  .fvb__glow{position:absolute;width:78%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.28),rgba(255,255,255,0) 68%)}
+  .fvb__media img{position:relative;max-height:100%;max-width:100%;width:auto;object-fit:contain;border-radius:16px;filter:drop-shadow(0 18px 24px rgba(0,0,0,.35))}
+  .fvb__media svg{position:relative;width:100%;max-width:340px;filter:drop-shadow(0 18px 20px rgba(0,0,0,.35))}
+  .fvb__badge{position:absolute;top:6%;right:4%;width:86px;height:86px;display:grid;place-items:center;text-align:center;background:#F5B000;color:#1E1A17;font-weight:800;font-size:1.6rem;line-height:1.05;white-space:pre-line;clip-path:polygon(50% 0,61% 12%,77% 6%,80% 22%,96% 26%,90% 42%,100% 54%,88% 64%,92% 82%,75% 82%,66% 98%,50% 88%,34% 98%,25% 82%,8% 82%,12% 64%,0 54%,10% 42%,4% 26%,20% 22%,23% 6%,39% 12%);transform:rotate(-8deg)}
+  .fvb__dots{position:absolute;left:56px;bottom:16px;display:flex;gap:6px;z-index:2}
+  .fvb__dots button{width:22px;height:4px;border:0;border-radius:4px;background:rgba(255,255,255,.35);padding:0;cursor:pointer}
+  .fvb__dots button.is-on{background:#fff;width:34px}
+  .fvb__nav{position:absolute;bottom:12px;width:34px;height:34px;border-radius:99px;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.1);color:#fff;font-size:1.8rem;line-height:1;cursor:pointer;z-index:2}
+  .fvb__nav--prev{right:56px}.fvb__nav--next{right:16px}
+  @media (max-width:760px){
+    .fvb{aspect-ratio:auto;height:268px;min-height:0;border-radius:18px}
+    .fvb__slide{grid-template-columns:1.5fr 1fr;padding:56px 14px 38px 18px;gap:4px;align-items:start}
+    .fvb__live{top:14px;left:18px;font-size:1.05rem}.fvb__live b,.fvb__live span{padding:5px 9px}
+    .fvb__text{gap:8px}
+    .fvb__tag{font-size:1rem;letter-spacing:.18em}
+    .fvb h2{font-size:2rem;line-height:1.12;-webkit-line-clamp:4}
+    .fvb p{display:none}
+    .fvb__btn{padding:9px 16px;font-size:1.3rem;margin-top:2px}
+    .fvb__media{height:150px;align-self:center}
+    .fvb__badge{width:64px;height:64px;font-size:1.2rem;top:-6px;right:-4px}
+    .fvb__slide::before{width:300px;height:300px;right:-120px;top:-90px}
+    .fvb__dots{left:18px;bottom:14px}
+    .fvb__nav{display:none}
+  }
+  @media (prefers-reduced-motion:reduce){.fvb__slide{transition:none}.fvb__live b i{animation:none}}
+</style>
+<section class="fv" style="padding-block:16px">
   <div class="page-width">
-    {%- if section.settings.show_live -%}
-      <div class="fv-live" role="status">
-        <span class="fv-live__tag"><i></i>LIVE</span>
-        {%- if section.settings.ends != blank -%}
-          <span class="fv-live__time" data-fv-ends="{{ section.settings.ends }}">Ends in …</span>
-        {%- endif -%}
-        <div class="fv-live__msgs"><div class="fv-live__track">
-          {%- for block in section.blocks -%}<span>✦ {{ block.settings.heading | strip_html }}</span>{%- endfor -%}
-        </div></div>
-      </div>
-    {%- endif -%}
-
-    <div class="fv-promo" id="fv-promo-{{ section.id }}">
-      {%- if section.blocks.size > 1 -%}<span class="fv-promo__count"><span data-n>1</span> / {{ section.blocks.size }}</span>{%- endif -%}
+    <div class="fvb" id="fv-promo-{{ section.id }}" aria-roledescription="carousel">
       {%- for block in section.blocks -%}
-        <div class="fv-slide{% if forloop.first %} is-on{% endif %}" {{ block.shopify_attributes }}>
-          <div>
-            {%- if block.settings.tag != blank -%}<span class="fv-slide__tag">{{ block.settings.tag }}</span>{%- endif -%}
+        <div class="fvb__slide fvb__slide--{{ block.settings.theme | default: 'navy' }}{% if forloop.first %} is-on{% endif %}" {{ block.shopify_attributes }}>
+          {%- if section.settings.show_live -%}
+            <span class="fvb__live"><b><i></i>LIVE</b>{%- if section.settings.ends != blank -%}<span data-fv-ends="{{ section.settings.ends }}">Ends in …</span>{%- endif -%}</span>
+          {%- endif -%}
+          <div class="fvb__text">
+            {%- if block.settings.tag != blank -%}<span class="fvb__tag">{{ block.settings.tag }}</span>{%- endif -%}
             <h2>{{ block.settings.heading }}</h2>
             {%- if block.settings.text != blank -%}<p>{{ block.settings.text }}</p>{%- endif -%}
             {%- if block.settings.button != blank -%}
-              <a class="fv-btn fv-btn--light" href="{{ block.settings.link | default: routes.all_products_collection_url }}">{{ block.settings.button }} →</a>
+              <a class="fvb__btn" href="{{ block.settings.link | default: routes.all_products_collection_url }}">{{ block.settings.button }} →</a>
             {%- endif -%}
           </div>
-          <div class="fv-slide__media">
+          <div class="fvb__media">
+            <span class="fvb__glow" aria-hidden="true"></span>
             {%- if block.settings.image != blank -%}
-              {{ block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', sizes: '(min-width: 760px) 40vw, 90vw' }}
+              {{ block.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', sizes: '(min-width: 760px) 40vw, 40vw', alt: '' }}
             {%- else -%}
               {% render 'fv-art', name: block.settings.art %}
             {%- endif -%}
+            {%- if block.settings.badge != blank -%}<span class="fvb__badge" aria-hidden="true">{{ block.settings.badge | replace: '|', '
+' }}</span>{%- endif -%}
           </div>
         </div>
       {%- endfor -%}
       {%- if section.blocks.size > 1 -%}
-        <button class="fv-promo__nav fv-promo__nav--prev" type="button" data-dir="-1" aria-label="Previous offer">‹</button>
-        <button class="fv-promo__nav fv-promo__nav--next" type="button" data-dir="1" aria-label="Next offer">›</button>
-        <div class="fv-promo__dots">{%- for block in section.blocks -%}<button type="button" data-i="{{ forloop.index0 }}" aria-label="Offer {{ forloop.index }}"{% if forloop.first %} class="is-on"{% endif %}></button>{%- endfor -%}</div>
+        <div class="fvb__dots">{%- for block in section.blocks -%}<button type="button" data-i="{{ forloop.index0 }}" aria-label="Offer {{ forloop.index }}"{% if forloop.first %} class="is-on"{% endif %}></button>{%- endfor -%}</div>
+        <button class="fvb__nav fvb__nav--prev" type="button" data-dir="-1" aria-label="Previous offer">‹</button>
+        <button class="fvb__nav fvb__nav--next" type="button" data-dir="1" aria-label="Next offer">›</button>
       {%- endif -%}
     </div>
   </div>
@@ -45,45 +86,49 @@
 <script>
 (function(){
   var root=document.getElementById('fv-promo-{{ section.id }}'); if(!root) return;
-  var slides=root.querySelectorAll('.fv-slide'), dots=root.querySelectorAll('.fv-promo__dots button'), n=root.querySelector('[data-n]'), i=0, timer;
+  var slides=root.querySelectorAll('.fvb__slide'), dots=root.querySelectorAll('.fvb__dots button'), i=0, timer, x0=null;
   function go(k){ if(!slides.length) return; i=(k+slides.length)%slides.length;
-    slides.forEach(function(s,j){s.classList.toggle('is-on',j===i)}); dots.forEach(function(d,j){d.classList.toggle('is-on',j===i)}); if(n) n.textContent=i+1; }
+    slides.forEach(function(s,j){s.classList.toggle('is-on',j===i)}); dots.forEach(function(d,j){d.classList.toggle('is-on',j===i)}); }
   function auto(){ clearInterval(timer); if(slides.length>1 && !matchMedia('(prefers-reduced-motion: reduce)').matches) timer=setInterval(function(){go(i+1)},{{ section.settings.speed | times: 1000 }}); }
   root.addEventListener('click',function(e){var b=e.target.closest('[data-dir]'),d=e.target.closest('[data-i]'); if(b){go(i+ +b.dataset.dir);auto()} if(d){go(+d.dataset.i);auto()}});
+  root.addEventListener('touchstart',function(e){x0=e.touches[0].clientX},{passive:true});
+  root.addEventListener('touchend',function(e){if(x0===null)return;var dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>40){go(i+(dx<0?1:-1));auto()}x0=null});
   auto();
-  document.querySelectorAll('[data-fv-ends]').forEach(function(el){
-    var end=new Date(el.dataset.fvEnds+'T23:59:59+05:30');
-    function t(){var s=Math.max(0,Math.floor((end-new Date())/1000)),d=Math.floor(s/86400);s%=86400;var h=Math.floor(s/3600);s%=3600;var m=Math.floor(s/60);s%=60;
-      el.textContent=s+m+h+d===0?'Offer ended':'Ends in '+d+'d '+h+'h '+m+'m '+s+'s';}
-    t(); setInterval(t,1000);
-  });
+  var els=root.querySelectorAll('[data-fv-ends]'); if(!els.length) return;
+  var end=new Date(els[0].dataset.fvEnds+'T23:59:59+05:30');
+  function t(){var s=Math.max(0,Math.floor((end-new Date())/1000)),d=Math.floor(s/86400);s%=86400;var h=Math.floor(s/3600);s%=3600;var m=Math.floor(s/60);s%=60;
+    var txt=(d+h+m+s===0)?'Offer ended':'Ends in '+d+'d '+String(h).padStart(2,'0')+'h '+String(m).padStart(2,'0')+'m '+String(s).padStart(2,'0')+'s';
+    els.forEach(function(el){el.textContent=txt});}
+  t(); setInterval(t,1000);
 })();
 </script>
 {% schema %}
 {
-  "name": "Furneview offer slider",
+  "name": "Furneview offer banner",
   "tag": "div",
   "settings": [
-    { "type": "checkbox", "id": "show_live", "label": "Show LIVE offer strip", "default": true },
-    { "type": "text", "id": "ends", "label": "Offer end date (YYYY-MM-DD)", "default": "2026-11-30", "info": "Shows a live countdown. Leave empty to hide it." },
+    { "type": "checkbox", "id": "show_live", "label": "Show LIVE countdown on the banner", "default": true },
+    { "type": "text", "id": "ends", "label": "Offer end date (YYYY-MM-DD)", "default": "2026-11-30", "info": "Leave empty to show only the LIVE tag." },
     { "type": "range", "id": "speed", "label": "Seconds per slide", "min": 3, "max": 12, "step": 1, "default": 6 }
   ],
   "max_blocks": 15,
   "blocks": [{ "type": "slide", "name": "Offer slide", "settings": [
+    { "type": "select", "id": "theme", "label": "Colour", "default": "navy", "options": [{"value":"navy","label":"Navy and copper"},{"value":"green","label":"Forest green"},{"value":"orange","label":"Furneview orange"}] },
     { "type": "text", "id": "tag", "label": "Small tag", "default": "Festive offer" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Flat 15% off on sofas" },
-    { "type": "text", "id": "text", "label": "Text", "default": "Choose any design and fabric. Free delivery and installation." },
+    { "type": "text", "id": "text", "label": "Text (hidden on phones)", "default": "Choose any design and fabric. Free delivery and installation." },
+    { "type": "text", "id": "badge", "label": "Badge", "default": "15%|OFF", "info": "Use | for a line break, e.g. 15%|OFF. Leave empty to hide." },
     { "type": "text", "id": "button", "label": "Button label", "default": "Shop now" },
     { "type": "url", "id": "link", "label": "Button link" },
-    { "type": "image_picker", "id": "image", "label": "Product photo (recommended)" },
+    { "type": "image_picker", "id": "image", "label": "Product photo (cut-out PNG looks best)" },
     { "type": "select", "id": "art", "label": "Illustration (if no photo)", "default": "sofa", "options": [
       {"value":"sofa","label":"Sofa"},{"value":"bed","label":"Bed"},{"value":"mattress","label":"Mattress"},{"value":"dining","label":"Dining"},
       {"value":"wardrobe","label":"Wardrobe"},{"value":"recliner","label":"Recliner"},{"value":"tv","label":"TV unit"},{"value":"study","label":"Study"}]}
   ]}],
-  "presets": [{ "name": "Furneview offer slider", "blocks": [
-    { "type": "slide", "settings": { "tag": "Festive offer", "heading": "Flat 15% off on fabric sofas", "text": "Pick from 100+ fabrics. Free delivery and installation in Bengaluru.", "art": "sofa" } },
-    { "type": "slide", "settings": { "tag": "Bed + mattress", "heading": "Extra 20% off a mattress with any storage bed", "text": "Hydraulic and box storage beds in solid wood.", "art": "bed" } },
-    { "type": "slide", "settings": { "tag": "New in", "heading": "Solid sheesham dining sets", "text": "4, 6 and 8 seaters, ready to deliver.", "art": "dining" } }
+  "presets": [{ "name": "Furneview offer banner", "blocks": [
+    { "type": "slide", "settings": { "theme": "navy", "tag": "Festive offer", "heading": "Flat 15% off on fabric sofas", "badge": "15%|OFF", "art": "sofa" } },
+    { "type": "slide", "settings": { "theme": "green", "tag": "Bed + mattress", "heading": "Extra 20% off a mattress with any storage bed", "badge": "20%|OFF", "art": "bed" } },
+    { "type": "slide", "settings": { "theme": "orange", "tag": "New in", "heading": "Solid sheesham dining sets", "badge": "NEW", "art": "dining" } }
   ]}]
 }
 {% endschema %}
