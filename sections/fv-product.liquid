@@ -42,18 +42,22 @@
           <div data-pane="photos">
             <div class="fvp__view" data-main>
               {%- if product.featured_media -%}
-                {{ product.featured_media | image_url: width: 1400 | image_tag: sizes: '(min-width: 990px) 55vw, 100vw', alt: product.title, loading: 'eager' }}
+                {%- render 'fv-media', media: product.featured_media, autoplay: false, alt: product.title, loading: 'eager' -%}
               {%- else -%}{{ 'product-1' | placeholder_svg_tag }}{%- endif -%}
             </div>
             {%- if product.media.size > 1 -%}
               <div class="fvp__thumbs">
-                {%- for m in product.media -%}{%- if m.media_type == 'image' -%}
-                  <button type="button" class="fvp__thumb{% if forloop.first %} is-on{% endif %}" data-src="{{ m | image_url: width: 1400 }}" aria-label="{{ m.alt | default: 'Photo' | escape }}">
-                    {{ m | image_url: width: 200 | image_tag: loading: 'lazy', alt: '' }}
-                    {%- if m.alt != blank and m.alt.size < 14 -%}<span>{{ m.alt }}</span>{%- endif -%}
+                {%- for m in product.media -%}
+                  <button type="button" class="fvp__thumb{% if m.id == product.featured_media.id %} is-on{% endif %}{% if m.media_type == 'video' or m.media_type == 'external_video' %} fvp__thumb--video{% endif %}" data-media="{{ m.id }}" aria-label="{% if m.media_type == 'video' or m.media_type == 'external_video' %}Play video{% else %}{{ m.alt | default: 'Photo' | escape }}{% endif %}">
+                    {%- if m.preview_image -%}{{ m.preview_image | image_url: width: 200 | image_tag: loading: 'lazy', alt: '' }}{%- endif -%}
+                    {%- if m.media_type == 'video' or m.media_type == 'external_video' -%}<i class="fvp__play" aria-hidden="true"></i><span>Video</span>
+                    {%- elsif m.alt != blank and m.alt.size < 14 -%}<span>{{ m.alt }}</span>{%- endif -%}
                   </button>
-                {%- endif -%}{%- endfor -%}
+                {%- endfor -%}
               </div>
+              {%- for m in product.media -%}
+                <template data-media-tpl="{{ m.id }}">{%- render 'fv-media', media: m, autoplay: true, alt: product.title, loading: 'eager' -%}</template>
+              {%- endfor -%}
             {%- endif -%}
           </div>
 
@@ -213,7 +217,9 @@
   }});
   $$('.fvp__thumb').forEach(function(b){b.onclick=function(){
     $$('.fvp__thumb').forEach(function(x){x.classList.toggle('is-on',x===b)});
-    var img=$('[data-main] img'); if(img){img.srcset='';img.src=b.dataset.src}
+    var tpl=root.querySelector('[data-media-tpl="'+b.dataset.media+'"]'), main=$('[data-main]');
+    if(tpl&&main){ main.querySelectorAll('video').forEach(function(v){v.pause()}); main.innerHTML=''; main.appendChild(tpl.content.cloneNode(true));
+      var v=main.querySelector('video'); if(v){ v.muted=true; var pr=v.play(); if(pr&&pr.catch) pr.catch(function(){}); } }
   }});
 
   /* size guide */
