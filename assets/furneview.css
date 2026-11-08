@@ -249,3 +249,5 @@
 .fv-sw.is-on .fv-dot::after{content:"✓";color:#fff;font-size:2rem;text-shadow:0 1px 3px rgba(0,0,0,.5)}
 .fv-sw__new{position:absolute;top:2px;left:2px;width:22px;height:22px;border-radius:99px;background:#0E8A5F;color:#fff;font-size:1.2rem;display:grid;place-items:center}
 .fvp__desc{color:var(--fv-muted);line-height:1.7;font-size:1.5rem}
+/* keep slider layers inside the slider so they never sit above the header or menu */
+.fv-promo{isolation:isolate;z-index:0}

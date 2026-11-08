@@ -111,7 +111,8 @@
         "c4",
         "c5",
         "c6"
-      ]
+      ],
+      "disabled": true
     }
   },
   "order": [
