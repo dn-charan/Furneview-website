@@ -82,7 +82,8 @@
           "settings": {
             "title": "Sofas",
             "collection": "sofa-and-recliners",
-            "icon": "sofa"
+            "icon": "sofa",
+            "photo": "sofas"
           }
         },
         "c1": {
@@ -90,7 +91,8 @@
           "settings": {
             "title": "Beds",
             "collection": "beds-and-mattresses",
-            "icon": "bed"
+            "icon": "bed",
+            "photo": "beds"
           }
         },
         "c2": {
@@ -98,7 +100,8 @@
           "settings": {
             "title": "Mattresses",
             "collection": "mattresses",
-            "icon": "mattress"
+            "icon": "mattress",
+            "photo": "mattresses"
           }
         },
         "c3": {
@@ -106,7 +109,8 @@
           "settings": {
             "title": "Dining",
             "collection": "dining",
-            "icon": "dining"
+            "icon": "dining",
+            "photo": "dining"
           }
         },
         "c4": {
@@ -114,7 +118,8 @@
           "settings": {
             "title": "Wardrobes",
             "collection": "wardrobes",
-            "icon": "wardrobe"
+            "icon": "wardrobe",
+            "photo": "wardrobes"
           }
         },
         "c5": {
@@ -122,7 +127,8 @@
           "settings": {
             "title": "Recliners",
             "collection": "recliners",
-            "icon": "recliner"
+            "icon": "recliner",
+            "photo": "recliners"
           }
         },
         "c6": {
@@ -130,7 +136,8 @@
           "settings": {
             "title": "TV Units",
             "collection": "tv-units",
-            "icon": "tv"
+            "icon": "tv",
+            "photo": "tv-units"
           }
         },
         "c7": {
@@ -138,7 +145,8 @@
           "settings": {
             "title": "Coffee Tables",
             "collection": "coffee-tables",
-            "icon": "coffee"
+            "icon": "coffee",
+            "photo": "coffee-tables"
           }
         },
         "c8": {
@@ -146,7 +154,8 @@
           "settings": {
             "title": "Study Tables",
             "collection": "study-tables",
-            "icon": "study"
+            "icon": "study",
+            "photo": "study-tables"
           }
         },
         "c9": {
@@ -154,7 +163,8 @@
           "settings": {
             "title": "Office Chairs",
             "collection": "office-chairs",
-            "icon": "chair"
+            "icon": "chair",
+            "photo": "office-chairs"
           }
         },
         "c_ch": {
@@ -162,7 +172,8 @@
           "settings": {
             "title": "Chairs",
             "icon": "chair",
-            "collection": "chairs"
+            "collection": "chairs",
+            "photo": "chairs"
           }
         },
         "c_st": {
@@ -170,7 +181,8 @@
           "settings": {
             "title": "Storage",
             "icon": "wardrobe",
-            "collection": "storage"
+            "collection": "storage",
+            "photo": "storage"
           }
         }
       },
@@ -192,7 +204,7 @@
         "eyebrow": "Browse",
         "heading": "Shop by category",
         "scroll": true,
-        "speed": 4
+        "px_speed": 35
       }
     },
     "bestsellers": {

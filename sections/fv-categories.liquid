@@ -4,40 +4,75 @@
     <div class="fv-head"><div><span class="fv-eyebrow">{{ section.settings.eyebrow }}</span><h2>{{ section.settings.heading }}</h2></div>
       <a href="{{ routes.collections_url }}">View all categories →</a></div>
     {%- if section.settings.scroll -%}
-    <div class="fv-marq" style="--fv-dur:{{ section.blocks.size | times: section.settings.speed }}s">
-      <div class="fv-marq__track">
-        {%- for block in section.blocks -%}
+    <div class="fv-marq-wrap" id="fv-mq-{{ section.id }}">
+      <div class="fv-marq" tabindex="0" aria-label="Categories, swipe to see more">
+        <div class="fv-marq__track">
+          {%- for block in section.blocks -%}
         {%- assign c = block.settings.collection -%}
         <a class="fv-cat" href="{% if c != blank %}{{ c.url }}{% else %}{{ routes.collections_url }}{% endif %}" {{ block.shopify_attributes }}>
-          <span class="fv-cat__tile">
-            {%- if block.settings.image != blank -%}{{ block.settings.image | image_url: width: 400 | image_tag: loading: 'lazy', alt: '' }}
-            {%- else -%}{% render 'fv-art', name: block.settings.icon %}{%- endif -%}
-          </span>
-          {{ block.settings.title | default: c.title }}
+          {%- if block.settings.image != blank -%}
+            <span class="fv-cat__tile fv-cat__tile--photo">{{ block.settings.image | image_url: width: 480 | image_tag: loading: 'lazy', alt: '' }}</span>
+          {%- elsif block.settings.photo != blank -%}
+            {%- assign ph = 'fv-cat-' | append: block.settings.photo | append: '.jpg' -%}
+            <span class="fv-cat__tile fv-cat__tile--photo"><img src="{{ ph | asset_url }}" alt="" width="480" height="360" loading="lazy"></span>
+          {%- else -%}
+            <span class="fv-cat__tile">{% render 'fv-art', name: block.settings.icon %}</span>
+          {%- endif -%}
+          <span class="fv-cat__name">{{ block.settings.title | default: c.title }}</span>
         </a>
-        {%- endfor -%}
-        {%- for block in section.blocks -%}
+          {%- endfor -%}
+          {%- for block in section.blocks -%}
         {%- assign c = block.settings.collection -%}
-        <a class="fv-cat" href="{% if c != blank %}{{ c.url }}{% else %}{{ routes.collections_url }}{% endif %}" aria-hidden="true" tabindex="-1">
-          <span class="fv-cat__tile">
-            {%- if block.settings.image != blank -%}{{ block.settings.image | image_url: width: 400 | image_tag: loading: 'lazy', alt: '' }}
-            {%- else -%}{% render 'fv-art', name: block.settings.icon %}{%- endif -%}
-          </span>
-          {{ block.settings.title | default: c.title }}
+        <a class="fv-cat" href="{% if c != blank %}{{ c.url }}{% else %}{{ routes.collections_url }}{% endif %}" aria-hidden="true" tabindex="-1" data-copy>
+          {%- if block.settings.image != blank -%}
+            <span class="fv-cat__tile fv-cat__tile--photo">{{ block.settings.image | image_url: width: 480 | image_tag: loading: 'lazy', alt: '' }}</span>
+          {%- elsif block.settings.photo != blank -%}
+            {%- assign ph = 'fv-cat-' | append: block.settings.photo | append: '.jpg' -%}
+            <span class="fv-cat__tile fv-cat__tile--photo"><img src="{{ ph | asset_url }}" alt="" width="480" height="360" loading="lazy"></span>
+          {%- else -%}
+            <span class="fv-cat__tile">{% render 'fv-art', name: block.settings.icon %}</span>
+          {%- endif -%}
+          <span class="fv-cat__name">{{ block.settings.title | default: c.title }}</span>
         </a>
-        {%- endfor -%}
+          {%- endfor -%}
+        </div>
       </div>
+      <button class="fv-marq__btn fv-marq__btn--prev" type="button" data-d="-1" aria-label="Scroll categories left">‹</button>
+      <button class="fv-marq__btn fv-marq__btn--next" type="button" data-d="1" aria-label="Scroll categories right">›</button>
     </div>
+    <script>
+    (function(){
+      var w=document.getElementById('fv-mq-{{ section.id }}'); if(!w) return;
+      var box=w.querySelector('.fv-marq'), track=w.querySelector('.fv-marq__track'), first=track.querySelector('[data-copy]');
+      var speed={{ section.settings.px_speed }}, pos=1, paused=false, resumeT, last=null;
+      var still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+      function half(){return first?first.offsetLeft-track.firstElementChild.offsetLeft:track.scrollWidth/2}
+      function wrap(){var h=half(), x=box.scrollLeft; if(h<=0) return; if(x>h+20) box.scrollLeft=x-h; else if(x<20) box.scrollLeft=x+h; pos=box.scrollLeft}
+      function tick(t){ if(last!==null && !paused && !still){ pos+=speed*(t-last)/1000; box.scrollLeft=pos; if(box.scrollLeft>=half()){ pos-=half(); box.scrollLeft=pos } } last=t; requestAnimationFrame(tick) }
+      function hold(){ paused=true; clearTimeout(resumeT) }
+      function release(){ clearTimeout(resumeT); resumeT=setTimeout(function(){ pos=box.scrollLeft; paused=false },2500) }
+      box.addEventListener('scroll',function(){ if(paused) wrap() },{passive:true});
+      ['pointerdown','touchstart','wheel','mouseenter','focusin'].forEach(function(e){box.addEventListener(e,hold,{passive:true})});
+      ['pointerup','touchend','mouseleave','focusout'].forEach(function(e){box.addEventListener(e,release,{passive:true})});
+      box.addEventListener('wheel',release,{passive:true});
+      w.querySelectorAll('[data-d]').forEach(function(b){b.onclick=function(){hold();var step=(track.firstElementChild.offsetWidth+16)*2;if(+b.dataset.d<0&&box.scrollLeft-step<0)box.scrollLeft+=half();box.scrollBy({left:+b.dataset.d*step,behavior:'smooth'});release()}});
+      box.scrollLeft=1; requestAnimationFrame(tick);
+    })();
+    </script>
     {%- else -%}
     <div class="fv-cats">
       {%- for block in section.blocks -%}
         {%- assign c = block.settings.collection -%}
         <a class="fv-cat" href="{% if c != blank %}{{ c.url }}{% else %}{{ routes.collections_url }}{% endif %}" {{ block.shopify_attributes }}>
-          <span class="fv-cat__tile">
-            {%- if block.settings.image != blank -%}{{ block.settings.image | image_url: width: 400 | image_tag: loading: 'lazy', alt: '' }}
-            {%- else -%}{% render 'fv-art', name: block.settings.icon %}{%- endif -%}
-          </span>
-          {{ block.settings.title | default: c.title }}
+          {%- if block.settings.image != blank -%}
+            <span class="fv-cat__tile fv-cat__tile--photo">{{ block.settings.image | image_url: width: 480 | image_tag: loading: 'lazy', alt: '' }}</span>
+          {%- elsif block.settings.photo != blank -%}
+            {%- assign ph = 'fv-cat-' | append: block.settings.photo | append: '.jpg' -%}
+            <span class="fv-cat__tile fv-cat__tile--photo"><img src="{{ ph | asset_url }}" alt="" width="480" height="360" loading="lazy"></span>
+          {%- else -%}
+            <span class="fv-cat__tile">{% render 'fv-art', name: block.settings.icon %}</span>
+          {%- endif -%}
+          <span class="fv-cat__name">{{ block.settings.title | default: c.title }}</span>
         </a>
       {%- endfor -%}
     </div>
@@ -50,7 +85,7 @@
   "tag": "div",
   "settings": [
     { "type": "checkbox", "id": "scroll", "label": "Scroll tiles right to left", "default": true },
-    { "type": "range", "id": "speed", "label": "Scroll speed (seconds per tile, higher is slower)", "min": 2, "max": 8, "step": 1, "default": 4 },
+    { "type": "range", "id": "px_speed", "label": "Scroll speed", "min": 10, "max": 80, "step": 5, "default": 35, "info": "Higher is faster. Customers can also swipe either way." },
     { "type": "text", "id": "eyebrow", "label": "Small label", "default": "Browse" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Shop by category" }
   ],
@@ -58,6 +93,7 @@
     { "type": "text", "id": "title", "label": "Name", "default": "Sofas" },
     { "type": "collection", "id": "collection", "label": "Collection" },
     { "type": "image_picker", "id": "image", "label": "Photo (optional)" },
+    { "type": "select", "id": "photo", "label": "Built-in photo (if no photo uploaded)", "default": "", "options": [{"value":"","label":"None"},{"value":"sofas","label":"Sofas"},{"value":"beds","label":"Beds"},{"value":"mattresses","label":"Mattresses"},{"value":"dining","label":"Dining"},{"value":"wardrobes","label":"Wardrobes"},{"value":"recliners","label":"Recliners"},{"value":"tv-units","label":"Tv Units"},{"value":"coffee-tables","label":"Coffee Tables"},{"value":"study-tables","label":"Study Tables"},{"value":"office-chairs","label":"Office Chairs"},{"value":"chairs","label":"Chairs"},{"value":"storage","label":"Storage"}] },
     { "type": "select", "id": "icon", "label": "Illustration (if no photo)", "default": "sofa", "options": [
       {"value":"sofa","label":"Sofa"},{"value":"bed","label":"Bed"},{"value":"mattress","label":"Mattress"},{"value":"dining","label":"Dining"},
       {"value":"wardrobe","label":"Wardrobe"},{"value":"recliner","label":"Recliner"},{"value":"tv","label":"TV unit"},{"value":"coffee","label":"Coffee table"},

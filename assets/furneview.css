@@ -251,11 +251,17 @@
 .fvp__desc{color:var(--fv-muted);line-height:1.7;font-size:1.5rem}
 /* keep slider layers inside the slider so they never sit above the header or menu */
 .fv-promo{isolation:isolate;z-index:0}
-/* category marquee: scrolls right to left, pauses on hover or touch */
-.fv-marq{overflow:hidden;margin-inline:calc(-1 * max(16px, env(safe-area-inset-left, 0px)));mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
-.fv-marq__track{display:flex;gap:16px;width:max-content;animation:fvslide var(--fv-dur,48s) linear infinite;padding:4px 0 8px}
-.fv-marq:hover .fv-marq__track,.fv-marq:focus-within .fv-marq__track,.fv-marq:active .fv-marq__track{animation-play-state:paused}
-.fv-marq .fv-cat{width:150px;flex:none}
-@keyframes fvslide{to{transform:translateX(calc(-50% - 8px))}}
-@media (max-width:600px){.fv-marq .fv-cat{width:120px}.fv-marq__track{gap:12px}@keyframes fvslide{to{transform:translateX(calc(-50% - 6px))}}}
-@media (prefers-reduced-motion:reduce){.fv-marq{overflow-x:auto}.fv-marq__track{animation:none}}
+/* category strip: scrolls right to left by itself; customers can swipe either way */
+.fv-marq-wrap{position:relative}
+.fv-marq{overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;margin-inline:calc(-1 * max(16px, env(safe-area-inset-left, 0px)));padding-inline:max(16px, env(safe-area-inset-left, 0px))}
+.fv-marq::-webkit-scrollbar{display:none}
+.fv-marq__track{display:flex;gap:16px;width:max-content;padding:4px 0 10px}
+.fv-marq .fv-cat{width:200px;flex:none}
+.fv-cat__tile--photo{aspect-ratio:4/3;border-radius:16px;border:0;box-shadow:0 6px 18px rgba(30,26,23,.08)}
+.fv-cat__tile--photo img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.fv-cat:hover .fv-cat__tile--photo img{transform:scale(1.05)}
+.fv-cat__name{display:flex;flex-direction:column;align-items:center;gap:6px;font-weight:700;font-size:1.6rem}
+.fv-cat__name::after{content:"";width:34px;height:3px;border-radius:3px;background:var(--fv-orange)}
+.fv-marq__btn{position:absolute;top:calc(50% - 30px);transform:translateY(-50%);width:42px;height:42px;border-radius:99px;border:0;background:#fff;color:var(--fv-ink);font-size:2.2rem;line-height:1;box-shadow:0 4px 14px rgba(0,0,0,.15);cursor:pointer;z-index:1}
+.fv-marq__btn--prev{left:-8px}.fv-marq__btn--next{right:-8px}
+@media (max-width:600px){.fv-marq .fv-cat{width:150px}.fv-marq__track{gap:12px}.fv-cat__name{font-size:1.4rem}.fv-marq__btn{display:none}}
