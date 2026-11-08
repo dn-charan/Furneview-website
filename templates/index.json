@@ -478,9 +478,14 @@
       "settings": {
         "limit": 50
       }
+    },
+    "poster": {
+      "type": "fv-poster",
+      "settings": {}
     }
   },
   "order": [
+    "poster",
     "promo",
     "trust",
     "browser",
