@@ -296,6 +296,12 @@
         document.documentElement.classList.add('shopify-design-mode');
       }
     </script>
+    <style id="fv-font">
+      :root{--font-body-family:"Times New Roman",Times,"Liberation Serif",serif;--font-heading-family:"Times New Roman",Times,"Liberation Serif",serif;--font-body-weight:400;--font-heading-weight:700}
+      body,button,input,select,textarea,.fv{font-family:var(--font-body-family)}
+      h1,h2,h3,h4,.h0,.h1,.h2,.h3,.h4,.h5{font-family:var(--font-heading-family);font-weight:700;letter-spacing:0}
+      .fv{--fv-display:"Times New Roman",Times,"Liberation Serif",serif}
+    </style>
   </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">

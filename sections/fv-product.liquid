@@ -14,13 +14,60 @@
   assign current = product.selected_or_first_available_variant
   assign std_count = 0
   assign prem_count = 0
-  for block in section.blocks
-    if block.settings.tier == 'premium'
-      assign prem_count = prem_count | plus: 1
-    else
-      assign std_count = std_count | plus: 1
-    endif
-  endfor
+  assign fab_total = 0
+-%}
+{%- assign fab_json = '[]' -%}
+{%- assign fab_series_std = '' -%}
+{%- assign fab_series_prem = '' -%}
+{%- if shop.metaobjects.fabric.values.size > 0 -%}
+  {%- paginate shop.metaobjects.fabric.values by 250 -%}
+  {%- capture fab_swatches -%}
+    {%- for f in shop.metaobjects.fabric.values -%}
+      {%- liquid
+        assign tier = f.tier.value | downcase
+        if tier == 'premium'
+          assign prem_count = prem_count | plus: 1
+          unless fab_series_prem contains f.series.value
+            assign fab_series_prem = fab_series_prem | append: f.series.value | append: '|'
+          endunless
+        else
+          assign std_count = std_count | plus: 1
+          unless fab_series_std contains f.series.value
+            assign fab_series_std = fab_series_std | append: f.series.value | append: '|'
+          endunless
+        endif
+        assign fab_total = fab_total | plus: 1
+      -%}
+      <button type="button" class="fv-sw" data-fab="{{ forloop.index0 }}" data-tier="{{ tier }}" data-series="{{ f.series.value | escape }}"{% if tier == 'premium' %} hidden{% endif %}>
+        {%- if f.is_new.value -%}<span class="fv-sw__new" title="New">✦</span>{%- endif -%}
+        <span class="fv-dot" style="--c:{{ f.color.value }}"></span>{{ f.name.value }}
+      </button>
+    {%- endfor -%}
+  {%- endcapture -%}
+  {%- capture fab_json -%}[{%- for f in shop.metaobjects.fabric.values -%}{"name": {{ f.name.value | json }}, "code": {{ f.code.value | json }}, "color": {{ f.color.value | append: '' | json }}, "tier": {{ f.tier.value | downcase | json }}}{% unless forloop.last %},{% endunless %}{%- endfor -%}]{%- endcapture -%}
+  {%- endpaginate -%}
+{%- else -%}
+  {%- capture fab_swatches -%}
+    {%- for block in section.blocks -%}
+      {%- liquid
+        if block.settings.tier == 'premium'
+          assign prem_count = prem_count | plus: 1
+        else
+          assign std_count = std_count | plus: 1
+        endif
+        assign fab_total = fab_total | plus: 1
+      -%}
+      <button type="button" class="fv-sw" data-fab="{{ forloop.index0 }}" data-tier="{{ block.settings.tier }}" {{ block.shopify_attributes }}{% if block.settings.tier == 'premium' %} hidden{% endif %}>
+        {%- if block.settings.is_new -%}<span class="fv-sw__new" title="New">✦</span>{%- endif -%}
+        <span class="fv-dot" style="--c:{{ block.settings.color }}"></span>{{ block.settings.name }}
+      </button>
+    {%- endfor -%}
+  {%- endcapture -%}
+  {%- capture fab_json -%}[{%- for block in section.blocks -%}{"name": {{ block.settings.name | json }}, "code": {{ block.settings.code | json }}, "color": {{ block.settings.color | json }}, "tier": {{ block.settings.tier | json }}}{% unless forloop.last %},{% endunless %}{%- endfor -%}]{%- endcapture -%}
+{%- endif -%}
+{%- liquid
+  assign fab_series_std = fab_series_std | split: '|'
+  assign fab_series_prem = fab_series_prem | split: '|'
 -%}
 <section class="fv" id="fvp-{{ section.id }}" style="padding-block:24px 40px">
   <div class="page-width">
@@ -134,7 +181,7 @@
         <div class="fvp__price">
           <div class="fvp__price-top">
             <div><small>Your price</small><div class="fvp__price-num" data-price>{{ current.price | money_without_trailing_zeros }}</div></div>
-            {%- if section.blocks.size > 0 -%}<span class="fvp__tier" data-tier-badge>Standard fabric</span>{%- endif -%}
+            {%- if fab_total > 0 -%}<span class="fvp__tier" data-tier-badge>Standard fabric</span>{%- endif -%}
           </div>
           <div class="fvp__rows" data-rows {% unless current.compare_at_price > current.price %}hidden{% endunless %}>
             <div><span>MRP</span><s data-mrp>{{ current.compare_at_price | money_without_trailing_zeros }}</s></div>
@@ -150,6 +197,18 @@
           <button type="button" class="fv-btn fv-btn--dark" data-buy>Buy now</button>
         </div>
         <p class="fvp__msg" data-msg role="status"></p>
+        <a class="fv-btn fvp__visit" href="{{ section.settings.visit_link | default: '/#fv-visit' }}">Schedule your store visit</a>
+
+        {%- if section.settings.pin_prefixes != blank -%}
+        <div class="fvp__pin">
+          <b>Delivery &amp; assembly details</b>
+          <form class="fvp__pinrow" data-pin>
+            <input id="fvp-pin-{{ section.id }}" inputmode="numeric" maxlength="6" pattern="[0-9]{6}" placeholder="Pincode" aria-label="Pincode" autocomplete="postal-code">
+            <button type="submit" class="fv-btn fvp__pinbtn">Check</button>
+          </form>
+          <span class="fvp__pinmsg" data-pin-msg>Enter your pincode to see delivery and assembly details.</span>
+        </div>
+        {%- endif -%}
 
         {%- if range -%}
         <div class="fvp__section">
@@ -180,10 +239,10 @@
         </div>
         {%- endif -%}
 
-        {%- if section.blocks.size > 0 -%}
+        {%- if fab_total > 0 -%}
         <div class="fvp__section">
           <span class="fv-step">{% if range %}Step 2 · {% endif %}Choose fabric colour</span>
-          <h2>{{ section.blocks.size }} fabrics · selected: <span data-fab-name></span></h2>
+          <h2>{{ fab_total }} fabrics · selected: <span data-fab-name></span></h2>
           <div class="fvp__fabbox">
             <div class="fvp__fabhead">
               <div class="fvp__fabtabs">
@@ -191,21 +250,39 @@
                 {%- if prem_count > 0 -%}<button type="button" class="fvp__fabtab is-premium" data-tier="premium">Premium · {{ prem_count }} fabrics</button>{%- endif -%}
               </div>
             </div>
-            <div class="fvp__swatches" data-swatches>
-              {%- for block in section.blocks -%}
-                <button type="button" class="fv-sw" data-fab="{{ forloop.index0 }}" data-tier="{{ block.settings.tier }}" {{ block.shopify_attributes }}{% if block.settings.tier == 'premium' %} hidden{% endif %}>
-                  {%- if block.settings.is_new -%}<span class="fv-sw__new" title="New">✦</span>{%- endif -%}
-                  <span class="fv-dot" style="--c:{{ block.settings.color }}"></span>{{ block.settings.name }}
-                </button>
-              {%- endfor -%}
-            </div>
+            {%- if fab_series_std.size > 1 or fab_series_prem.size > 1 -%}
+              <div class="fv-pills fvp__series" data-series-pills>
+                <button type="button" class="fv-pill is-on" data-ser="">All</button>
+                {%- for x in fab_series_std -%}{%- if x != blank -%}<button type="button" class="fv-pill" data-ser="{{ x | escape }}" data-ser-tier="standard">{{ x }}</button>{%- endif -%}{%- endfor -%}
+                {%- for x in fab_series_prem -%}{%- if x != blank -%}<button type="button" class="fv-pill" data-ser="{{ x | escape }}" data-ser-tier="premium" hidden>{{ x }}</button>{%- endif -%}{%- endfor -%}
+              </div>
+            {%- endif -%}
+            <div class="fvp__swatches" data-swatches>{{ fab_swatches }}</div>
+            <button type="button" class="fv-pill fvp__more" data-more hidden>Show all fabrics</button>
           </div>
         </div>
         {%- endif -%}
 
         {%- if product.description != blank -%}
-          <div class="fvp__section"><span class="fv-step">About this design</span><div class="fvp__desc rte">{{ product.description }}</div></div>
+          <div class="fvp__desc rte">{{ product.description }}</div>
         {%- endif -%}
+
+        <div class="fvp__acc">
+          {%- if L or D or H -%}
+            <details><summary>Dimensions</summary><div class="fvp__accb">
+              <table class="fvp__dimt"><tr><td>Length (L)</td><td>{{ L }}"{% if L %} ({{ L | times: 2.54 | round }} cm){% endif %}</td></tr><tr><td>Depth (B)</td><td>{{ D }}"{% if D %} ({{ D | times: 2.54 | round }} cm){% endif %}</td></tr><tr><td>Height (H)</td><td>{{ H }}"{% if H %} ({{ H | times: 2.54 | round }} cm){% endif %}</td></tr></table>
+            </div></details>
+          {%- endif -%}
+          {%- assign feats = product.metafields.custom.features.value -%}
+          {%- if feats != blank -%}
+            <details><summary>Salient features</summary><div class="fvp__accb"><ul>{%- assign lines = feats | newline_to_br | split: '<br />' -%}{%- for l in lines -%}{%- assign t = l | strip -%}{%- if t != blank -%}<li>{{ t }}</li>{%- endif -%}{%- endfor -%}</ul></div></details>
+          {%- endif -%}
+          {%- assign w = product.metafields.custom.warranty.value | default: section.settings.warranty -%}
+          {%- if w != blank -%}<details><summary>Warranty</summary><div class="fvp__accb rte">{{ w }}</div></details>{%- endif -%}
+          {%- if section.settings.care != blank -%}<details><summary>Maintenance guide</summary><div class="fvp__accb rte">{{ section.settings.care }}</div></details>{%- endif -%}
+          {%- if section.settings.shipping != blank -%}<details><summary>Shipping &amp; return</summary><div class="fvp__accb rte">{{ section.settings.shipping }}</div></details>{%- endif -%}
+        </div>
+        {%- if section.settings.disclaimer != blank -%}<p class="fvp__note">{{ section.settings.disclaimer }}</p>{%- endif -%}
       </div>
     </div>
   </div>
@@ -214,7 +291,7 @@
 <script type="application/json" data-fvp-data>
 {
   "product": {{ product | json }},
-  "fabrics": [{%- for block in section.blocks -%}{"name": {{ block.settings.name | json }}, "code": {{ block.settings.code | json }}, "color": {{ block.settings.color | json }}, "tier": {{ block.settings.tier | json }}}{% unless forloop.last %},{% endunless %}{%- endfor -%}],
+  "fabrics": {{ fab_json }},
   "dims": {"L": {{ L | default: 0 | json }}, "D": {{ D | default: 0 | json }}, "H": {{ H | default: 0 | json }}, "person": {{ section.settings.person_height | json }}},
   "cutout": {% if cutout %}{{ cutout | image_url: width: 1200 | json }}{% elsif product.featured_image %}{{ product.featured_image | image_url: width: 1200 | json }}{% else %}null{% endif %},
   "hasCutout": {% if cutout %}true{% else %}false{% endif %},
@@ -306,9 +383,22 @@
   }
   root.addEventListener('click',function(e){
     var s=e.target.closest('[data-fab]'); if(s) setFab(+s.dataset.fab);
-    var t=e.target.closest('.fvp__fabtab'); if(t){$$('.fvp__fabtab').forEach(function(x){x.classList.toggle('is-on',x===t)});
-      $$('[data-fab]').forEach(function(b){b.hidden=b.dataset.tier!==t.dataset.tier});}
+    var t=e.target.closest('.fvp__fabtab'); if(t){$$('.fvp__fabtab').forEach(function(x){x.classList.toggle('is-on',x===t)}); fv.tier=t.dataset.tier; fv.ser=''; fv.all=false; filterFab();}
+    var sp=e.target.closest('[data-ser]'); if(sp){ fv.ser=sp.dataset.ser; fv.all=false; filterFab(); }
+    if(e.target.closest('[data-more]')){ fv.all=!fv.all; filterFab(); }
   });
+  var fv={tier:'standard',ser:'',all:false}, LIMIT=24;
+  function filterFab(){
+    var shown=0, total=0;
+    $$('[data-fab]').forEach(function(b){
+      var ok=b.dataset.tier===fv.tier&&(!fv.ser||b.dataset.series===fv.ser);
+      if(ok){ total++; ok=fv.all||fv.ser||total<=LIMIT||b.classList.contains('is-on'); }
+      b.hidden=!ok; if(ok) shown++;
+    });
+    $$('[data-ser]').forEach(function(p){ p.hidden=!!p.dataset.serTier&&p.dataset.serTier!==fv.tier; p.classList.toggle('is-on',p.dataset.ser===fv.ser); });
+    var more=$('[data-more]'); if(more){ var extra=!fv.ser&&total>LIMIT; more.hidden=!extra; more.textContent=fv.all?'Show fewer fabrics':'Show all '+total+' fabrics'; }
+  }
+  filterFab();
   if(fabrics.length) setFab(0); else { var chip=$('[data-fab-chip]'); if(chip) chip.hidden=true; pick(); }
 
   /* design pills */
@@ -331,6 +421,15 @@
   }
   $('[data-add]').onclick=function(){add('cart')};
   $('[data-buy]').onclick=function(){add('checkout')};
+
+  /* pincode check */
+  var pf=$('[data-pin]');
+  if(pf){ var pre={{ section.settings.pin_prefixes | split: ',' | json }}.map(function(x){return x.trim()}).filter(Boolean);
+    pf.addEventListener('submit',function(e){ e.preventDefault(); var v=pf.querySelector('input').value.trim(), m=$('[data-pin-msg]');
+      if(!/^[0-9]{6}$/.test(v)){ m.className='fvp__pinmsg is-err'; m.textContent='Enter a valid 6-digit pincode.'; return; }
+      var ok=pre.some(function(x){return v.indexOf(x)===0});
+      m.className='fvp__pinmsg'+(ok?' is-ok':'');
+      m.textContent=ok?{{ section.settings.pin_ok | json }}:{{ section.settings.pin_other | json }}; }); }
 
   /* see it in your room */
   var room=$('[data-room]'); if(!room) return;
@@ -359,6 +458,16 @@
   "class": "fv-product-section",
   "settings": [
     { "type": "checkbox", "id": "room_tool", "label": "Show \"In your room\" tool", "default": true, "info": "Works best when the product has a cut-out photo (transparent PNG) in the metafield custom.room_cutout." },
+    { "type": "url", "id": "visit_link", "label": "Store visit button link", "info": "Leave empty to open the store visit form on the homepage." },
+    { "type": "header", "content": "Delivery check" },
+    { "type": "text", "id": "pin_prefixes", "label": "Pincodes with standard delivery (starting digits, comma separated)", "default": "560,561,562", "info": "Leave empty to hide the pincode check." },
+    { "type": "text", "id": "pin_ok", "label": "Message for those pincodes", "default": "Free delivery and assembly. Usually delivered in 7 to 10 days." },
+    { "type": "text", "id": "pin_other", "label": "Message for other pincodes", "default": "We deliver here on request. Our team will call you to confirm the delivery date and charges." },
+    { "type": "header", "content": "Product information tabs" },
+    { "type": "richtext", "id": "warranty", "label": "Warranty (default)", "default": "<p>1-year warranty against manufacturing defects. Lifetime termite warranty on solid wood frames. Warranty does not cover normal wear and tear, misuse, or damage from moisture or direct sunlight.</p>" },
+    { "type": "richtext", "id": "care", "label": "Maintenance guide", "default": "<ul><li>Vacuum or brush the upholstery weekly to remove dust.</li><li>Blot spills straight away with a clean, dry cloth. Do not rub.</li><li>Keep away from direct sunlight and heat to prevent fading.</li><li>Wipe wooden parts with a soft dry cloth. Avoid water and harsh cleaners.</li><li>Rotate and fluff cushions regularly to keep their shape.</li></ul>" },
+    { "type": "richtext", "id": "shipping", "label": "Shipping & return", "default": "<p>Free delivery and assembly in Bengaluru. Made-to-order and customised pieces are prepared before dispatch; our team will confirm your delivery date by phone.</p><p>Please inspect your furniture at delivery. Report any damage within 48 hours with photos and we will repair or replace it. Customised products cannot be returned.</p>" },
+    { "type": "text", "id": "disclaimer", "label": "Note under the tabs", "default": "*Images are for representation purposes only. Actual finish and colour may differ slightly." },
     { "type": "range", "id": "person_height", "label": "Person height in size guide (inches)", "min": 60, "max": 74, "step": 1, "default": 67 },
     { "type": "paragraph", "content": "Dimensions come from product metafields custom.length, custom.depth and custom.height (inches). Seater filters come from product tags like \"1 Seater\" or \"L-Shape\". To change price by fabric, give the product an option named \"Fabric tier\" with values Standard and Premium." }
   ],
