@@ -1,6 +1,13 @@
 {{ 'furneview.css' | asset_url | stylesheet_tag }}
 <section class="fv" style="padding-block:20px">
-  <div class="page-width fv-stats2">
+  {%- liquid
+  assign has_band = false
+  if section.settings.stat1_number != blank or section.settings.stat2_number != blank or section.settings.seal_top != blank
+    assign has_band = true
+  endif
+-%}
+  <div class="page-width fv-stats2{% unless has_band %} fv-stats2--solo{% endunless %}">
+    {%- if has_band -%}
     <div class="fv-stats2__band">
       {%- for i in (1..2) -%}
         {%- liquid
@@ -21,6 +28,7 @@
         <div class="fv-seal"><div class="fv-seal__star">{{ section.settings.seal_top }}</div><span class="fv-seal__label">{{ section.settings.seal_bottom }}</span></div>
       {%- endif -%}
     </div>
+    {%- endif -%}
     <div class="fv-benefits">
       {%- for block in section.blocks -%}
         <div class="fv-benefit" {{ block.shopify_attributes }}>

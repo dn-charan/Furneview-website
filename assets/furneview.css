@@ -335,3 +335,6 @@
 .fvp__series::-webkit-scrollbar{display:none}
 .fvp__fabtabs{flex-wrap:wrap}
 .fvp__fabtab{white-space:nowrap;font-size:1.3rem;padding:7px 12px}
+.fv-stats2--solo{grid-template-columns:1fr}
+.fv-stats2--solo .fv-benefits{grid-template-columns:repeat(4,1fr)}
+@media (max-width:760px){.fv-stats2--solo .fv-benefits{grid-template-columns:1fr 1fr}}

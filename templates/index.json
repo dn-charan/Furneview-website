@@ -451,7 +451,11 @@
     },
     "trust": {
       "type": "fv-stats",
-      "settings": {},
+      "settings": {
+        "stat1_number": "",
+        "stat2_number": "",
+        "seal_top": ""
+      },
       "blocks": {
         "b0": {
           "type": "benefit",
