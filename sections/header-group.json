@@ -38,10 +38,85 @@
         "padding_top": 20,
         "padding_bottom": 20
       }
+    },
+    "catalog": {
+      "type": "fv-catalog",
+      "settings": {
+        "mobile_label": "Shop by category",
+        "bg": "#FBF5EA"
+      },
+      "blocks": {
+        "c0": {
+          "type": "category",
+          "settings": {
+            "title": "Sofa & Recliners",
+            "tag": "sofas",
+            "groups": "Sofa Sets: Fabric Sofas, L-Shape Sofas, Leather Sofas, 3 Seater Sofas, 2 Seater Sofas, 1 Seater Sofas, Wooden Sofa Sets\nSofa Cum Beds: Fabric Sofa Cum Beds, Wooden Sofa Cum Beds\nRecliners: 1 Seater Recliners, 2 Seater Recliners, 3 Seater Recliners"
+          }
+        },
+        "c1": {
+          "type": "category",
+          "settings": {
+            "title": "Beds",
+            "tag": "beds",
+            "groups": "Beds: King Size Beds, Queen Size Beds, Single Beds, Upholstered Beds\nStorage Beds: Hydraulic Storage Beds, Box Storage Beds, Drawer Beds, Non Storage Beds\nMattresses: Memory Foam Mattresses, Orthopaedic Mattresses"
+          }
+        },
+        "c2": {
+          "type": "category",
+          "settings": {
+            "title": "Dining",
+            "tag": "dining",
+            "groups": "Dining Sets: 6 Seater Dining Sets, 4 Seater Dining Sets, 8 Seater Dining Sets\nDining Tables: Marble Dining Tables, Wooden Dining Tables\nDining Seating: Dining Chairs, Dining Benches\nDining Storage: Sideboards, Crockery Units, Bar Cabinets"
+          }
+        },
+        "c3": {
+          "type": "category",
+          "settings": {
+            "title": "Chairs",
+            "tag": "chairs",
+            "groups": "Living Chairs: Wing Chairs, Accent Chairs, Lounge Chairs, Rocking Chairs\nWork Chairs: Office Chairs, Study Chairs\nOther Seating: Benches, Ottomans & Pouffes"
+          }
+        },
+        "c4": {
+          "type": "category",
+          "settings": {
+            "title": "Living",
+            "tag": "living",
+            "groups": "Living Storage: TV Units, Shoe Racks, Bookshelves, Cabinets & Sideboards, Display Units, Chest of Drawers\nTables: Coffee Tables, Console Tables, Nesting Tables, Side Tables\nPooja: Home Temples"
+          }
+        },
+        "c5": {
+          "type": "category",
+          "settings": {
+            "title": "Bedroom",
+            "tag": "bedroom",
+            "groups": "Wardrobes: 2 Door Wardrobes, 3 Door Wardrobes, Sliding Wardrobes\nBedroom Tables: Bedside Tables, Dressing Tables\nStudy & Office: Study Tables, Office Tables"
+          }
+        },
+        "c6": {
+          "type": "category",
+          "settings": {
+            "title": "New Launch",
+            "tag": "new-launch",
+            "groups": ""
+          }
+        }
+      },
+      "block_order": [
+        "c0",
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6"
+      ]
     }
   },
   "order": [
     "announcement-bar",
-    "header"
+    "header",
+    "catalog"
   ]
 }

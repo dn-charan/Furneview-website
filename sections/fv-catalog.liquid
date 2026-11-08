@@ -1,0 +1,147 @@
+{%- comment -%}
+  Catalog menu. Each item links to /collections/all/<tag>, which lists every product carrying that tag,
+  so no collections need to be created. Write a group per line: "Group: Item, Item, Item".
+  To point an item at a different tag, write "Item = tag".
+{%- endcomment -%}
+{%- liquid
+  assign base = routes.all_products_collection_url
+-%}
+<style>
+  .fvc{background:var(--fvc-bg,#FBF5EA);border-bottom:1px solid #E8DCCB;position:relative;z-index:3;font-family:var(--font-body-family)}
+  .fvc a{color:#1E1A17;text-decoration:none}
+  .fvc__bar{display:flex;gap:4px;justify-content:center;flex-wrap:wrap}
+  .fvc__top{position:static}
+  .fvc__top > a{display:block;padding:14px 16px;font-size:1.5rem;font-weight:600;border-bottom:2px solid transparent}
+  .fvc__top:hover > a,.fvc__top:focus-within > a{border-color:#F25A0B;color:#C9470A}
+  .fvc__panel{position:absolute;left:0;right:0;top:100%;background:#fff;box-shadow:0 18px 40px rgba(30,26,23,.12);border-top:1px solid #E8DCCB;padding:26px 0 30px;opacity:0;visibility:hidden;transition:opacity .15s}
+  .fvc__top:hover .fvc__panel,.fvc__top:focus-within .fvc__panel{opacity:1;visibility:visible}
+  .fvc__cols{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:24px 32px}
+  .fvc__cols h4{margin:0 0 10px;font-size:1.4rem;letter-spacing:.06em;text-transform:uppercase}
+  .fvc__cols h4 a{color:#C9470A}
+  .fvc__cols ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+  .fvc__cols li a{font-size:1.5rem;color:#4A433D}
+  .fvc__cols li a:hover{color:#C9470A;text-decoration:underline}
+  .fvc__all{display:inline-block;margin-top:18px;font-weight:700;color:#C9470A!important;font-size:1.4rem}
+  .fvc__mobile{display:none}
+  @media (max-width:989px){
+    .fvc__bar{display:none}
+    .fvc__mobile{display:block}
+    .fvc__mobile > details > summary{list-style:none;display:flex;justify-content:space-between;align-items:center;padding:14px 0;font-weight:700;font-size:1.6rem;cursor:pointer}
+    .fvc details summary::-webkit-details-marker{display:none}
+    .fvc__m1 > details{border-top:1px solid #E8DCCB}
+    .fvc__m1 summary,.fvc__m2 summary{list-style:none;display:flex;justify-content:space-between;align-items:center;padding:14px 4px;font-size:1.6rem;cursor:pointer}
+    .fvc__m2{padding-left:8px}
+    .fvc__m2 > details{border-top:1px solid #F0E7DA}
+    .fvc__m2 details[open] > summary{background:#F4F1EC}
+    .fvc__m3{list-style:none;margin:0;padding:4px 0 10px 32px;display:grid;gap:4px}
+    .fvc__m3 a{display:block;padding:9px 0;font-size:1.5rem}
+    .fvc__chev{transition:transform .2s;flex:none}
+    details[open] > summary .fvc__chev{transform:rotate(180deg)}
+    .fvc__leaf{display:block;padding:14px 4px;font-size:1.6rem;border-top:1px solid #E8DCCB}
+  }
+</style>
+{%- capture chev -%}<svg class="fvc__chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>{%- endcapture -%}
+<nav class="fvc" aria-label="Product categories" style="--fvc-bg:{{ section.settings.bg }}">
+  <div class="page-width">
+    <ul class="fvc__bar" role="list" style="list-style:none;margin:0;padding:0">
+      {%- for block in section.blocks -%}
+        {%- assign cat_tag = block.settings.tag | default: block.settings.title | handleize -%}
+        <li class="fvc__top" {{ block.shopify_attributes }}>
+          <a href="{{ block.settings.link | default: base | append: '' }}{% if block.settings.link == blank %}/{{ cat_tag }}{% endif %}">{{ block.settings.title }}</a>
+          {%- assign lines = block.settings.groups | newline_to_br | split: '<br />' -%}
+          {%- if block.settings.groups != blank -%}
+          <div class="fvc__panel"><div class="page-width">
+            <div class="fvc__cols">
+              {%- for line in lines -%}
+                {%- assign ln = line | strip -%}
+                {%- if ln == blank -%}{%- continue -%}{%- endif -%}
+                {%- assign parts = ln | split: ':' -%}
+                {%- assign gname = parts[0] | strip -%}
+                <div>
+                  <h4><a href="{{ base }}/{{ gname | handleize }}">{{ gname }}</a></h4>
+                  {%- if parts.size > 1 -%}
+                  <ul>
+                    {%- assign items = parts[1] | split: ',' -%}
+                    {%- for it in items -%}
+                      {%- assign kv = it | split: '=' -%}
+                      {%- assign iname = kv[0] | strip -%}
+                      {%- if iname == blank -%}{%- continue -%}{%- endif -%}
+                      {%- if kv.size > 1 -%}{%- assign itag = kv[1] | strip | handleize -%}{%- else -%}{%- assign itag = iname | handleize -%}{%- endif -%}
+                      <li><a href="{{ base }}/{{ itag }}">{{ iname }}</a></li>
+                    {%- endfor -%}
+                  </ul>
+                  {%- endif -%}
+                </div>
+              {%- endfor -%}
+            </div>
+            <a class="fvc__all" href="{{ base }}/{{ cat_tag }}">View all {{ block.settings.title }} →</a>
+          </div></div>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+
+    <div class="fvc__mobile">
+      <details>
+        <summary>{{ section.settings.mobile_label }} {{ chev }}</summary>
+        <div class="fvc__m1">
+          {%- for block in section.blocks -%}
+            {%- assign cat_tag = block.settings.tag | default: block.settings.title | handleize -%}
+            {%- if block.settings.groups == blank -%}
+              <a class="fvc__leaf" href="{{ base }}/{{ cat_tag }}">{{ block.settings.title }}</a>
+            {%- else -%}
+            <details>
+              <summary>{{ block.settings.title }} {{ chev }}</summary>
+              <div class="fvc__m2">
+                {%- assign lines = block.settings.groups | newline_to_br | split: '<br />' -%}
+                {%- for line in lines -%}
+                  {%- assign ln = line | strip -%}
+                  {%- if ln == blank -%}{%- continue -%}{%- endif -%}
+                  {%- assign parts = ln | split: ':' -%}
+                  {%- assign gname = parts[0] | strip -%}
+                  <details>
+                    <summary>{{ gname }} {{ chev }}</summary>
+                    <ul class="fvc__m3">
+                      <li><a href="{{ base }}/{{ gname | handleize }}">All {{ gname }}</a></li>
+                      {%- if parts.size > 1 -%}
+                        {%- assign items = parts[1] | split: ',' -%}
+                        {%- for it in items -%}
+                          {%- assign kv = it | split: '=' -%}
+                          {%- assign iname = kv[0] | strip -%}
+                          {%- if iname == blank -%}{%- continue -%}{%- endif -%}
+                          {%- if kv.size > 1 -%}{%- assign itag = kv[1] | strip | handleize -%}{%- else -%}{%- assign itag = iname | handleize -%}{%- endif -%}
+                          <li><a href="{{ base }}/{{ itag }}">{{ iname }}</a></li>
+                        {%- endfor -%}
+                      {%- endif -%}
+                    </ul>
+                  </details>
+                {%- endfor -%}
+              </div>
+            </details>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </details>
+    </div>
+  </div>
+</nav>
+{% schema %}
+{
+  "name": "Furneview catalog menu",
+  "tag": "div",
+  "class": "fvc-section",
+  "settings": [
+    { "type": "text", "id": "mobile_label", "label": "Phone menu button", "default": "Shop by category" },
+    { "type": "color", "id": "bg", "label": "Background", "default": "#FBF5EA" },
+    { "type": "paragraph", "content": "Each item shows products with a matching tag. Example: the item \"Fabric Sofas\" lists products tagged Fabric Sofas. Write one group per line as  Group: Item, Item, Item" }
+  ],
+  "max_blocks": 12,
+  "blocks": [{ "type": "category", "name": "Category", "settings": [
+    { "type": "text", "id": "title", "label": "Category name", "default": "Sofas" },
+    { "type": "text", "id": "tag", "label": "Product tag for \"View all\"", "info": "Leave empty to use the category name." },
+    { "type": "url", "id": "link", "label": "Category link (optional)", "info": "Leave empty to show all products with the category tag." },
+    { "type": "textarea", "id": "groups", "label": "Sub-categories", "default": "Sofa Sets: Fabric Sofas, L-Shape Sofas, Leather Sofas" }
+  ]}],
+  "presets": [{ "name": "Furneview catalog menu" }]
+}
+{% endschema %}
