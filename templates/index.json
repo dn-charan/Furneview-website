@@ -285,8 +285,7 @@
       "settings": {
         "eyebrow": "Get the look",
         "heading": "Shop by room"
-      },
-      "disabled": true
+      }
     },
     "offers": {
       "type": "fv-offers",
