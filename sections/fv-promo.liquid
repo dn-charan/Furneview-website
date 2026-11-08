@@ -1,0 +1,89 @@
+{{ 'furneview.css' | asset_url | stylesheet_tag }}
+<section class="fv" style="padding-block:20px 12px">
+  <div class="page-width">
+    {%- if section.settings.show_live -%}
+      <div class="fv-live" role="status">
+        <span class="fv-live__tag"><i></i>LIVE</span>
+        {%- if section.settings.ends != blank -%}
+          <span class="fv-live__time" data-fv-ends="{{ section.settings.ends }}">Ends in …</span>
+        {%- endif -%}
+        <div class="fv-live__msgs"><div class="fv-live__track">
+          {%- for block in section.blocks -%}<span>✦ {{ block.settings.heading | strip_html }}</span>{%- endfor -%}
+        </div></div>
+      </div>
+    {%- endif -%}
+
+    <div class="fv-promo" id="fv-promo-{{ section.id }}">
+      {%- if section.blocks.size > 1 -%}<span class="fv-promo__count"><span data-n>1</span> / {{ section.blocks.size }}</span>{%- endif -%}
+      {%- for block in section.blocks -%}
+        <div class="fv-slide{% if forloop.first %} is-on{% endif %}" {{ block.shopify_attributes }}>
+          <div>
+            {%- if block.settings.tag != blank -%}<span class="fv-slide__tag">{{ block.settings.tag }}</span>{%- endif -%}
+            <h2>{{ block.settings.heading }}</h2>
+            {%- if block.settings.text != blank -%}<p>{{ block.settings.text }}</p>{%- endif -%}
+            {%- if block.settings.button != blank -%}
+              <a class="fv-btn fv-btn--light" href="{{ block.settings.link | default: routes.all_products_collection_url }}">{{ block.settings.button }} →</a>
+            {%- endif -%}
+          </div>
+          <div class="fv-slide__media">
+            {%- if block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', sizes: '(min-width: 760px) 40vw, 90vw' }}
+            {%- else -%}
+              {% render 'fv-art', name: block.settings.art %}
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endfor -%}
+      {%- if section.blocks.size > 1 -%}
+        <button class="fv-promo__nav fv-promo__nav--prev" type="button" data-dir="-1" aria-label="Previous offer">‹</button>
+        <button class="fv-promo__nav fv-promo__nav--next" type="button" data-dir="1" aria-label="Next offer">›</button>
+        <div class="fv-promo__dots">{%- for block in section.blocks -%}<button type="button" data-i="{{ forloop.index0 }}" aria-label="Offer {{ forloop.index }}"{% if forloop.first %} class="is-on"{% endif %}></button>{%- endfor -%}</div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+<script>
+(function(){
+  var root=document.getElementById('fv-promo-{{ section.id }}'); if(!root) return;
+  var slides=root.querySelectorAll('.fv-slide'), dots=root.querySelectorAll('.fv-promo__dots button'), n=root.querySelector('[data-n]'), i=0, timer;
+  function go(k){ if(!slides.length) return; i=(k+slides.length)%slides.length;
+    slides.forEach(function(s,j){s.classList.toggle('is-on',j===i)}); dots.forEach(function(d,j){d.classList.toggle('is-on',j===i)}); if(n) n.textContent=i+1; }
+  function auto(){ clearInterval(timer); if(slides.length>1 && !matchMedia('(prefers-reduced-motion: reduce)').matches) timer=setInterval(function(){go(i+1)},{{ section.settings.speed | times: 1000 }}); }
+  root.addEventListener('click',function(e){var b=e.target.closest('[data-dir]'),d=e.target.closest('[data-i]'); if(b){go(i+ +b.dataset.dir);auto()} if(d){go(+d.dataset.i);auto()}});
+  auto();
+  document.querySelectorAll('[data-fv-ends]').forEach(function(el){
+    var end=new Date(el.dataset.fvEnds+'T23:59:59+05:30');
+    function t(){var s=Math.max(0,Math.floor((end-new Date())/1000)),d=Math.floor(s/86400);s%=86400;var h=Math.floor(s/3600);s%=3600;var m=Math.floor(s/60);s%=60;
+      el.textContent=s+m+h+d===0?'Offer ended':'Ends in '+d+'d '+h+'h '+m+'m '+s+'s';}
+    t(); setInterval(t,1000);
+  });
+})();
+</script>
+{% schema %}
+{
+  "name": "Furneview offer slider",
+  "tag": "div",
+  "settings": [
+    { "type": "checkbox", "id": "show_live", "label": "Show LIVE offer strip", "default": true },
+    { "type": "text", "id": "ends", "label": "Offer end date (YYYY-MM-DD)", "default": "2026-11-30", "info": "Shows a live countdown. Leave empty to hide it." },
+    { "type": "range", "id": "speed", "label": "Seconds per slide", "min": 3, "max": 12, "step": 1, "default": 6 }
+  ],
+  "max_blocks": 15,
+  "blocks": [{ "type": "slide", "name": "Offer slide", "settings": [
+    { "type": "text", "id": "tag", "label": "Small tag", "default": "Festive offer" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Flat 15% off on sofas" },
+    { "type": "text", "id": "text", "label": "Text", "default": "Choose any design and fabric. Free delivery and installation." },
+    { "type": "text", "id": "button", "label": "Button label", "default": "Shop now" },
+    { "type": "url", "id": "link", "label": "Button link" },
+    { "type": "image_picker", "id": "image", "label": "Product photo (recommended)" },
+    { "type": "select", "id": "art", "label": "Illustration (if no photo)", "default": "sofa", "options": [
+      {"value":"sofa","label":"Sofa"},{"value":"bed","label":"Bed"},{"value":"mattress","label":"Mattress"},{"value":"dining","label":"Dining"},
+      {"value":"wardrobe","label":"Wardrobe"},{"value":"recliner","label":"Recliner"},{"value":"tv","label":"TV unit"},{"value":"study","label":"Study"}]}
+  ]}],
+  "presets": [{ "name": "Furneview offer slider", "blocks": [
+    { "type": "slide", "settings": { "tag": "Festive offer", "heading": "Flat 15% off on fabric sofas", "text": "Pick from 100+ fabrics. Free delivery and installation in Bengaluru.", "art": "sofa" } },
+    { "type": "slide", "settings": { "tag": "Bed + mattress", "heading": "Extra 20% off a mattress with any storage bed", "text": "Hydraulic and box storage beds in solid wood.", "art": "bed" } },
+    { "type": "slide", "settings": { "tag": "New in", "heading": "Solid sheesham dining sets", "text": "4, 6 and 8 seaters, ready to deliver.", "art": "dining" } }
+  ]}]
+}
+{% endschema %}

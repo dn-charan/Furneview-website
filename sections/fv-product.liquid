@@ -1,0 +1,334 @@
+{{ 'furneview.css' | asset_url | stylesheet_tag }}
+{%- liquid
+  assign L = product.metafields.custom.length.value
+  assign D = product.metafields.custom.depth.value
+  assign H = product.metafields.custom.height.value
+  assign cutout = product.metafields.custom.room_cutout.value
+  assign range = nil
+  for c in product.collections
+    if c.handle != 'all' and c.handle != 'frontpage' and c.products_count > 1
+      assign range = c
+      break
+    endif
+  endfor
+  assign current = product.selected_or_first_available_variant
+  assign std_count = 0
+  assign prem_count = 0
+  for block in section.blocks
+    if block.settings.tier == 'premium'
+      assign prem_count = prem_count | plus: 1
+    else
+      assign std_count = std_count | plus: 1
+    endif
+  endfor
+-%}
+<section class="fv" id="fvp-{{ section.id }}" style="padding-block:24px 40px">
+  <div class="page-width">
+    <a class="fvp__back" href="{% if range %}{{ range.url }}{% else %}{{ routes.all_products_collection_url }}{% endif %}">← {% if range %}All {{ range.title }}{% else %}All products{% endif %}</a>
+    <div class="fvp" style="margin-top:16px">
+      <!-- LEFT: views -->
+      <div class="fvp__left">
+        <div class="fvp__stage">
+          <div class="fvp__tabs" role="tablist">
+            <button type="button" class="fvp__tab is-on" data-view="photos" role="tab">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg>Photos</button>
+            {%- if H -%}<button type="button" class="fvp__tab" data-view="size" role="tab">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 20 20 4M7 17l2 2M10 14l2 2M13 11l2 2M16 8l2 2"/></svg>Size guide</button>{%- endif -%}
+            {%- if section.settings.room_tool -%}<button type="button" class="fvp__tab" data-view="room" role="tab">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 11 12 4l9 7v9H3z"/><path d="M9 20v-6h6v6"/></svg>In your room</button>{%- endif -%}
+            <span class="fvp__tab" data-fab-chip style="cursor:default"><span class="fv-dot" data-fab-dot style="width:20px;height:20px"></span><span data-fab-label></span></span>
+          </div>
+
+          <div data-pane="photos">
+            <div class="fvp__view" data-main>
+              {%- if product.featured_media -%}
+                {{ product.featured_media | image_url: width: 1400 | image_tag: sizes: '(min-width: 990px) 55vw, 100vw', alt: product.title, loading: 'eager' }}
+              {%- else -%}{{ 'product-1' | placeholder_svg_tag }}{%- endif -%}
+            </div>
+            {%- if product.media.size > 1 -%}
+              <div class="fvp__thumbs">
+                {%- for m in product.media -%}{%- if m.media_type == 'image' -%}
+                  <button type="button" class="fvp__thumb{% if forloop.first %} is-on{% endif %}" data-src="{{ m | image_url: width: 1400 }}" aria-label="{{ m.alt | default: 'Photo' | escape }}">
+                    {{ m | image_url: width: 200 | image_tag: loading: 'lazy', alt: '' }}
+                    {%- if m.alt != blank and m.alt.size < 14 -%}<span>{{ m.alt }}</span>{%- endif -%}
+                  </button>
+                {%- endif -%}{%- endfor -%}
+              </div>
+            {%- endif -%}
+          </div>
+
+          {%- if H -%}
+          <div data-pane="size" hidden>
+            <div class="fvp__view" style="background:linear-gradient(180deg,#fff,#F1EAE0)">
+              <svg class="fvp__size" viewBox="0 0 400 400" data-size-svg role="img" aria-label="Size compared with a 5 foot 7 inch person"></svg>
+            </div>
+          </div>
+          {%- endif -%}
+
+          {%- if section.settings.room_tool -%}
+          <div data-pane="room" hidden>
+            <div class="fvp__view" data-room style="cursor:default;touch-action:none">
+              <label data-room-empty style="display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;padding:24px;border:2px dashed var(--fv-line);border-radius:16px;margin:16px;cursor:pointer">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--fv-orange-deep)" stroke-width="2" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></svg>
+                <b style="font-family:var(--fv-display);font-size:2.4rem">Upload a photo of your room</b>
+                <span style="color:var(--fv-muted);font-size:1.4rem">Then drag and resize the {{ product.title | escape }} to see how it fits. Your photo stays on your device.</span>
+                <input type="file" accept="image/*" data-room-file hidden>
+              </label>
+              <canvas data-room-canvas hidden style="width:100%;height:100%;object-fit:contain"></canvas>
+            </div>
+            <div data-room-tools hidden style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;align-items:center">
+              <label class="fv-pill" style="gap:8px">Size <input type="range" min="10" max="90" value="45" data-room-scale aria-label="Sofa size"></label>
+              <button type="button" class="fv-pill" data-room-flip>Flip</button>
+              <button type="button" class="fv-pill" data-room-save>Save picture</button>
+              <label class="fv-pill" style="cursor:pointer">New photo<input type="file" accept="image/*" data-room-file hidden></label>
+            </div>
+          </div>
+          {%- endif -%}
+        </div>
+
+        {%- if L and D and H -%}
+        <div class="fvp__card">
+          <div class="fvp__dims">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 17 17 3l4 4L7 21z"/><path d="m7 13 2 2M10 10l2 2M13 7l2 2"/></svg>
+            <div><b>Dimensions (inches)</b><br>Length (L) <b>{{ L }}"</b> · Depth (B) <b>{{ D }}"</b> · Height (H) <b>{{ H }}"</b></div>
+          </div>
+        </div>
+        {%- endif -%}
+      </div>
+
+      <!-- RIGHT: details -->
+      <div class="fvp__right">
+        <div>
+          {%- if product.type != blank -%}<span class="fv-step">{{ product.type }}</span>{%- endif -%}
+          <h1>{{ product.title }}</h1>
+        </div>
+
+        <div class="fvp__price">
+          <div class="fvp__price-top">
+            <div><small>Your price</small><div class="fvp__price-num" data-price>{{ current.price | money_without_trailing_zeros }}</div></div>
+            {%- if section.blocks.size > 0 -%}<span class="fvp__tier" data-tier-badge>Standard fabric</span>{%- endif -%}
+          </div>
+          <div class="fvp__rows" data-rows {% unless current.compare_at_price > current.price %}hidden{% endunless %}>
+            <div><span>MRP</span><s data-mrp>{{ current.compare_at_price | money_without_trailing_zeros }}</s></div>
+            <div><span>You save</span><span class="fvp__save" data-save></span></div>
+          </div>
+        </div>
+
+        <div data-options></div>
+
+        <div class="fvp__buy">
+          <div class="fvp__qty"><button type="button" data-qty="-1" aria-label="Decrease quantity">−</button><input value="1" inputmode="numeric" data-qty-input aria-label="Quantity"><button type="button" data-qty="1" aria-label="Increase quantity">+</button></div>
+          <button type="button" class="fv-btn fv-btn--orange" data-add>Add to cart</button>
+          <button type="button" class="fv-btn fv-btn--dark" data-buy>Buy now</button>
+        </div>
+        <p class="fvp__msg" data-msg role="status"></p>
+
+        {%- if range -%}
+        <div class="fvp__section">
+          <span class="fv-step">Step 1 · Choose design</span>
+          <h2>{{ range.title }} · {{ range.products_count }} designs</h2>
+          <div class="fv-pills" data-design-pills></div>
+          <div class="fvp__designs" data-designs>
+            {%- for p in range.products limit: 24 -%}
+              {%- liquid
+                assign seat = ''
+                for t in p.tags
+                  assign tl = t | downcase
+                  if tl contains 'seater' or tl contains 'l-shape' or tl contains 'sofa cum bed' or tl contains 'sofa set'
+                    assign seat = t
+                    break
+                  endif
+                endfor
+              -%}
+              <a class="fvp__design{% if p.id == product.id %} is-on{% endif %}" href="{{ p.url }}" data-type="{{ seat | escape }}">
+                {%- if p.featured_image -%}{{ p.featured_image | image_url: width: 500 | image_tag: loading: 'lazy', alt: '' }}{%- endif -%}
+                {%- if seat != blank -%}<small>{{ seat }}</small>{%- endif -%}
+                <span>{{ p.title }}</span>
+                {%- if p.metafields.custom.length.value -%}<em>{{ p.metafields.custom.length.value }}" × {{ p.metafields.custom.depth.value }}" × {{ p.metafields.custom.height.value }}"</em>{%- endif -%}
+                <b>{{ p.price_min | money_without_trailing_zeros }}</b>
+              </a>
+            {%- endfor -%}
+          </div>
+        </div>
+        {%- endif -%}
+
+        {%- if section.blocks.size > 0 -%}
+        <div class="fvp__section">
+          <span class="fv-step">{% if range %}Step 2 · {% endif %}Choose fabric colour</span>
+          <h2>{{ section.blocks.size }} fabrics · selected: <span data-fab-name></span></h2>
+          <div class="fvp__fabbox">
+            <div class="fvp__fabhead">
+              <div class="fvp__fabtabs">
+                <button type="button" class="fvp__fabtab is-on" data-tier="standard">Standard · {{ std_count }} fabrics</button>
+                {%- if prem_count > 0 -%}<button type="button" class="fvp__fabtab is-premium" data-tier="premium">Premium · {{ prem_count }} fabrics</button>{%- endif -%}
+              </div>
+            </div>
+            <div class="fvp__swatches" data-swatches>
+              {%- for block in section.blocks -%}
+                <button type="button" class="fv-sw" data-fab="{{ forloop.index0 }}" data-tier="{{ block.settings.tier }}" {{ block.shopify_attributes }}{% if block.settings.tier == 'premium' %} hidden{% endif %}>
+                  {%- if block.settings.is_new -%}<span class="fv-sw__new" title="New">✦</span>{%- endif -%}
+                  <span class="fv-dot" style="--c:{{ block.settings.color }}"></span>{{ block.settings.name }}
+                </button>
+              {%- endfor -%}
+            </div>
+          </div>
+        </div>
+        {%- endif -%}
+
+        {%- if product.description != blank -%}
+          <div class="fvp__section"><span class="fv-step">About this design</span><div class="fvp__desc rte">{{ product.description }}</div></div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script type="application/json" data-fvp-data>
+{
+  "product": {{ product | json }},
+  "fabrics": [{%- for block in section.blocks -%}{"name": {{ block.settings.name | json }}, "code": {{ block.settings.code | json }}, "color": {{ block.settings.color | json }}, "tier": {{ block.settings.tier | json }}}{% unless forloop.last %},{% endunless %}{%- endfor -%}],
+  "dims": {"L": {{ L | default: 0 | json }}, "D": {{ D | default: 0 | json }}, "H": {{ H | default: 0 | json }}, "person": {{ section.settings.person_height | json }}},
+  "cutout": {% if cutout %}{{ cutout | image_url: width: 1200 | json }}{% elsif product.featured_image %}{{ product.featured_image | image_url: width: 1200 | json }}{% else %}null{% endif %},
+  "hasCutout": {% if cutout %}true{% else %}false{% endif %},
+  "currency": {{ cart.currency.iso_code | json }},
+  "cartAdd": {{ routes.cart_add_url | json }},
+  "cartUrl": {{ routes.cart_url | json }},
+  "recent": {"url": {{ product.url | json }}, "title": {{ product.title | json }}, "img": {% if product.featured_image %}{{ product.featured_image | image_url: width: 500 | json }}{% else %}""{% endif %}, "price": {{ product.price_min | money_without_trailing_zeros | json }}}
+}
+</script>
+<script>
+(function(){
+  var root=document.getElementById('fvp-{{ section.id }}'); if(!root) return;
+  var data=JSON.parse(root.nextElementSibling.textContent), P=data.product, $=function(s){return root.querySelector(s)}, $$=function(s){return [].slice.call(root.querySelectorAll(s))};
+  var fmt=function(c){try{return new Intl.NumberFormat('en-IN',{style:'currency',currency:data.currency||'INR',maximumFractionDigits:0}).format(c/100)}catch(e){return '₹'+Math.round(c/100).toLocaleString('en-IN')}};
+
+  /* recently viewed */
+  try{var r=JSON.parse(localStorage.getItem('fv_recent')||'[]').filter(function(x){return x.url!==data.recent.url});r.unshift(data.recent);localStorage.setItem('fv_recent',JSON.stringify(r.slice(0,8)))}catch(e){}
+
+  /* views */
+  $$('[data-view]').forEach(function(t){t.onclick=function(){
+    $$('[data-view]').forEach(function(x){x.classList.toggle('is-on',x===t)});
+    $$('[data-pane]').forEach(function(p){p.hidden=p.dataset.pane!==t.dataset.view});
+    if(t.dataset.view==='room') drawRoom();
+  }});
+  $$('.fvp__thumb').forEach(function(b){b.onclick=function(){
+    $$('.fvp__thumb').forEach(function(x){x.classList.toggle('is-on',x===b)});
+    var img=$('[data-main] img'); if(img){img.srcset='';img.src=b.dataset.src}
+  }});
+
+  /* size guide */
+  var svg=$('[data-size-svg]');
+  if(svg&&data.dims.H){
+    var d=data.dims, maxH=Math.max(d.person,d.H), s=300/maxH, base=360, ph=d.person*s, w=Math.min(220,(d.L||d.H)*s), h=d.H*s, x=170;
+    svg.innerHTML=
+      '<g fill="#9C958D"><circle cx="70" cy="'+(base-ph+ph*0.07)+'" r="'+(ph*0.065)+'"/><rect x="'+(70-ph*0.11)+'" y="'+(base-ph+ph*0.15)+'" width="'+(ph*0.22)+'" height="'+(ph*0.42)+'" rx="10"/><rect x="'+(70-ph*0.1)+'" y="'+(base-ph*0.45)+'" width="'+(ph*0.085)+'" height="'+(ph*0.45)+'" rx="6"/><rect x="'+(70+ph*0.015)+'" y="'+(base-ph*0.45)+'" width="'+(ph*0.085)+'" height="'+(ph*0.45)+'" rx="6"/></g>'+
+      '<rect x="'+x+'" y="'+(base-h)+'" width="'+w+'" height="'+h+'" rx="14" fill="#4A4C52"/><rect x="'+(x+10)+'" y="'+(base-h*0.5)+'" width="'+(w-20)+'" height="'+(h*0.3)+'" rx="8" fill="#5A5D63"/>'+
+      '<line x1="0" x2="400" y1="'+base+'" y2="'+base+'" stroke="#D8CDBE" stroke-width="2"/>'+
+      '<line x1="'+(x+w+14)+'" x2="'+(x+w+14)+'" y1="'+(base-h)+'" y2="'+base+'" stroke="#1E1A17" stroke-dasharray="4 4"/>'+
+      lbl(70,base-ph-14,Math.floor(d.person/12)+'′'+(d.person%12)+'″ ('+d.person+' in)')+
+      lbl(Math.min(330,x+w+14),base-h/2,'H '+d.H+' in')+
+      (d.L?lbl(x+w/2,base+22,'L '+d.L+' in'):'')+(d.D?lbl(x+w/2,base-h-16,'Depth '+d.D+' in'):'');
+  }
+  function lbl(cx,cy,t){var tw=t.length*7+18;return '<g><rect x="'+(cx-tw/2)+'" y="'+(cy-13)+'" width="'+tw+'" height="26" rx="13" fill="#fff" stroke="#E8DCCB"/><text x="'+cx+'" y="'+(cy+5)+'" text-anchor="middle" fill="#1E1A17">'+t+'</text></g>'}
+
+  /* fabrics + variants */
+  var fabrics=data.fabrics||[], fi=0;
+  var tierIdx=-1; (P.options||[]).forEach(function(o,i){var n=(o.name||o).toString().toLowerCase(); if(n.indexOf('fabric')>-1||n.indexOf('tier')>-1) tierIdx=i;});
+  var cur=P.variants.find(function(v){return v.available})||P.variants[0], chosen=(cur.options||[]).slice();
+  var optWrap=$('[data-options]');
+  (P.options||[]).forEach(function(o,i){
+    if(i===tierIdx) return; var name=o.name||o, vals=[];
+    P.variants.forEach(function(v){if(vals.indexOf(v.options[i])<0)vals.push(v.options[i])});
+    if(vals.length<2) return;
+    var g=document.createElement('div'); g.className='fvp__section'; g.style.gap='10px';
+    g.innerHTML='<span class="fv-step">'+name+'</span><div class="fv-pills">'+vals.map(function(v){return '<button type="button" class="fv-pill'+(v===chosen[i]?' is-on':'')+'" data-opt="'+i+'" data-val="'+v.replace(/"/g,'&quot;')+'">'+v+'</button>'}).join('')+'</div>';
+    optWrap.appendChild(g);
+  });
+  optWrap.addEventListener('click',function(e){var b=e.target.closest('[data-opt]');if(!b)return;chosen[+b.dataset.opt]=b.dataset.val;
+    $$('[data-opt="'+b.dataset.opt+'"]').forEach(function(x){x.classList.toggle('is-on',x===b)});pick()});
+  function pick(){
+    if(tierIdx>-1&&fabrics[fi]){
+      var want=fabrics[fi].tier, vals=[]; P.variants.forEach(function(v){if(vals.indexOf(v.options[tierIdx])<0)vals.push(v.options[tierIdx])});
+      chosen[tierIdx]=vals.find(function(v){return v.toLowerCase().indexOf(want)>-1})||chosen[tierIdx];
+    }
+    cur=P.variants.find(function(v){return v.options.every(function(o,i){return o===chosen[i]})})||cur;
+    $('[data-price]').textContent=fmt(cur.price);
+    var rows=$('[data-rows]'); if(cur.compare_at_price>cur.price){rows.hidden=false;$('[data-mrp]').textContent=fmt(cur.compare_at_price);$('[data-save]').textContent=fmt(cur.compare_at_price-cur.price)+' ('+Math.round((1-cur.price/cur.compare_at_price)*100)+'%)'}else rows.hidden=true;
+    var add=$('[data-add]'),buy=$('[data-buy]'); add.disabled=buy.disabled=!cur.available; add.textContent=cur.available?'Add to cart':'Sold out';
+  }
+  function setFab(i){
+    fi=i; var f=fabrics[i]; if(!f) return;
+    $$('[data-fab]').forEach(function(b){b.classList.toggle('is-on',+b.dataset.fab===i)});
+    var dot=$('[data-fab-dot]'); if(dot) dot.style.setProperty('--c',f.color);
+    var lab=$('[data-fab-label]'); if(lab) lab.textContent=f.code+' · '+f.name;
+    var nm=$('[data-fab-name]'); if(nm) nm.textContent=f.name;
+    var tb=$('[data-tier-badge]'); if(tb){tb.textContent=(f.tier==='premium'?'Premium':'Standard')+' fabric';tb.classList.toggle('fvp__tier--premium',f.tier==='premium')}
+    pick();
+  }
+  root.addEventListener('click',function(e){
+    var s=e.target.closest('[data-fab]'); if(s) setFab(+s.dataset.fab);
+    var t=e.target.closest('.fvp__fabtab'); if(t){$$('.fvp__fabtab').forEach(function(x){x.classList.toggle('is-on',x===t)});
+      $$('[data-fab]').forEach(function(b){b.hidden=b.dataset.tier!==t.dataset.tier});}
+  });
+  if(fabrics.length) setFab(0); else { var chip=$('[data-fab-chip]'); if(chip) chip.hidden=true; pick(); }
+
+  /* design pills */
+  var designs=$$('.fvp__design'), dp=$('[data-design-pills]');
+  if(dp&&designs.length){var m={};designs.forEach(function(d){var t=d.dataset.type;if(t)m[t]=(m[t]||0)+1});var ks=Object.keys(m);
+    if(ks.length){dp.innerHTML='<button type="button" class="fv-pill is-on" data-dt="">All designs <span>('+designs.length+')</span></button>'+ks.map(function(k){return '<button type="button" class="fv-pill" data-dt="'+k+'">'+k+' <span>('+m[k]+')</span></button>'}).join('');
+      dp.onclick=function(e){var b=e.target.closest('[data-dt]');if(!b)return;$$('[data-dt]').forEach(function(x){x.classList.toggle('is-on',x===b)});designs.forEach(function(d){d.hidden=b.dataset.dt&&d.dataset.type!==b.dataset.dt})};}}
+
+  /* quantity + cart */
+  var qi=$('[data-qty-input]');
+  $$('[data-qty]').forEach(function(b){b.onclick=function(){qi.value=Math.max(1,(parseInt(qi.value,10)||1)+ +b.dataset.qty)}});
+  function add(then){
+    var msg=$('[data-msg]'); msg.className='fvp__msg'; msg.textContent='Adding…';
+    var props={}; if(fabrics[fi]) props['Fabric']=fabrics[fi].code+' · '+fabrics[fi].name;
+    fetch(data.cartAdd+'.js',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify({items:[{id:cur.id,quantity:Math.max(1,parseInt(qi.value,10)||1),properties:props}]})})
+    .then(function(r){return r.json().then(function(j){if(!r.ok)throw new Error(j.description||'Could not add to cart');return j})})
+    .then(function(){ if(then==='checkout') location.href='/checkout'; else location.href=data.cartUrl; })
+    .catch(function(err){msg.className='fvp__msg is-err';msg.textContent=err.message});
+  }
+  $('[data-add]').onclick=function(){add('cart')};
+  $('[data-buy]').onclick=function(){add('checkout')};
+
+  /* see it in your room */
+  var room=$('[data-room]'); if(!room) return;
+  var cv=$('[data-room-canvas]'), ctx=cv.getContext('2d'), bg=null, fg=new Image(), pos={x:.5,y:.75,s:.45,flip:false}, drag=null;
+  fg.crossOrigin='anonymous'; if(data.cutout) fg.src=data.cutout; fg.onload=drawRoom;
+  $$('[data-room-file]').forEach(function(inp){inp.onchange=function(){var f=inp.files[0];if(!f)return;var u=URL.createObjectURL(f),im=new Image();
+    im.onload=function(){bg=im;cv.width=Math.min(1600,im.naturalWidth);cv.height=Math.round(cv.width*im.naturalHeight/im.naturalWidth);
+      $('[data-room-empty]').hidden=true;cv.hidden=false;$('[data-room-tools]').hidden=false;room.style.aspectRatio=cv.width+'/'+cv.height;drawRoom()};im.src=u}});
+  function box(){var w=cv.width*pos.s,h=fg.naturalWidth?w*fg.naturalHeight/fg.naturalWidth:w*.6;return{w:w,h:h,x:pos.x*cv.width-w/2,y:pos.y*cv.height-h/2}}
+  function drawRoom(){ if(!bg) return; ctx.clearRect(0,0,cv.width,cv.height); ctx.drawImage(bg,0,0,cv.width,cv.height);
+    if(fg.complete&&fg.naturalWidth){var b=box();ctx.save();ctx.shadowColor='rgba(0,0,0,.35)';ctx.shadowBlur=30;ctx.shadowOffsetY=12;
+      if(pos.flip){ctx.translate(b.x+b.w,b.y);ctx.scale(-1,1);ctx.drawImage(fg,0,0,b.w,b.h)}else ctx.drawImage(fg,b.x,b.y,b.w,b.h);ctx.restore()}}
+  function pt(e){var r=cv.getBoundingClientRect();return{x:(e.clientX-r.left)/r.width,y:(e.clientY-r.top)/r.height}}
+  cv.addEventListener('pointerdown',function(e){var p=pt(e);drag={dx:p.x-pos.x,dy:p.y-pos.y};cv.setPointerCapture(e.pointerId)});
+  cv.addEventListener('pointermove',function(e){if(!drag)return;var p=pt(e);pos.x=p.x-drag.dx;pos.y=p.y-drag.dy;drawRoom()});
+  cv.addEventListener('pointerup',function(){drag=null});
+  $('[data-room-scale]').oninput=function(e){pos.s=e.target.value/100;drawRoom()};
+  $('[data-room-flip]').onclick=function(){pos.flip=!pos.flip;drawRoom()};
+  $('[data-room-save]').onclick=function(){try{var a=document.createElement('a');a.download='furneview-room.jpg';a.href=cv.toDataURL('image/jpeg',.9);a.click()}catch(e){$('[data-msg]').textContent='Saving isn\'t available for this photo. Take a screenshot instead.'}};
+})();
+</script>
+{% schema %}
+{
+  "name": "Furneview product",
+  "tag": "div",
+  "class": "fv-product-section",
+  "settings": [
+    { "type": "checkbox", "id": "room_tool", "label": "Show \"In your room\" tool", "default": true, "info": "Works best when the product has a cut-out photo (transparent PNG) in the metafield custom.room_cutout." },
+    { "type": "range", "id": "person_height", "label": "Person height in size guide (inches)", "min": 60, "max": 74, "step": 1, "default": 67 },
+    { "type": "paragraph", "content": "Dimensions come from product metafields custom.length, custom.depth and custom.height (inches). Seater filters come from product tags like \"1 Seater\" or \"L-Shape\". To change price by fabric, give the product an option named \"Fabric tier\" with values Standard and Premium." }
+  ],
+  "blocks": [{ "type": "fabric", "name": "Fabric", "settings": [
+    { "type": "text", "id": "name", "label": "Fabric name", "default": "Graphite Grey" },
+    { "type": "text", "id": "code", "label": "Fabric code", "default": "FB-001" },
+    { "type": "color", "id": "color", "label": "Swatch colour", "default": "#46494F" },
+    { "type": "select", "id": "tier", "label": "Tier", "default": "standard", "options": [{"value":"standard","label":"Standard"},{"value":"premium","label":"Premium"}] },
+    { "type": "checkbox", "id": "is_new", "label": "Mark as new", "default": false }
+  ]}]
+}
+{% endschema %}

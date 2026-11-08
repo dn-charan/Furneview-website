@@ -1,0 +1,65 @@
+{{ 'furneview.css' | asset_url | stylesheet_tag }}
+<section class="fv" style="padding-block:20px">
+  <div class="page-width fv-stats2">
+    <div class="fv-stats2__band">
+      {%- for i in (1..2) -%}
+        {%- liquid
+          assign kn = 'stat' | append: i | append: '_number'
+          assign kl = 'stat' | append: i | append: '_label'
+        -%}
+        {%- if section.settings[kn] != blank -%}
+          <div class="fv-stat2">
+            <span class="fv-stat2__ic" aria-hidden="true">
+              {%- if i == 1 -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><circle cx="9" cy="10" r=".8" fill="currentColor"/><circle cx="15" cy="10" r=".8" fill="currentColor"/></svg>
+              {%- else -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 11V8a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v3"/><path d="M3 13a2 2 0 0 1 4 0v2h10v-2a2 2 0 0 1 4 0v4H3z"/><path d="M5 17v2M19 17v2"/></svg>{%- endif -%}
+            </span>
+            <div><b>{{ section.settings[kn] }}</b><span>{{ section.settings[kl] }}</span></div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+      {%- if section.settings.seal_top != blank -%}
+        <div class="fv-seal"><div class="fv-seal__star">{{ section.settings.seal_top }}</div><span class="fv-seal__label">{{ section.settings.seal_bottom }}</span></div>
+      {%- endif -%}
+    </div>
+    <div class="fv-benefits">
+      {%- for block in section.blocks -%}
+        <div class="fv-benefit" {{ block.shopify_attributes }}>
+          {%- case block.settings.icon -%}
+            {%- when 'truck' -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h11v10H3zM14 9h4l3 3v4h-7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>
+            {%- when 'box' -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3 3 7.5v9L12 21l9-4.5v-9z"/><path d="M3 7.5 12 12l9-4.5M12 12v9"/></svg>
+            {%- when 'tag' -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.5"/></svg>
+            {%- else -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3 5 6v6c0 4.5 3 7.5 7 9 4-1.5 7-4.5 7-9V6z"/><path d="m9 12 2 2 4-4"/></svg>
+          {%- endcase -%}
+          <b>{{ block.settings.title }}</b><span>{{ block.settings.text }}</span>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Furneview trust band",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "stat1_number", "label": "Number 1", "default": "25,000+" },
+    { "type": "text", "id": "stat1_label", "label": "Label 1", "default": "Happy customers" },
+    { "type": "text", "id": "stat2_number", "label": "Number 2", "default": "10,000+" },
+    { "type": "text", "id": "stat2_label", "label": "Label 2", "default": "Sofa and fabric combinations" },
+    { "type": "text", "id": "seal_top", "label": "Badge text", "default": "LIFETIME TERMITE", "info": "Leave empty to hide the badge." },
+    { "type": "text", "id": "seal_bottom", "label": "Badge label", "default": "WARRANTY ON WOOD" }
+  ],
+  "max_blocks": 4,
+  "blocks": [{ "type": "benefit", "name": "Benefit", "settings": [
+    { "type": "select", "id": "icon", "label": "Icon", "default": "truck", "options": [
+      {"value":"truck","label":"Delivery"},{"value":"box","label":"Returns"},{"value":"tag","label":"Price"},{"value":"shield","label":"Warranty"}]},
+    { "type": "text", "id": "title", "label": "Title", "default": "Free shipping" },
+    { "type": "text", "id": "text", "label": "Text", "default": "On all orders over ₹10,000" }
+  ]}],
+  "presets": [{ "name": "Furneview trust band", "blocks": [
+    {"type":"benefit","settings":{"icon":"truck","title":"Free shipping","text":"On all orders over ₹10,000"}},
+    {"type":"benefit","settings":{"icon":"box","title":"7-day easy returns","text":"No questions asked"}},
+    {"type":"benefit","settings":{"icon":"tag","title":"Best price guarantee","text":"Factory-direct pricing"}},
+    {"type":"benefit","settings":{"icon":"shield","title":"Up to 5-year warranty","text":"Peace of mind, guaranteed"}}
+  ]}]
+}
+{% endschema %}

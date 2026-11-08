@@ -26,7 +26,8 @@
         "tile2_title": "Book a free store visit",
         "tile2_link_label": "Pick a slot",
         "tile2_link": ""
-      }
+      },
+      "disabled": true
     },
     "usps": {
       "type": "fv-usps",
@@ -70,7 +71,8 @@
         "u2",
         "u3"
       ],
-      "settings": {}
+      "settings": {},
+      "disabled": true
     },
     "categories": {
       "type": "fv-categories",
@@ -217,7 +219,8 @@
         "swipe_on_mobile": true,
         "padding_top": 36,
         "padding_bottom": 36
-      }
+      },
+      "disabled": true
     },
     "rooms": {
       "type": "fv-rooms",
@@ -380,16 +383,114 @@
         "bulk_button": "Request a quote",
         "bulk_link": ""
       }
+    },
+    "promo": {
+      "type": "fv-promo",
+      "settings": {
+        "show_live": true,
+        "ends": "2026-11-30",
+        "speed": 6
+      },
+      "blocks": {
+        "s0": {
+          "type": "slide",
+          "settings": {
+            "tag": "Festive offer",
+            "heading": "Flat 15% off on fabric sofas",
+            "text": "Pick from 36 fabrics. Free delivery and installation in Bengaluru.",
+            "button": "Shop now",
+            "art": "sofa"
+          }
+        },
+        "s1": {
+          "type": "slide",
+          "settings": {
+            "tag": "Bed + mattress",
+            "heading": "Extra 20% off a mattress with any storage bed",
+            "text": "Hydraulic and box storage beds in solid wood.",
+            "button": "Shop now",
+            "art": "bed"
+          }
+        },
+        "s2": {
+          "type": "slide",
+          "settings": {
+            "tag": "New in",
+            "heading": "Solid sheesham dining sets",
+            "text": "4, 6 and 8 seaters, ready to deliver.",
+            "button": "Shop now",
+            "art": "dining"
+          }
+        }
+      },
+      "block_order": [
+        "s0",
+        "s1",
+        "s2"
+      ]
+    },
+    "trust": {
+      "type": "fv-stats",
+      "settings": {},
+      "blocks": {
+        "b0": {
+          "type": "benefit",
+          "settings": {
+            "icon": "truck",
+            "title": "Free shipping",
+            "text": "On all orders over ₹10,000"
+          }
+        },
+        "b1": {
+          "type": "benefit",
+          "settings": {
+            "icon": "box",
+            "title": "7-day easy returns",
+            "text": "No questions asked"
+          }
+        },
+        "b2": {
+          "type": "benefit",
+          "settings": {
+            "icon": "tag",
+            "title": "Best price guarantee",
+            "text": "Factory-direct pricing"
+          }
+        },
+        "b3": {
+          "type": "benefit",
+          "settings": {
+            "icon": "shield",
+            "title": "Up to 5-year warranty",
+            "text": "Peace of mind, guaranteed"
+          }
+        }
+      },
+      "block_order": [
+        "b0",
+        "b1",
+        "b2",
+        "b3"
+      ]
+    },
+    "browser": {
+      "type": "fv-browser",
+      "settings": {
+        "limit": 50
+      }
     }
   },
   "order": [
-    "hero",
-    "usps",
+    "promo",
+    "trust",
+    "browser",
     "categories",
-    "bestsellers",
     "rooms",
     "offers",
     "why",
-    "stores"
+    "stores",
+    "hero",
+    "usps",
+    "bestsellers"
   ]
 }

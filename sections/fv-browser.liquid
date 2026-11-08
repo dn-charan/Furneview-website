@@ -1,0 +1,123 @@
+{{ 'furneview.css' | asset_url | stylesheet_tag }}
+{%- liquid
+  assign src = section.settings.collection
+  if src == blank
+    assign src = collections.all
+  endif
+  assign shown = section.settings.limit
+-%}
+<section class="fv" id="fv-browser-{{ section.id }}">
+  <div class="page-width">
+    <div data-recent-wrap hidden>
+      <div class="fv-head"><h2>Recently viewed</h2><button type="button" class="fv-pill" data-recent-clear>Clear</button></div>
+      <div class="fv-recent" data-recent></div>
+    </div>
+
+    <div class="fv-head" style="margin-top:20px"><div><span class="fv-eyebrow">{{ section.settings.eyebrow }}</span><h2>{{ section.settings.heading }}</h2></div></div>
+
+    <div class="fv-filter">
+      <label class="fv-search" for="fvq-{{ section.id }}">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="fvq-{{ section.id }}" type="search" placeholder="{{ section.settings.placeholder }}" data-q>
+      </label>
+      <div class="fv-pills" data-cats></div>
+      <div class="fv-filter__row">
+        <div class="fv-pills" data-types></div>
+        <select class="fv-sort" data-sort aria-label="Sort products">
+          <option value="featured">Sort: Featured</option>
+          <option value="low">Price: low to high</option>
+          <option value="high">Price: high to low</option>
+          <option value="az">Name: A to Z</option>
+        </select>
+      </div>
+    </div>
+
+    <p class="fv-count" data-count></p>
+    <div class="fv-pgrid" data-grid>
+      {%- for product in src.products limit: shown -%}
+        {%- liquid
+          assign seat = ''
+          for t in product.tags
+            assign tl = t | downcase
+            if tl contains 'seater' or tl contains 'l-shape' or tl contains 'sofa cum bed' or tl contains 'sofa set' or tl contains 'recliner'
+              assign seat = t
+              break
+            endif
+          endfor
+          assign L = product.metafields.custom.length.value
+          assign D = product.metafields.custom.depth.value
+          assign H = product.metafields.custom.height.value
+        -%}
+        <a class="fv-pcard" href="{{ product.url }}"
+           data-title="{{ product.title | escape }} {{ product.type | escape }} {{ product.tags | join: ' ' | escape }}"
+           data-cat="{{ product.type | escape }}" data-type="{{ seat | escape }}" data-price="{{ product.price }}" data-i="{{ forloop.index0 }}">
+          <div class="fv-pcard__img">
+            {%- if product.featured_image -%}
+              {{ product.featured_image | image_url: width: 800 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 33vw, (min-width: 600px) 50vw, 100vw', alt: product.title }}
+            {%- else -%}{{ 'product-1' | placeholder_svg_tag }}{%- endif -%}
+            {%- if product.type != blank -%}<span class="fv-chip fv-chip--type">{{ product.type }}</span>{%- endif -%}
+            {%- if product.compare_at_price > product.price -%}<span class="fv-chip fv-chip--sale">{{ product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price }}% off</span>{%- endif -%}
+            {%- if L and D and H -%}<span class="fv-chip fv-chip--dim">L {{ L }}" × B {{ D }}" × H {{ H }}"</span>{%- endif -%}
+          </div>
+          <div class="fv-pcard__row">
+            <div><h3>{{ product.title }}</h3>
+              <span class="fv-pcard__meta">{% if seat != blank %}{{ seat }}{% if product.variants.size > 1 %} · {% endif %}{% endif %}{% if product.variants.size > 1 %}{{ product.variants.size }} options{% endif %}</span></div>
+            <div class="fv-pcard__price">{% if product.price_varies %}<small>FROM</small>{% endif %}<b>{{ product.price_min | money_without_trailing_zeros }}</b>{% if product.compare_at_price > product.price %}<s>{{ product.compare_at_price | money_without_trailing_zeros }}</s>{% endif %}</div>
+          </div>
+        </a>
+      {%- else -%}
+        <p class="fv-count">Add products in Shopify admin → Products and they'll appear here.</p>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+<script>
+(function(){
+  var root=document.getElementById('fv-browser-{{ section.id }}'); if(!root) return;
+  var cards=[].slice.call(root.querySelectorAll('.fv-pcard')), grid=root.querySelector('[data-grid]');
+  var st={q:'',cat:'',type:'',sort:'featured'};
+  function count(list,key){var m={};list.forEach(function(c){var v=c.dataset[key];if(v)m[v]=(m[v]||0)+1});return m;}
+  function pills(el,map,key,allLabel){
+    var keys=Object.keys(map).sort(); if(!keys.length){el.hidden=true;return}
+    el.innerHTML='<button type="button" class="fv-pill'+(st[key]===''?' is-on':'')+'" data-k="'+key+'" data-v="">'+allLabel+'</button>'+
+      keys.map(function(k){return '<button type="button" class="fv-pill'+(st[key]===k?' is-on':'')+'" data-k="'+key+'" data-v="'+k.replace(/"/g,'&quot;')+'">'+k+' <span>('+map[k]+')</span></button>'}).join('');
+  }
+  function draw(){
+    var q=st.q.toLowerCase(), vis=cards.filter(function(c){
+      return (!q||c.dataset.title.toLowerCase().indexOf(q)>-1)&&(!st.cat||c.dataset.cat===st.cat)&&(!st.type||c.dataset.type===st.type)});
+    var sorted=vis.slice().sort(function(a,b){
+      if(st.sort==='low')return a.dataset.price-b.dataset.price; if(st.sort==='high')return b.dataset.price-a.dataset.price;
+      if(st.sort==='az')return a.dataset.title.localeCompare(b.dataset.title); return a.dataset.i-b.dataset.i});
+    cards.forEach(function(c){c.hidden=vis.indexOf(c)<0});
+    sorted.forEach(function(c){grid.appendChild(c)});
+    root.querySelector('[data-count]').textContent=vis.length+(vis.length===1?' product':' products');
+    pills(root.querySelector('[data-cats]'),count(cards,'cat'),'cat','All products');
+    pills(root.querySelector('[data-types]'),count(cards.filter(function(c){return !st.cat||c.dataset.cat===st.cat}),'type'),'type','All types');
+  }
+  root.addEventListener('click',function(e){var b=e.target.closest('[data-k]');if(!b)return;st[b.dataset.k]=b.dataset.v;if(b.dataset.k==='cat')st.type='';draw()});
+  root.querySelector('[data-q]').addEventListener('input',function(e){st.q=e.target.value;draw()});
+  root.querySelector('[data-sort]').addEventListener('change',function(e){st.sort=e.target.value;draw()});
+  draw();
+  // recently viewed (saved by the product page)
+  var wrap=root.querySelector('[data-recent-wrap]'), list=[];
+  try{list=JSON.parse(localStorage.getItem('fv_recent')||'[]')}catch(e){}
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  if(list.length){wrap.hidden=false;root.querySelector('[data-recent]').innerHTML=list.map(function(p){
+    return '<a href="'+esc(p.url)+'">'+(p.img?'<img src="'+esc(p.img)+'" alt="" loading="lazy">':'')+'<b>'+esc(p.title)+'</b><span>'+esc(p.price)+'<em>→</em></span></a>'}).join('')}
+  root.querySelector('[data-recent-clear]').onclick=function(){try{localStorage.removeItem('fv_recent')}catch(e){};wrap.hidden=true};
+})();
+</script>
+{% schema %}
+{
+  "name": "Furneview product browser",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Small label", "default": "Shop" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Explore all furniture" },
+    { "type": "text", "id": "placeholder", "label": "Search placeholder", "default": "Search, e.g. L-shape, recliner, king bed" },
+    { "type": "collection", "id": "collection", "label": "Products from", "info": "Leave empty to show all products." },
+    { "type": "range", "id": "limit", "label": "Products to load", "min": 6, "max": 50, "step": 1, "default": 50 }
+  ],
+  "presets": [{ "name": "Furneview product browser" }]
+}
+{% endschema %}

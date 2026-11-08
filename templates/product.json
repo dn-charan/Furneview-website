@@ -1,116 +1,411 @@
 {
   "sections": {
     "main": {
-      "type": "main-product",
+      "type": "fv-product",
+      "settings": {
+        "room_tool": true,
+        "person_height": 67
+      },
       "blocks": {
-        "vendor": {
-          "type": "text",
+        "f0": {
+          "type": "fabric",
           "settings": {
-            "text": "{{ product.vendor }}",
-            "text_style": "uppercase"
+            "name": "Deep Rust",
+            "code": "FB-001",
+            "color": "#8E3B26",
+            "tier": "standard",
+            "is_new": false
           }
         },
-        "title": {
-          "type": "title"
-        },
-        "caption": {
-          "type": "text",
+        "f1": {
+          "type": "fabric",
           "settings": {
-            "text": "{{ product.metafields.descriptors.subtitle.value }}",
-            "text_style": "subtitle"
+            "name": "Golden Brown",
+            "code": "FB-002",
+            "color": "#9C6A1C",
+            "tier": "standard",
+            "is_new": false
           }
         },
-        "price": {
-          "type": "price"
-        },
-        "variant_picker": {
-          "type": "variant_picker",
+        "f2": {
+          "type": "fabric",
           "settings": {
-            "picker_type": "button"
+            "name": "Indigo Blue",
+            "code": "FB-003",
+            "color": "#2C3A8C",
+            "tier": "standard",
+            "is_new": false
           }
         },
-        "quantity_selector": {
-          "type": "quantity_selector"
-        },
-        "buy_buttons": {
-          "type": "buy_buttons",
+        "f3": {
+          "type": "fabric",
           "settings": {
-            "show_dynamic_checkout": true,
-            "show_gift_card_recipient": true
+            "name": "Light Beige",
+            "code": "FB-004",
+            "color": "#D9CDB4",
+            "tier": "standard",
+            "is_new": false
           }
         },
-        "description": {
-          "type": "description"
-        },
-        "collapsible-row-0": {
-          "type": "collapsible_tab",
+        "f4": {
+          "type": "fabric",
           "settings": {
-            "heading": "Materials",
-            "icon": "leather",
-            "content": "",
-            "page": ""
+            "name": "Botanical Green",
+            "code": "FB-005",
+            "color": "#4E7A4C",
+            "tier": "standard",
+            "is_new": false
           }
         },
-        "collapsible-row-1": {
-          "type": "collapsible_tab",
+        "f5": {
+          "type": "fabric",
           "settings": {
-            "heading": "Shipping & Returns",
-            "icon": "truck",
-            "content": "",
-            "page": ""
+            "name": "Camel",
+            "code": "FB-006",
+            "color": "#B98E5E",
+            "tier": "standard",
+            "is_new": false
           }
         },
-        "collapsible-row-2": {
-          "type": "collapsible_tab",
+        "f6": {
+          "type": "fabric",
           "settings": {
-            "heading": "Dimensions",
-            "icon": "ruler",
-            "content": "",
-            "page": ""
+            "name": "Earthen Beige",
+            "code": "FB-007",
+            "color": "#B5A48A",
+            "tier": "standard",
+            "is_new": false
           }
         },
-        "collapsible-row-3": {
-          "type": "collapsible_tab",
+        "f7": {
+          "type": "fabric",
           "settings": {
-            "heading": "Care Instructions",
-            "icon": "heart",
-            "content": "",
-            "page": ""
+            "name": "Aloe Mint",
+            "code": "FB-008",
+            "color": "#8DBFA3",
+            "tier": "standard",
+            "is_new": false
           }
         },
-        "share": {
-          "type": "share",
+        "f8": {
+          "type": "fabric",
           "settings": {
-            "share_label": "Share"
+            "name": "Ash Grey",
+            "code": "FB-009",
+            "color": "#9C9C9C",
+            "tier": "standard",
+            "is_new": false
+          }
+        },
+        "f9": {
+          "type": "fabric",
+          "settings": {
+            "name": "Royal Blue",
+            "code": "FB-010",
+            "color": "#365E9A",
+            "tier": "standard",
+            "is_new": false
+          }
+        },
+        "f10": {
+          "type": "fabric",
+          "settings": {
+            "name": "Bone White",
+            "code": "FB-011",
+            "color": "#DCD6C6",
+            "tier": "standard",
+            "is_new": false
+          }
+        },
+        "f11": {
+          "type": "fabric",
+          "settings": {
+            "name": "Maroon",
+            "code": "FB-012",
+            "color": "#5E1A22",
+            "tier": "standard",
+            "is_new": false
+          }
+        },
+        "f12": {
+          "type": "fabric",
+          "settings": {
+            "name": "Oak Brown",
+            "code": "FB-013",
+            "color": "#8A6A3E",
+            "tier": "standard",
+            "is_new": false
+          }
+        },
+        "f13": {
+          "type": "fabric",
+          "settings": {
+            "name": "Plum Purple",
+            "code": "FB-014",
+            "color": "#5B3477",
+            "tier": "standard",
+            "is_new": false
+          }
+        },
+        "f14": {
+          "type": "fabric",
+          "settings": {
+            "name": "Rust Orange",
+            "code": "FB-015",
+            "color": "#A9481F",
+            "tier": "standard",
+            "is_new": true
+          }
+        },
+        "f15": {
+          "type": "fabric",
+          "settings": {
+            "name": "Tabasco Red",
+            "code": "FB-016",
+            "color": "#A51E24",
+            "tier": "standard",
+            "is_new": false
+          }
+        },
+        "f16": {
+          "type": "fabric",
+          "settings": {
+            "name": "Denim Blue",
+            "code": "FB-017",
+            "color": "#4E6E97",
+            "tier": "standard",
+            "is_new": false
+          }
+        },
+        "f17": {
+          "type": "fabric",
+          "settings": {
+            "name": "Steel Grey",
+            "code": "FB-018",
+            "color": "#636B74",
+            "tier": "standard",
+            "is_new": false
+          }
+        },
+        "f18": {
+          "type": "fabric",
+          "settings": {
+            "name": "Aqua Blue",
+            "code": "FB-019",
+            "color": "#3EA2B5",
+            "tier": "standard",
+            "is_new": false
+          }
+        },
+        "f19": {
+          "type": "fabric",
+          "settings": {
+            "name": "Forest Green",
+            "code": "FB-020",
+            "color": "#1F5634",
+            "tier": "standard",
+            "is_new": true
+          }
+        },
+        "f20": {
+          "type": "fabric",
+          "settings": {
+            "name": "Graphite Grey",
+            "code": "FB-021",
+            "color": "#46494F",
+            "tier": "standard",
+            "is_new": true
+          }
+        },
+        "f21": {
+          "type": "fabric",
+          "settings": {
+            "name": "Sand Beige",
+            "code": "FB-022",
+            "color": "#C7B48F",
+            "tier": "standard",
+            "is_new": false
+          }
+        },
+        "f22": {
+          "type": "fabric",
+          "settings": {
+            "name": "Walnut Brown",
+            "code": "FB-023",
+            "color": "#4E3226",
+            "tier": "standard",
+            "is_new": false
+          }
+        },
+        "f23": {
+          "type": "fabric",
+          "settings": {
+            "name": "Amber",
+            "code": "FB-024",
+            "color": "#C8891E",
+            "tier": "standard",
+            "is_new": false
+          }
+        },
+        "f24": {
+          "type": "fabric",
+          "settings": {
+            "name": "Velvet Emerald",
+            "code": "FB-025",
+            "color": "#11573F",
+            "tier": "premium",
+            "is_new": true
+          }
+        },
+        "f25": {
+          "type": "fabric",
+          "settings": {
+            "name": "Velvet Navy",
+            "code": "FB-026",
+            "color": "#1B2A4A",
+            "tier": "premium",
+            "is_new": false
+          }
+        },
+        "f26": {
+          "type": "fabric",
+          "settings": {
+            "name": "Velvet Blush",
+            "code": "FB-027",
+            "color": "#C98A8E",
+            "tier": "premium",
+            "is_new": false
+          }
+        },
+        "f27": {
+          "type": "fabric",
+          "settings": {
+            "name": "Velvet Mustard",
+            "code": "FB-028",
+            "color": "#C9A227",
+            "tier": "premium",
+            "is_new": false
+          }
+        },
+        "f28": {
+          "type": "fabric",
+          "settings": {
+            "name": "Boucle Ivory",
+            "code": "FB-029",
+            "color": "#E9E2D2",
+            "tier": "premium",
+            "is_new": true
+          }
+        },
+        "f29": {
+          "type": "fabric",
+          "settings": {
+            "name": "Boucle Oatmeal",
+            "code": "FB-030",
+            "color": "#CDBFA6",
+            "tier": "premium",
+            "is_new": false
+          }
+        },
+        "f30": {
+          "type": "fabric",
+          "settings": {
+            "name": "Chenille Moss",
+            "code": "FB-031",
+            "color": "#6E7A5C",
+            "tier": "premium",
+            "is_new": true
+          }
+        },
+        "f31": {
+          "type": "fabric",
+          "settings": {
+            "name": "Chenille Charcoal",
+            "code": "FB-032",
+            "color": "#33363B",
+            "tier": "premium",
+            "is_new": false
+          }
+        },
+        "f32": {
+          "type": "fabric",
+          "settings": {
+            "name": "Linen Stone",
+            "code": "FB-033",
+            "color": "#A69C8C",
+            "tier": "premium",
+            "is_new": false
+          }
+        },
+        "f33": {
+          "type": "fabric",
+          "settings": {
+            "name": "Linen Sky",
+            "code": "FB-034",
+            "color": "#8FB2CC",
+            "tier": "premium",
+            "is_new": false
+          }
+        },
+        "f34": {
+          "type": "fabric",
+          "settings": {
+            "name": "Leatherette Tan",
+            "code": "FB-035",
+            "color": "#9A5B2E",
+            "tier": "premium",
+            "is_new": false
+          }
+        },
+        "f35": {
+          "type": "fabric",
+          "settings": {
+            "name": "Leatherette Black",
+            "code": "FB-036",
+            "color": "#1E1D1F",
+            "tier": "premium",
+            "is_new": false
           }
         }
       },
       "block_order": [
-        "vendor",
-        "title",
-        "caption",
-        "price",
-        "variant_picker",
-        "quantity_selector",
-        "buy_buttons",
-        "description",
-        "collapsible-row-0",
-        "collapsible-row-1",
-        "collapsible-row-2",
-        "collapsible-row-3",
-        "share"
-      ],
-      "settings": {
-        "enable_sticky_info": true,
-        "gallery_layout": "stacked",
-        "media_size": "large",
-        "constrain_to_viewport": true,
-        "mobile_thumbnails": "hide",
-        "hide_variants": true,
-        "enable_video_looping": false,
-        "padding_top": 36,
-        "padding_bottom": 12
-      }
+        "f0",
+        "f1",
+        "f2",
+        "f3",
+        "f4",
+        "f5",
+        "f6",
+        "f7",
+        "f8",
+        "f9",
+        "f10",
+        "f11",
+        "f12",
+        "f13",
+        "f14",
+        "f15",
+        "f16",
+        "f17",
+        "f18",
+        "f19",
+        "f20",
+        "f21",
+        "f22",
+        "f23",
+        "f24",
+        "f25",
+        "f26",
+        "f27",
+        "f28",
+        "f29",
+        "f30",
+        "f31",
+        "f32",
+        "f33",
+        "f34",
+        "f35"
+      ]
     },
     "image-with-text": {
       "type": "image-with-text",
@@ -125,7 +420,7 @@
         "image-with-text-1": {
           "type": "text",
           "settings": {
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
             "text_style": "body"
           }
         }
@@ -145,7 +440,8 @@
         "mobile_content_alignment": "left",
         "padding_top": 36,
         "padding_bottom": 36
-      }
+      },
+      "disabled": true
     },
     "multicolumn": {
       "type": "multicolumn",
@@ -154,7 +450,7 @@
           "type": "column",
           "settings": {
             "title": "Free Shipping",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
             "link_label": "",
             "link": ""
           }
@@ -163,7 +459,7 @@
           "type": "column",
           "settings": {
             "title": "Hassle-Free Exchanges",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
             "link_label": "",
             "link": ""
           }
@@ -188,7 +484,8 @@
         "columns_mobile": "1",
         "padding_top": 36,
         "padding_bottom": 36
-      }
+      },
+      "disabled": true
     },
     "related-products": {
       "type": "related-products",
