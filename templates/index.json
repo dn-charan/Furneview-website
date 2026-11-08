@@ -481,7 +481,30 @@
     },
     "poster": {
       "type": "fv-poster",
-      "settings": {}
+      "settings": {
+        "ratio": "3/4",
+        "speed": 5
+      },
+      "blocks": {
+        "p1": {
+          "type": "poster",
+          "settings": {
+            "builtin": "fv-grand-opening",
+            "alt": "Furneview Grand Opening: flat 10% off, design it your way"
+          }
+        },
+        "p2": {
+          "type": "poster",
+          "settings": {
+            "builtin": "fv-deepavali",
+            "alt": "Deepavali greetings from Furneview"
+          }
+        }
+      },
+      "block_order": [
+        "p1",
+        "p2"
+      ]
     }
   },
   "order": [
