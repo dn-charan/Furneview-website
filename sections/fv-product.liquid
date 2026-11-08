@@ -40,24 +40,48 @@
           </div>
 
           <div data-pane="photos">
-            <div class="fvp__view" data-main>
-              {%- if product.featured_media -%}
-                {%- render 'fv-media', media: product.featured_media, autoplay: false, alt: product.title, loading: 'eager' -%}
-              {%- else -%}{{ 'product-1' | placeholder_svg_tag }}{%- endif -%}
-            </div>
-            {%- if product.media.size > 1 -%}
-              <div class="fvp__thumbs">
+            <div class="fvg">
+              <div class="fvg__main" data-main tabindex="0" aria-label="Product photos, swipe for more">
                 {%- for m in product.media -%}
-                  <button type="button" class="fvp__thumb{% if m.id == product.featured_media.id %} is-on{% endif %}{% if m.media_type == 'video' or m.media_type == 'external_video' %} fvp__thumb--video{% endif %}" data-media="{{ m.id }}" aria-label="{% if m.media_type == 'video' or m.media_type == 'external_video' %}Play video{% else %}{{ m.alt | default: 'Photo' | escape }}{% endif %}">
-                    {%- if m.preview_image -%}{{ m.preview_image | image_url: width: 200 | image_tag: loading: 'lazy', alt: '' }}{%- endif -%}
-                    {%- if m.media_type == 'video' or m.media_type == 'external_video' -%}<i class="fvp__play" aria-hidden="true"></i><span>Video</span>
-                    {%- elsif m.alt != blank and m.alt.size < 14 -%}<span>{{ m.alt }}</span>{%- endif -%}
-                  </button>
+                  <div class="fvg__slide" data-i="{{ forloop.index0 }}">
+                    {%- if m.media_type == 'video' -%}
+                      {{ m | video_tag: controls: true, muted: true, loop: true, playsinline: true, preload: 'none', image_size: '1400x' }}
+                    {%- elsif m.media_type == 'external_video' -%}
+                      {{ m | external_video_url: rel: 0 | external_video_tag: loading: 'lazy', allow: 'autoplay; encrypted-media; picture-in-picture', allowfullscreen: true }}
+                    {%- elsif m.preview_image -%}
+                      {%- liquid
+                        assign alt = m.alt | default: product.title
+                        assign ld = 'lazy'
+                        if forloop.first
+                          assign ld = 'eager'
+                        endif
+                      -%}
+                      {{ m.preview_image | image_url: width: 1400 | image_tag: sizes: '(min-width: 990px) 55vw, 100vw', alt: alt, loading: ld }}
+                    {%- endif -%}
+                  </div>
+                {%- else -%}
+                  <div class="fvg__slide">{{ 'product-1' | placeholder_svg_tag }}</div>
                 {%- endfor -%}
               </div>
-              {%- for m in product.media -%}
-                <template data-media-tpl="{{ m.id }}">{%- render 'fv-media', media: m, autoplay: true, alt: product.title, loading: 'eager' -%}</template>
-              {%- endfor -%}
+              {%- if product.media.size > 1 -%}
+                <span class="fvg__count" aria-hidden="true"><span data-n>1</span> / {{ product.media.size }}</span>
+                <button type="button" class="fvg__arrow fvg__arrow--prev" data-go="-1" aria-label="Previous photo">‹</button>
+                <button type="button" class="fvg__arrow fvg__arrow--next" data-go="1" aria-label="Next photo">›</button>
+              {%- endif -%}
+            </div>
+            {%- if product.media.size > 1 -%}
+              <div class="fvg__strip">
+                <button type="button" class="fvg__sbtn" data-go="-1" aria-label="Previous photo">‹</button>
+                <div class="fvg__thumbs" data-thumbs>
+                  {%- for m in product.media -%}
+                    <button type="button" class="fvg__thumb{% if forloop.first %} is-on{% endif %}" data-to="{{ forloop.index0 }}" aria-label="{% if m.media_type == 'video' or m.media_type == 'external_video' %}Play video{% else %}Photo {{ forloop.index }}{% endif %}">
+                      {%- if m.preview_image -%}{{ m.preview_image | image_url: width: 200 | image_tag: loading: 'lazy', alt: '' }}{%- endif -%}
+                      {%- if m.media_type == 'video' or m.media_type == 'external_video' -%}<i class="fvp__play" aria-hidden="true"></i>{%- endif -%}
+                    </button>
+                  {%- endfor -%}
+                </div>
+                <button type="button" class="fvg__sbtn" data-go="1" aria-label="Next photo">›</button>
+              </div>
             {%- endif -%}
           </div>
 
@@ -215,12 +239,21 @@
     $$('[data-pane]').forEach(function(p){p.hidden=p.dataset.pane!==t.dataset.view});
     if(t.dataset.view==='room') drawRoom();
   }});
-  $$('.fvp__thumb').forEach(function(b){b.onclick=function(){
-    $$('.fvp__thumb').forEach(function(x){x.classList.toggle('is-on',x===b)});
-    var tpl=root.querySelector('[data-media-tpl="'+b.dataset.media+'"]'), main=$('[data-main]');
-    if(tpl&&main){ main.querySelectorAll('video').forEach(function(v){v.pause()}); main.innerHTML=''; main.appendChild(tpl.content.cloneNode(true));
-      var v=main.querySelector('video'); if(v){ v.muted=true; var pr=v.play(); if(pr&&pr.catch) pr.catch(function(){}); } }
-  }});
+  /* gallery: swipe main image, thumbnails and arrows stay in sync */
+  (function(){
+    var main=$('[data-main]'); if(!main) return;
+    var slides=$$('.fvg__slide'), thumbs=$$('.fvg__thumb'), strip=$('[data-thumbs]'), n=$('[data-n]'), cur=0, t;
+    function to(i,smooth){ i=Math.max(0,Math.min(slides.length-1,i)); main.scrollTo({left:slides[i].offsetLeft-main.offsetLeft,behavior:smooth===false?'auto':'smooth'}); }
+    function mark(i){ if(i===cur&&n&&n.textContent==String(i+1)) return; cur=i; if(n) n.textContent=i+1;
+      thumbs.forEach(function(b,k){b.classList.toggle('is-on',k===i)});
+      var th=thumbs[i]; if(th&&strip) strip.scrollTo({left:th.offsetLeft-strip.offsetLeft-(strip.clientWidth-th.offsetWidth)/2,behavior:'smooth'});
+      slides.forEach(function(sl,k){var v=sl.querySelector('video'); if(!v) return; if(k===i){v.muted=true;var p=v.play();if(p&&p.catch)p.catch(function(){})} else v.pause()}); }
+    main.addEventListener('scroll',function(){clearTimeout(t);t=setTimeout(function(){mark(Math.round(main.scrollLeft/main.clientWidth))},60)},{passive:true});
+    root.addEventListener('click',function(e){var a=e.target.closest('[data-go]'),b=e.target.closest('[data-to]');
+      if(a) to(cur+ +a.dataset.go); if(b) to(+b.dataset.to);});
+    main.addEventListener('keydown',function(e){if(e.key==='ArrowRight')to(cur+1);if(e.key==='ArrowLeft')to(cur-1)});
+    mark(0);
+  })();
 
   /* size guide */
   var svg=$('[data-size-svg]');
