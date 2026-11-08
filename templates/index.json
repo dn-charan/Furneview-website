@@ -81,7 +81,7 @@
           "type": "category",
           "settings": {
             "title": "Sofas",
-            "collection": "",
+            "collection": "sofa-and-recliners",
             "icon": "sofa"
           }
         },
@@ -89,7 +89,7 @@
           "type": "category",
           "settings": {
             "title": "Beds",
-            "collection": "",
+            "collection": "beds-and-mattresses",
             "icon": "bed"
           }
         },
@@ -97,7 +97,7 @@
           "type": "category",
           "settings": {
             "title": "Mattresses",
-            "collection": "",
+            "collection": "mattresses",
             "icon": "mattress"
           }
         },
@@ -105,7 +105,7 @@
           "type": "category",
           "settings": {
             "title": "Dining",
-            "collection": "",
+            "collection": "dining",
             "icon": "dining"
           }
         },
@@ -113,7 +113,7 @@
           "type": "category",
           "settings": {
             "title": "Wardrobes",
-            "collection": "",
+            "collection": "wardrobes",
             "icon": "wardrobe"
           }
         },
@@ -121,7 +121,7 @@
           "type": "category",
           "settings": {
             "title": "Recliners",
-            "collection": "furniture-example-products",
+            "collection": "recliners",
             "icon": "recliner"
           }
         },
@@ -129,7 +129,7 @@
           "type": "category",
           "settings": {
             "title": "TV Units",
-            "collection": "",
+            "collection": "tv-units",
             "icon": "tv"
           }
         },
@@ -137,7 +137,7 @@
           "type": "category",
           "settings": {
             "title": "Coffee Tables",
-            "collection": "",
+            "collection": "coffee-tables",
             "icon": "coffee"
           }
         },
@@ -145,7 +145,7 @@
           "type": "category",
           "settings": {
             "title": "Study Tables",
-            "collection": "",
+            "collection": "study-tables",
             "icon": "study"
           }
         },
@@ -153,24 +153,24 @@
           "type": "category",
           "settings": {
             "title": "Office Chairs",
-            "collection": "",
+            "collection": "office-chairs",
             "icon": "chair"
           }
         },
-        "c10": {
+        "c_ch": {
           "type": "category",
           "settings": {
-            "title": "Decor",
-            "collection": "",
-            "icon": "decor"
+            "title": "Chairs",
+            "icon": "chair",
+            "collection": "chairs"
           }
         },
-        "c11": {
+        "c_st": {
           "type": "category",
           "settings": {
-            "title": "Lighting",
-            "collection": "",
-            "icon": "lamp"
+            "title": "Storage",
+            "icon": "wardrobe",
+            "collection": "storage"
           }
         }
       },
@@ -185,8 +185,8 @@
         "c7",
         "c8",
         "c9",
-        "c10",
-        "c11"
+        "c_ch",
+        "c_st"
       ],
       "settings": {
         "eyebrow": "Browse",
@@ -229,7 +229,7 @@
           "type": "room",
           "settings": {
             "title": "Living room",
-            "collection": "",
+            "collection": "sofa-and-recliners",
             "bg": "#f6e3d3",
             "icon": "sofa"
           }
@@ -238,7 +238,7 @@
           "type": "room",
           "settings": {
             "title": "Bedroom",
-            "collection": "",
+            "collection": "beds-and-mattresses",
             "bg": "#e3eee6",
             "icon": "bed"
           }
@@ -247,7 +247,7 @@
           "type": "room",
           "settings": {
             "title": "Dining",
-            "collection": "",
+            "collection": "dining",
             "bg": "#f3ecdf",
             "icon": "dining"
           }
@@ -256,7 +256,7 @@
           "type": "room",
           "settings": {
             "title": "Home office",
-            "collection": "",
+            "collection": "study-tables",
             "bg": "#e8e6e3",
             "icon": "study"
           }
