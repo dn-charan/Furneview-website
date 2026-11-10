@@ -2,56 +2,86 @@
 {%- liquid
   assign design_url = section.settings.design_link | default: '/collections/sofa-and-recliners'
   assign visit_url = section.settings.visit_link | default: '/pages/visit'
+  assign fit_url = section.settings.fit_link | default: design_url
 -%}
 <section class="fv fvw" data-fvw data-mode="{{ section.settings.start_mode }}" data-auto="{{ section.settings.auto_mode }}">
-  <div class="page-width fvw__in">
-    <div class="fvw__copy">
-      {%- if section.settings.kicker != blank -%}<span class="fvw__kicker">{{ section.settings.kicker }}</span>{%- endif -%}
-      {%- if section.settings.heading != blank -%}<h2 class="fvw__h">{{ section.settings.heading }}</h2>{%- endif -%}
-      {%- if section.settings.text != blank -%}<p class="fvw__p">{{ section.settings.text }}</p>{%- endif -%}
-      <div class="fvw__ctas">
-        <a class="fv-btn fv-btn--orange fvw__cta" href="{{ design_url }}">{{ section.settings.design_label }}
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-        <a class="fv-btn fvw__ghost" href="{{ visit_url }}">{{ section.settings.visit_label }}</a>
+  <div class="page-width">
+    <div class="fvw__hero">
+      <div class="fvw__frame">
+        <div class="fvw__photo">
+          {%- if section.settings.image != blank -%}
+            {{ section.settings.image | image_url: width: 1800 | image_tag: loading: 'eager', fetchpriority: 'high', alt: section.settings.image_alt, sizes: '(min-width: 990px) 62vw, 100vw' }}
+          {%- else -%}
+            <img src="{{ 'fv-window-sofa.jpg' | asset_url }}" srcset="{{ 'fv-window-sofa-sm.jpg' | asset_url }} 900w, {{ 'fv-window-sofa.jpg' | asset_url }} 1672w" sizes="(min-width: 990px) 62vw, 100vw" width="1672" height="941" alt="{{ section.settings.image_alt | escape }}" loading="eager" fetchpriority="high">
+          {%- endif -%}
+          <i class="fvw__tint" aria-hidden="true"></i>
+          <i class="fvw__sun" aria-hidden="true"></i>
+          <i class="fvw__lampglow" aria-hidden="true"></i>
+          <div class="fvw__diyas" aria-hidden="true">
+            {%- for i in (1..3) -%}<svg viewBox="0 0 26 30"><path class="fvw__flame" d="M13 2c4 6 4 10 0 14-4-4-4-8 0-14z" fill="#FFC14D"/><path d="M2 20h22c-2 6-6 8-11 8S4 26 2 20z" fill="#C9470A"/></svg>{%- endfor -%}
+          </div>
+        </div>
+        <div class="fvw__switch" role="group" aria-label="See this room in a different light">
+          <button type="button" data-m="morning" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M5 19l1.5-1.5M17.5 6.5 19 5"/></svg>Morning</button>
+          <button type="button" data-m="golden" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18h18M6 18a6 6 0 0 1 12 0M12 6v2M4.5 10.5 6 12M19.5 10.5 18 12"/></svg>Golden hour</button>
+          <button type="button" data-m="night" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c3 4.5 3 7.5 0 10.5-3-3-3-6 0-10.5zM4 16h16c-1.5 3.5-4.5 5-8 5s-6.5-1.5-8-5z"/></svg>Diya night</button>
+        </div>
       </div>
-      <div class="fvw__switch" role="group" aria-label="See the room in a different light">
-        <button type="button" data-m="morning" aria-pressed="false">Morning</button>
-        <button type="button" data-m="golden" aria-pressed="false">Golden hour</button>
-        <button type="button" data-m="night" aria-pressed="false">Diya night</button>
+
+      <div class="fvw__copy">
+        {%- if section.settings.kicker != blank -%}<span class="fvw__kicker">{{ section.settings.kicker }}</span>{%- endif -%}
+        {%- if section.settings.heading != blank -%}<h2 class="fvw__h">{{ section.settings.heading }}</h2>{%- endif -%}
+        {%- if section.settings.text != blank -%}<p class="fvw__p">{{ section.settings.text }}</p>{%- endif -%}
+        <p class="fvw__mode" data-mode-line aria-live="polite"></p>
+        <div class="fvw__ctas">
+          <a class="fv-btn fv-btn--orange fvw__cta" href="{{ design_url }}">{{ section.settings.design_label }}
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="fv-btn fvw__ghost" href="{{ visit_url }}">{{ section.settings.visit_label }}</a>
+        </div>
       </div>
     </div>
 
-    <div class="fvw__arch" aria-hidden="true">
-      <div class="fvw__win"><i class="fvw__sky"></i><i class="fvw__bar fvw__bar--v"></i><i class="fvw__bar fvw__bar--h"></i></div>
-      <i class="fvw__glow"></i>
-      <svg class="fvw__lamp" viewBox="0 0 70 120"><path d="M35 0v52" stroke="#1E1A17" stroke-width="2"/><path d="M12 72a23 20 0 0 1 46 0z" fill="#1E1A17"/><ellipse class="fvw__bulb" cx="35" cy="74" rx="10" ry="4"/></svg>
-      <svg class="fvw__plant" viewBox="0 0 70 150"><path d="M20 150h30l-4-44H24z" fill="#1F6B3B"/><path d="M35 108c-6-40 4-70 28-86-2 34-12 62-28 86zm0 0C22 82 6 72-6 74c8 22 22 32 41 34z" fill="#2E8A4E"/></svg>
-      {%- if section.settings.image != blank -%}
-        {{ section.settings.image | image_url: width: 1200 | image_tag: class: 'fvw__img', loading: 'eager', alt: '', sizes: '(min-width: 990px) 560px, 90vw' }}
-      {%- else -%}
-        <svg class="fvw__sofa" viewBox="0 0 300 150">
-          <rect class="fvw__s2" x="34" y="20" width="232" height="66" rx="22"/>
-          <rect class="fvw__s1" x="26" y="66" width="248" height="52" rx="18"/>
-          <rect class="fvw__s2" x="8" y="50" width="42" height="78" rx="18"/>
-          <rect class="fvw__s2" x="250" y="50" width="42" height="78" rx="18"/>
-          <rect x="62" y="36" width="52" height="36" rx="10" fill="#E2D3BB"/>
-          <rect x="186" y="36" width="52" height="36" rx="10" fill="#1F6B3B"/>
-          <rect x="40" y="128" width="7" height="20" fill="#5A3A28"/><rect x="253" y="128" width="7" height="20" fill="#5A3A28"/>
-        </svg>
-      {%- endif -%}
-      <div class="fvw__diyas">
-        {%- for i in (1..3) -%}<svg viewBox="0 0 26 30"><path class="fvw__flame" d="M13 2c4 6 4 10 0 14-4-4-4-8 0-14z" fill="#FFC14D"/><path d="M2 20h22c-2 6-6 8-11 8S4 26 2 20z" fill="#C9470A"/></svg>{%- endfor -%}
+    {%- if section.settings.show_tools -%}
+    <div class="fvw__tools">
+      <h2 class="fvw__h2">{{ section.settings.tools_heading }}</h2>
+      <div class="fvw__cards">
+        <a class="fvw__card" href="{{ fit_url }}">
+          <span class="fvw__ic fvw__ic--o"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h6M9 3v6M15 21v-6h6"/></svg></span>
+          <span class="fvw__ct"><b>Will it fit?</b><small>Check your room and your door on any sofa page</small></span>
+          <svg class="fvw__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+        <a class="fvw__card" href="{{ design_url }}">
+          <span class="fvw__ic fvw__ic--g"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M2 20c0-3.5 2.7-6 6-6s6 2.5 6 6M14 20c0-2.5 1.5-4.5 3.5-4.5S21 17.5 21 20"/></svg></span>
+          <span class="fvw__ct"><b>Ask the family</b><small>Send your pick and fabric on WhatsApp in one tap</small></span>
+          <svg class="fvw__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+        <a class="fvw__card" href="{{ visit_url }}">
+          <span class="fvw__ic fvw__ic--o"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10 12 4l8 6v10H4z"/><path d="M10 20v-5h4v5"/></svg></span>
+          <span class="fvw__ct"><b>Sit on it first</b><small>Book a try-out slot, we keep your picks ready</small></span>
+          <svg class="fvw__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
       </div>
-      <i class="fvw__floor"></i>
     </div>
+    {%- endif -%}
+
+    {%- if section.settings.show_steps -%}
+    <div class="fvw__made">
+      <div class="fvw__madetxt">
+        <span>{{ section.settings.steps_kicker }}</span>
+        <h2>{{ section.settings.steps_heading }}</h2>
+      </div>
+      <ol class="fvw__steps">
+        {%- assign steps = section.settings.steps | split: ',' -%}
+        {%- for s in steps -%}<li><b>{{ forloop.index }}</b><span>{{ s | strip }}</span></li>{%- endfor -%}
+      </ol>
+    </div>
+    {%- endif -%}
   </div>
 </section>
 
 <script>
 (function(){
   var root=document.currentScript.previousElementSibling; if(!root||!root.hasAttribute('data-fvw')) return;
-  var btns=root.querySelectorAll('[data-m]');
-  function set(m){ root.setAttribute('data-mode',m); btns.forEach(function(b){b.setAttribute('aria-pressed', b.dataset.m===m?'true':'false')}); }
+  var btns=root.querySelectorAll('[data-m]'), line=root.querySelector('[data-mode-line]');
+  var words={morning:'Soft morning daylight through the window',golden:'Warm golden-hour sun, the way evenings feel at home',night:'Lamps on and diyas lit, the festive night look'};
+  function set(m){ root.setAttribute('data-mode',m); btns.forEach(function(b){b.setAttribute('aria-pressed', b.dataset.m===m?'true':'false')}); if(line) line.textContent=words[m]||''; }
   var m=root.dataset.mode;
   if(root.dataset.auto==='true'){ var h=new Date().getHours(); m = h>=6&&h<16 ? 'morning' : h>=16&&h<19 ? 'golden' : 'night'; }
   set(m);
@@ -65,17 +95,27 @@
   "tag": "div",
   "class": "fvw-wrap",
   "settings": [
-    { "type": "text", "id": "kicker", "label": "Small text above heading", "default": "Furniture made for a better view" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Design it your way. See it in your light." },
-    { "type": "textarea", "id": "text", "label": "Text", "default": "Choose the shape, size and fabric. Check it fits your room and door, ask the family, then visit us to sit on it." },
-    { "type": "text", "id": "design_label", "label": "Main button label", "default": "Design your sofa" },
+    { "type": "text", "id": "kicker", "label": "Small text above heading", "default": "See it in your light" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Furniture made for a better view" },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Tap morning, golden hour or diya night to see how this sofa looks at home through the day. Pick your size and one of 125 fabrics." },
+    { "type": "image_picker", "id": "image", "label": "Room photo", "info": "Landscape photo works best. Leave empty to use the sage sofa photo." },
+    { "type": "text", "id": "image_alt", "label": "Photo description", "default": "Sage green 3 seater and 2 seater fabric sofa set with a round wooden coffee table" },
+    { "type": "text", "id": "design_label", "label": "Main button label", "default": "Shop this sofa" },
     { "type": "url", "id": "design_link", "label": "Main button link", "info": "Leave empty to open Sofas & Recliners." },
     { "type": "text", "id": "visit_label", "label": "Second button label", "default": "Book a store visit" },
     { "type": "url", "id": "visit_link", "label": "Second button link", "info": "Leave empty to open the store visit booking page." },
-    { "type": "image_picker", "id": "image", "label": "Product photo inside the window (optional)", "info": "Use a cut-out PNG with a transparent background. Leave empty to show the drawn sofa." },
     { "type": "select", "id": "start_mode", "label": "Starting light", "default": "golden", "options": [
       { "value": "morning", "label": "Morning" }, { "value": "golden", "label": "Golden hour" }, { "value": "night", "label": "Diya night" } ] },
-    { "type": "checkbox", "id": "auto_mode", "label": "Match the light to the visitor's time of day", "default": true }
+    { "type": "checkbox", "id": "auto_mode", "label": "Match the light to the visitor's time of day", "default": true },
+    { "type": "header", "content": "Buy with confidence cards" },
+    { "type": "checkbox", "id": "show_tools", "label": "Show the three cards", "default": true },
+    { "type": "text", "id": "tools_heading", "label": "Cards heading", "default": "Buy with confidence" },
+    { "type": "url", "id": "fit_link", "label": "Will it fit? card link", "info": "Leave empty to use the main button link." },
+    { "type": "header", "content": "How it's made strip" },
+    { "type": "checkbox", "id": "show_steps", "label": "Show the steps strip", "default": true },
+    { "type": "text", "id": "steps_kicker", "label": "Strip small text", "default": "Made for you, not picked off a shelf" },
+    { "type": "text", "id": "steps_heading", "label": "Strip heading", "default": "How your sofa comes together" },
+    { "type": "text", "id": "steps", "label": "Steps (comma separated)", "default": "Wood cut, Frame, Foam, Fabric, Delivered" }
   ],
   "presets": [{ "name": "Furneview window" }]
 }

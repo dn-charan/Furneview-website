@@ -533,16 +533,13 @@
     },
     "window": {
       "type": "fv-window",
-      "settings": {
-        "kicker": "",
-        "heading": ""
-      }
+      "settings": {}
     }
   },
   "order": [
+    "window",
     "poster",
     "categories",
-    "window",
     "promo",
     "trust",
     "browser",
