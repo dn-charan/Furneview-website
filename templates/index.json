@@ -556,15 +556,7 @@
           "type": "benefit",
           "settings": {
             "icon": "shield",
-            "title": "Best Warranty",
-            "text": ""
-          }
-        },
-        "b3": {
-          "type": "benefit",
-          "settings": {
-            "icon": "box",
-            "title": "7-Day Easy Returns",
+            "title": "3-Year Warranty",
             "text": ""
           }
         }
@@ -572,8 +564,7 @@
       "block_order": [
         "b0",
         "b1",
-        "b2",
-        "b3"
+        "b2"
       ]
     },
     "browser": {
