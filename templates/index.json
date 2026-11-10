@@ -532,39 +532,40 @@
       "settings": {
         "stat1_number": "",
         "stat2_number": "",
-        "seal_top": ""
+        "seal_top": "",
+        "why_heading": "Why Furneview?"
       },
       "blocks": {
         "b0": {
           "type": "benefit",
           "settings": {
             "icon": "truck",
-            "title": "Free shipping",
-            "text": "On all orders over ₹10,000"
+            "title": "Free Shipping",
+            "text": ""
           }
         },
         "b1": {
           "type": "benefit",
           "settings": {
-            "icon": "box",
-            "title": "7-day easy returns",
-            "text": "No questions asked"
+            "icon": "install",
+            "title": "Free Installation",
+            "text": ""
           }
         },
         "b2": {
           "type": "benefit",
           "settings": {
-            "icon": "tag",
-            "title": "Best price guarantee",
-            "text": "Factory-direct pricing"
+            "icon": "shield",
+            "title": "Best Warranty",
+            "text": ""
           }
         },
         "b3": {
           "type": "benefit",
           "settings": {
-            "icon": "shield",
-            "title": "Up to 5-year warranty",
-            "text": "Peace of mind, guaranteed"
+            "icon": "box",
+            "title": "7-Day Easy Returns",
+            "text": ""
           }
         }
       },
