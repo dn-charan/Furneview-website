@@ -377,21 +377,96 @@
     "stores": {
       "type": "fv-stores",
       "blocks": {
+        "city0": {
+          "type": "city",
+          "settings": {
+            "name": "Bengaluru",
+            "icon": "bengaluru"
+          }
+        },
+        "city1": {
+          "type": "city",
+          "settings": {
+            "name": "Mysuru",
+            "icon": "mysuru"
+          }
+        },
+        "city2": {
+          "type": "city",
+          "settings": {
+            "name": "Chennai",
+            "icon": "chennai"
+          }
+        },
+        "city3": {
+          "type": "city",
+          "settings": {
+            "name": "Hyderabad",
+            "icon": "hyderabad"
+          }
+        },
+        "city4": {
+          "type": "city",
+          "settings": {
+            "name": "Mumbai",
+            "icon": "mumbai"
+          }
+        },
+        "city5": {
+          "type": "city",
+          "settings": {
+            "name": "Pune",
+            "icon": "pune"
+          }
+        },
+        "city6": {
+          "type": "city",
+          "settings": {
+            "name": "Delhi",
+            "icon": "delhi"
+          }
+        },
+        "city7": {
+          "type": "city",
+          "settings": {
+            "name": "Kolkata",
+            "icon": "kolkata"
+          }
+        },
         "st0": {
           "type": "store",
           "settings": {
-            "name": "banashankari, Bengaluru",
+            "name": "Banashankari",
+            "city": "Bengaluru",
+            "detail": "Open 10 AM – 9 PM",
+            "map_link": ""
+          }
+        },
+        "st1": {
+          "type": "store",
+          "settings": {
+            "name": "Sarjapura",
+            "city": "Bengaluru",
             "detail": "Open 10 AM – 9 PM",
             "map_link": ""
           }
         }
       },
       "block_order": [
-        "st0"
+        "city0",
+        "city1",
+        "city2",
+        "city3",
+        "city4",
+        "city5",
+        "city6",
+        "city7",
+        "st0",
+        "st1"
       ],
       "settings": {
         "eyebrow": "Visit us",
-        "heading": "Furneview experience stores",
+        "heading": "Furneview stores",
         "form_heading": "Book a store visit",
         "form_text": "A design consultant will have your shortlist ready when you arrive.",
         "bulk_eyebrow": "Offices · Hotels · Hostels",

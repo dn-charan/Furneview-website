@@ -1,0 +1,25 @@
+{%- comment -%} Simple line drawings of city landmarks. Usage: render 'fv-landmark', name: 'bengaluru' {%- endcomment -%}
+<svg class="fv-lm" viewBox="0 0 64 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">
+{%- case name -%}
+  {%- when 'bengaluru' -%}
+    <path class="fv-lm__f" d="M8 44V26h48v18z"/><path d="M4 44h56M8 26h48M12 26v18M20 26v18M28 30v14M36 30v14M44 26v18M52 26v18"/><path class="fv-lm__f" d="M24 26v-6h16v6"/><path d="M26 20a6 6 0 0 1 12 0"/><path d="M32 14v-4"/><path d="M8 26l4-4h40l4 4"/>
+  {%- when 'chennai' -%}
+    <path class="fv-lm__f" d="M26 44V14h12v30z"/><path d="M4 44h56M10 44V28h16M38 28h16v16M14 32v6M20 32v6M44 32v6M50 32v6"/><circle cx="32" cy="20" r="3"/><path d="M26 14l6-8 6 8M30 44v-8h4v8"/>
+  {%- when 'mumbai' -%}
+    <path class="fv-lm__f" d="M10 44V18h44v26z"/><path d="M4 44h56M10 18h44M24 44V32a8 8 0 0 1 16 0v12M14 24h6M44 24h6M14 32v8M50 32v8"/><path d="M12 18v-6M20 18v-6M44 18v-6M52 18v-6M10 12h12M42 12h12"/>
+  {%- when 'kolkata' -%}
+    <path d="M2 40h60M14 40V8M50 40V8M14 8h0M10 12h8M46 12h8"/><path class="fv-lm__f" d="M14 14c8 0 14 10 18 18 4-8 10-18 18-18"/><path d="M14 28h36M20 28v12M26 30v10M38 30v10M44 28v12"/>
+  {%- when 'hyderabad' -%}
+    <path class="fv-lm__f" d="M14 44V22h36v22z"/><path d="M4 44h56M24 44V34a8 8 0 0 1 16 0v10M14 22h36M16 22V8M48 22V8M14 8h4M46 8h4M16 4v4M48 4v4"/><path d="M26 22c0-5 12-5 12 0M18 28h4M42 28h4"/>
+  {%- when 'delhi' -%}
+    <path class="fv-lm__f" d="M16 44V14h32v30z"/><path d="M4 44h56M14 14h36M18 10h28M26 44V30a6 6 0 0 1 12 0v14M20 20h24"/><path d="M32 10V4"/>
+  {%- when 'pune' -%}
+    <path class="fv-lm__f" d="M8 44V22h48v22z"/><path d="M4 44h56M8 22h48M26 44V30h12v14M14 22v-6h8v6M42 22v-6h8v6M8 18h0M12 30h8M44 30h8"/><path d="M8 22l2-3h4M56 22l-2-3h-4"/>
+  {%- when 'mysuru' -%}
+    <path class="fv-lm__f" d="M10 44V24h44v26"/><path d="M4 44h56M10 24h44M26 24v-6h12v6"/><path d="M27 18a5 5 0 0 1 10 0M32 13V9"/><path d="M12 24v-5a3 3 0 0 1 6 0v5M46 24v-5a3 3 0 0 1 6 0v5M16 30v8M24 30v8M40 30v8M48 30v8M30 44v-8h4v8"/>
+  {%- when 'kochi' -%}
+    <path d="M4 40c6 3 10 3 16 0s10-3 16 0 10 3 16 0 6-1 8 0"/><path class="fv-lm__f" d="M14 34l18-24 18 24z"/><path d="M14 34h36M32 10v24M22 22l20 12M42 22L22 34"/>
+  {%- else -%}
+    <path class="fv-lm__f" d="M12 44V22l20-14 20 14v22z"/><path d="M4 44h56M26 44V32h12v12"/>
+{%- endcase -%}
+</svg>

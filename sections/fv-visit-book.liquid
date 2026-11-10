@@ -26,7 +26,19 @@
           <p class="fv-err" role="alert">{{ form.errors | default_errors }}</p>
         {%- endif -%}
         <input type="hidden" name="contact[subject]" value="Store visit booking">
+        {%- assign store_list = section.settings.stores | split: ',' -%}
+        {%- if store_list.size > 1 -%}
+        <fieldset class="fvv__set">
+          <legend>Pick a store</legend>
+          <div class="fvv__stores">
+            {%- for st in store_list -%}{%- assign t = st | strip -%}
+              <label class="fvv__store"><input type="radio" name="contact[Store]" value="{{ t | escape }}" data-store {% if forloop.first %}checked{% endif %}><span>{{ t }}</span></label>
+            {%- endfor -%}
+          </div>
+        </fieldset>
+        {%- else -%}
         <input type="hidden" name="contact[Store]" value="{{ section.settings.store_name | escape }}">
+        {%- endif -%}
         <input type="hidden" name="contact[Visit date]" data-v-date>
         <input type="hidden" name="contact[Visit time]" data-v-time>
 
@@ -75,6 +87,7 @@
     root.querySelectorAll(sel).forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')}); input.value=b.getAttribute(attr); upd(); }); }
   pick('[data-day]','data-day',dIn); pick('[data-slot]','data-slot',tIn);
   function upd(){ sum.textContent = dIn.value&&tIn.value ? dIn.value+' at '+tIn.value+' · we will call you to confirm' : 'Choose a day and time.'; }
+  try{ var sp=new URLSearchParams(location.search).get('store'); if(sp){ root.querySelectorAll('[data-store]').forEach(function(r){ if(r.value.toLowerCase().indexOf(sp.toLowerCase())>-1) r.checked=true; }); } }catch(e){}
   try{ var q=new URLSearchParams(location.search).get('try'); if(q) root.querySelector('[data-v-try]').value=q; }catch(e){}
   root.querySelector('form').addEventListener('submit',function(e){ if(!dIn.value||!tIn.value){ e.preventDefault(); sum.textContent='Please choose a day and a time first.'; sum.classList.add('is-err'); } });
 })();
@@ -87,8 +100,9 @@
     { "type": "text", "id": "kicker", "label": "Small label", "default": "Store visit" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Sit on it first" },
     { "type": "textarea", "id": "text", "label": "Text", "default": "Book a slot with a designer. Tell us what you want to try and we keep it ready when you arrive." },
-    { "type": "text", "id": "store_name", "label": "Store name", "default": "Furneview, Banashankari" },
-    { "type": "text", "id": "store_detail", "label": "Address and hours", "default": "Banashankari, Bengaluru" },
+    { "type": "text", "id": "store_name", "label": "Store name", "default": "Furneview, Bengaluru" },
+    { "type": "text", "id": "stores", "label": "Stores to choose from (comma separated)", "default": "Banashankari, Sarjapura" },
+    { "type": "text", "id": "store_detail", "label": "Address and hours", "default": "Banashankari and Sarjapura · Open 10 AM – 9 PM" },
     { "type": "url", "id": "map_link", "label": "Google Maps link" },
     { "type": "image_picker", "id": "image", "label": "Store photo" },
     { "type": "text", "id": "slots", "label": "Time slots (comma separated)", "default": "10:30 am, 12:00 pm, 2:00 pm, 4:00 pm, 6:00 pm, 7:30 pm" },

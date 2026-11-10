@@ -1,12 +1,65 @@
 {{ 'furneview.css' | asset_url | stylesheet_tag }}
 <section class="fv" id="fv-visit">
   <div class="page-width">
-    <div class="fv-head"><div><span class="fv-eyebrow">{{ section.settings.eyebrow }}</span><h2>{{ section.settings.heading }}</h2></div></div>
-    <div class="fv-cities">
-      {%- for block in section.blocks -%}
-        <a class="fv-city" {% if block.settings.map_link != blank %}href="{{ block.settings.map_link }}" target="_blank" rel="noopener"{% endif %} {{ block.shopify_attributes }}><b>{{ block.settings.name }}</b><small>{{ block.settings.detail }}</small></a>
+    <div class="fvs__head">
+      <div><span class="fv-eyebrow">{{ section.settings.eyebrow }}</span><h2>{{ section.settings.heading }}</h2></div>
+      {%- liquid
+        assign total = 0
+        for b in section.blocks
+          if b.type == 'store'
+            assign total = total | plus: 1
+          endif
+        endfor
+      -%}
+      {%- if total > 0 -%}<span class="fvs__count">{{ total }} {% if total == 1 %}store{% else %}stores{% endif %}</span>{%- endif -%}
+    </div>
+    <div class="fvs__grid" data-fvs>
+      {%- for c in section.blocks -%}
+        {%- if c.type != 'city' -%}{%- continue -%}{%- endif -%}
+        {%- liquid
+          assign n = 0
+          assign cn = c.settings.name | downcase | strip
+          for b in section.blocks
+            if b.type == 'store'
+              assign bc = b.settings.city | downcase | strip
+              if bc == cn
+                assign n = n | plus: 1
+              endif
+            endif
+          endfor
+        -%}
+        {%- if n > 0 -%}
+          <button type="button" class="fvs__city" data-city="{{ cn | escape }}" aria-expanded="false" {{ c.shopify_attributes }}>
+            {% render 'fv-landmark', name: c.settings.icon %}
+            <b>{{ c.settings.name }}</b><small>{{ n }} {% if n == 1 %}store{% else %}stores{% endif %}</small>
+          </button>
+        {%- else -%}
+          <div class="fvs__city is-soon" {{ c.shopify_attributes }}>
+            {% render 'fv-landmark', name: c.settings.icon %}
+            <b>{{ c.settings.name }}</b><small>Coming soon</small>
+          </div>
+        {%- endif -%}
       {%- endfor -%}
     </div>
+    {%- for c in section.blocks -%}
+      {%- if c.type != 'city' -%}{%- continue -%}{%- endif -%}
+      {%- assign cn = c.settings.name | downcase | strip -%}
+      <div class="fvs__list" data-list="{{ cn | escape }}" hidden>
+        {%- for b in section.blocks -%}
+          {%- assign bc = b.settings.city | downcase | strip -%}
+          {%- if b.type == 'store' and bc == cn -%}
+            <div class="fvs__store" {{ b.shopify_attributes }}>
+              <span class="fvs__pin" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+              <div class="fvs__sinfo"><b>{{ b.settings.name }}</b>{%- if b.settings.detail != blank -%}<small>{{ b.settings.detail }}</small>{%- endif -%}</div>
+              <div class="fvs__acts">
+                {%- if b.settings.map_link != blank -%}<a href="{{ b.settings.map_link }}" target="_blank" rel="noopener">Directions</a>{%- endif -%}
+                <a class="is-main" href="/pages/visit?store={{ b.settings.name | url_encode }}">Book visit</a>
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endfor -%}
     <div class="fv-visit">
       <div class="fv-box">
         <h3>{{ section.settings.form_heading }}</h3>
@@ -23,7 +76,7 @@
           <label for="fv-email">Email<input id="fv-email" name="contact[email]" type="email" required autocomplete="email"></label>
           <label for="fv-store">Store
             <select id="fv-store" name="contact[Store]">
-              {%- for block in section.blocks -%}<option>{{ block.settings.name }}</option>{%- endfor -%}
+              {%- for block in section.blocks -%}{%- if block.type == 'store' -%}<option>{{ block.settings.name }}, {{ block.settings.city }}</option>{%- endif -%}{%- endfor -%}
             </select>
           </label>
           <label for="fv-date" class="fv-full">Preferred date<input id="fv-date" name="contact[Preferred date]" type="date"></label>
@@ -39,6 +92,13 @@
     </div>
   </div>
 </section>
+<script>
+(function(){var g=document.querySelector('[data-fvs]');if(!g)return;var sec=g.parentNode;
+g.addEventListener('click',function(e){var b=e.target.closest('[data-city]');if(!b)return;var open=b.getAttribute('aria-expanded')!=='true';
+g.querySelectorAll('[data-city]').forEach(function(x){x.setAttribute('aria-expanded','false')});sec.querySelectorAll('[data-list]').forEach(function(l){l.hidden=true});
+if(open){b.setAttribute('aria-expanded','true');var l=sec.querySelector('[data-list="'+b.dataset.city+'"]');if(l)l.hidden=false;}});
+var first=g.querySelector('[data-city]');if(first)first.click();})();
+</script>
 {% schema %}
 {
   "name": "Furneview stores",
@@ -55,16 +115,25 @@
     { "type": "text", "id": "bulk_button", "label": "Button label", "default": "Request a quote" },
     { "type": "url", "id": "bulk_link", "label": "Button link" }
   ],
-  "max_blocks": 12,
-  "blocks": [{ "type": "store", "name": "Store", "settings": [
-    { "type": "text", "id": "name", "label": "Store name", "default": "Indiranagar, Bengaluru" },
-    { "type": "text", "id": "detail", "label": "Address or timings", "default": "Open 10 AM – 9 PM" },
-    { "type": "url", "id": "map_link", "label": "Google Maps link" }
-  ]}],
+  "max_blocks": 40,
+  "blocks": [
+    { "type": "city", "name": "City", "settings": [
+      { "type": "text", "id": "name", "label": "City name", "default": "Bengaluru" },
+      { "type": "select", "id": "icon", "label": "Landmark drawing", "default": "bengaluru", "options": [
+        {"value":"bengaluru","label":"Bengaluru"},{"value":"mysuru","label":"Mysuru"},{"value":"chennai","label":"Chennai"},{"value":"hyderabad","label":"Hyderabad"},
+        {"value":"mumbai","label":"Mumbai"},{"value":"pune","label":"Pune"},{"value":"delhi","label":"Delhi"},{"value":"kolkata","label":"Kolkata"},{"value":"kochi","label":"Kochi"},{"value":"other","label":"Other"}]},
+      { "type": "paragraph", "content": "A city shows Coming soon until you add a store with the same city name." }
+    ]},
+    { "type": "store", "name": "Store", "settings": [
+      { "type": "text", "id": "name", "label": "Store name", "default": "Banashankari" },
+      { "type": "text", "id": "city", "label": "City", "default": "Bengaluru", "info": "Must match a city tile's name." },
+      { "type": "text", "id": "detail", "label": "Address or timings", "default": "Open 10 AM – 9 PM" },
+      { "type": "url", "id": "map_link", "label": "Google Maps link" }
+    ]}
+  ],
   "presets": [{ "name": "Furneview stores", "blocks": [
-    {"type":"store","settings":{"name":"Indiranagar, Bengaluru","detail":"Open 10 AM – 9 PM"}},
-    {"type":"store","settings":{"name":"Whitefield, Bengaluru","detail":"Open 10 AM – 9 PM"}},
-    {"type":"store","settings":{"name":"JP Nagar, Bengaluru","detail":"Open 10 AM – 9 PM"}}
+    {"type":"city","settings":{"name":"Bengaluru","icon":"bengaluru"}},
+    {"type":"store","settings":{"name":"Banashankari","city":"Bengaluru","detail":"Open 10 AM – 9 PM"}}
   ]}]
 }
 {% endschema %}
