@@ -7,7 +7,7 @@
   <div class="page-width fvw__in">
     <div class="fvw__copy">
       {%- if section.settings.kicker != blank -%}<span class="fvw__kicker">{{ section.settings.kicker }}</span>{%- endif -%}
-      <h2 class="fvw__h">{{ section.settings.heading }}</h2>
+      {%- if section.settings.heading != blank -%}<h2 class="fvw__h">{{ section.settings.heading }}</h2>{%- endif -%}
       {%- if section.settings.text != blank -%}<p class="fvw__p">{{ section.settings.text }}</p>{%- endif -%}
       <div class="fvw__ctas">
         <a class="fv-btn fv-btn--orange fvw__cta" href="{{ design_url }}">{{ section.settings.design_label }}

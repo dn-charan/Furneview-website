@@ -15,8 +15,8 @@
     </div>
 
     <div class="fvv__panel">
-      <span class="fvw__kicker">{{ section.settings.kicker }}</span>
-      <h1 class="fvv__h">{{ section.settings.heading }}</h1>
+      {%- if section.settings.kicker != blank -%}<span class="fvw__kicker">{{ section.settings.kicker }}</span>{%- endif -%}
+      {%- if section.settings.heading != blank -%}<h1 class="fvv__h">{{ section.settings.heading }}</h1>{%- endif -%}
       <p class="fvv__p">{{ section.settings.text }}</p>
 
       {%- form 'contact', class: 'fvv__form', id: 'fvv-form' -%}

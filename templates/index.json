@@ -528,11 +528,15 @@
       "block_order": [
         "p1",
         "p2"
-      ]
+      ],
+      "disabled": true
     },
     "window": {
       "type": "fv-window",
-      "settings": {}
+      "settings": {
+        "kicker": "",
+        "heading": ""
+      }
     }
   },
   "order": [
