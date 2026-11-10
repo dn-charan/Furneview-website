@@ -424,14 +424,15 @@
 .fvw__tint{mix-blend-mode:soft-light}
 .fvw__sun{mix-blend-mode:screen;background:radial-gradient(60% 80% at 100% 35%,rgba(255,196,120,.75),transparent 70%)}
 .fvw__lampglow{mix-blend-mode:screen;background:radial-gradient(30% 34% at var(--lx) var(--ly),rgba(255,176,84,.9),rgba(255,150,60,.25) 55%,transparent 75%),radial-gradient(26% 16% at var(--tx) 80%,rgba(255,170,80,.45),transparent 70%)}
-.fvw__diyas{position:absolute;left:0;right:0;bottom:5%;display:flex;justify-content:center;gap:9%;opacity:0;transition:opacity .8s;z-index:2}
+.fvw__diyas{position:absolute;left:0;right:0;bottom:15%;display:flex;justify-content:center;gap:9%;opacity:0;transition:opacity .8s;z-index:2}
 .fvw__diyas svg{width:clamp(20px,3.4vw,34px);height:auto;filter:drop-shadow(0 0 10px rgba(255,190,90,.9))}
 /* morning */
-.fvw[data-mode=morning] .fvw__photo img{filter:brightness(1.05) saturate(1.02) contrast(1.02)}
-.fvw[data-mode=morning] .fvw__tint{opacity:1;background:linear-gradient(90deg,rgba(210,232,255,0) 35%,rgba(210,232,255,.55))}
+.fvw[data-mode=morning] .fvw__photo img{filter:brightness(1.1) saturate(.9) hue-rotate(10deg) contrast(1.03)}
+.fvw[data-mode=morning] .fvw__tint{opacity:1;background:linear-gradient(90deg,rgba(200,226,255,.35),rgba(200,226,255,.8))}
+.fvw[data-mode=morning] .fvw__sun{opacity:.7;background:radial-gradient(55% 80% at 100% 30%,rgba(255,255,255,.85),transparent 70%)}
 /* golden */
-.fvw[data-mode=golden] .fvw__photo img{filter:sepia(.2) saturate(1.28) brightness(1.02) hue-rotate(-6deg)}
-.fvw[data-mode=golden] .fvw__tint{opacity:1;background:linear-gradient(100deg,rgba(255,140,40,.15),rgba(255,120,30,.6))}
+.fvw[data-mode=golden] .fvw__photo img{filter:sepia(.38) saturate(1.5) brightness(1.02) hue-rotate(-12deg)}
+.fvw[data-mode=golden] .fvw__tint{opacity:1;background:linear-gradient(100deg,rgba(255,130,30,.4),rgba(255,100,20,.85))}
 .fvw[data-mode=golden] .fvw__sun{opacity:1}
 .fvw[data-mode=golden] .fvw__lampglow{opacity:.35}
 /* night */
