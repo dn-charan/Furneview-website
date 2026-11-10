@@ -1,0 +1,6 @@
+{
+  "sections": {
+    "main": { "type": "fv-visit-book", "settings": {} }
+  },
+  "order": ["main"]
+}

@@ -1,0 +1,82 @@
+{{ 'furneview.css' | asset_url | stylesheet_tag }}
+{%- liquid
+  assign design_url = section.settings.design_link | default: '/collections/sofa-and-recliners'
+  assign visit_url = section.settings.visit_link | default: '/pages/visit'
+-%}
+<section class="fv fvw" data-fvw data-mode="{{ section.settings.start_mode }}" data-auto="{{ section.settings.auto_mode }}">
+  <div class="page-width fvw__in">
+    <div class="fvw__copy">
+      {%- if section.settings.kicker != blank -%}<span class="fvw__kicker">{{ section.settings.kicker }}</span>{%- endif -%}
+      <h2 class="fvw__h">{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}<p class="fvw__p">{{ section.settings.text }}</p>{%- endif -%}
+      <div class="fvw__ctas">
+        <a class="fv-btn fv-btn--orange fvw__cta" href="{{ design_url }}">{{ section.settings.design_label }}
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="fv-btn fvw__ghost" href="{{ visit_url }}">{{ section.settings.visit_label }}</a>
+      </div>
+      <div class="fvw__switch" role="group" aria-label="See the room in a different light">
+        <button type="button" data-m="morning" aria-pressed="false">Morning</button>
+        <button type="button" data-m="golden" aria-pressed="false">Golden hour</button>
+        <button type="button" data-m="night" aria-pressed="false">Diya night</button>
+      </div>
+    </div>
+
+    <div class="fvw__arch" aria-hidden="true">
+      <div class="fvw__win"><i class="fvw__sky"></i><i class="fvw__bar fvw__bar--v"></i><i class="fvw__bar fvw__bar--h"></i></div>
+      <i class="fvw__glow"></i>
+      <svg class="fvw__lamp" viewBox="0 0 70 120"><path d="M35 0v52" stroke="#1E1A17" stroke-width="2"/><path d="M12 72a23 20 0 0 1 46 0z" fill="#1E1A17"/><ellipse class="fvw__bulb" cx="35" cy="74" rx="10" ry="4"/></svg>
+      <svg class="fvw__plant" viewBox="0 0 70 150"><path d="M20 150h30l-4-44H24z" fill="#1F6B3B"/><path d="M35 108c-6-40 4-70 28-86-2 34-12 62-28 86zm0 0C22 82 6 72-6 74c8 22 22 32 41 34z" fill="#2E8A4E"/></svg>
+      {%- if section.settings.image != blank -%}
+        {{ section.settings.image | image_url: width: 1200 | image_tag: class: 'fvw__img', loading: 'eager', alt: '', sizes: '(min-width: 990px) 560px, 90vw' }}
+      {%- else -%}
+        <svg class="fvw__sofa" viewBox="0 0 300 150">
+          <rect class="fvw__s2" x="34" y="20" width="232" height="66" rx="22"/>
+          <rect class="fvw__s1" x="26" y="66" width="248" height="52" rx="18"/>
+          <rect class="fvw__s2" x="8" y="50" width="42" height="78" rx="18"/>
+          <rect class="fvw__s2" x="250" y="50" width="42" height="78" rx="18"/>
+          <rect x="62" y="36" width="52" height="36" rx="10" fill="#E2D3BB"/>
+          <rect x="186" y="36" width="52" height="36" rx="10" fill="#1F6B3B"/>
+          <rect x="40" y="128" width="7" height="20" fill="#5A3A28"/><rect x="253" y="128" width="7" height="20" fill="#5A3A28"/>
+        </svg>
+      {%- endif -%}
+      <div class="fvw__diyas">
+        {%- for i in (1..3) -%}<svg viewBox="0 0 26 30"><path class="fvw__flame" d="M13 2c4 6 4 10 0 14-4-4-4-8 0-14z" fill="#FFC14D"/><path d="M2 20h22c-2 6-6 8-11 8S4 26 2 20z" fill="#C9470A"/></svg>{%- endfor -%}
+      </div>
+      <i class="fvw__floor"></i>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  var root=document.currentScript.previousElementSibling; if(!root||!root.hasAttribute('data-fvw')) return;
+  var btns=root.querySelectorAll('[data-m]');
+  function set(m){ root.setAttribute('data-mode',m); btns.forEach(function(b){b.setAttribute('aria-pressed', b.dataset.m===m?'true':'false')}); }
+  var m=root.dataset.mode;
+  if(root.dataset.auto==='true'){ var h=new Date().getHours(); m = h>=6&&h<16 ? 'morning' : h>=16&&h<19 ? 'golden' : 'night'; }
+  set(m);
+  btns.forEach(function(b){ b.addEventListener('click',function(){ set(b.dataset.m); }); });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Furneview window",
+  "tag": "div",
+  "class": "fvw-wrap",
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Small text above heading", "default": "Furniture made for a better view" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Design it your way. See it in your light." },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Choose the shape, size and fabric. Check it fits your room and door, ask the family, then visit us to sit on it." },
+    { "type": "text", "id": "design_label", "label": "Main button label", "default": "Design your sofa" },
+    { "type": "url", "id": "design_link", "label": "Main button link", "info": "Leave empty to open Sofas & Recliners." },
+    { "type": "text", "id": "visit_label", "label": "Second button label", "default": "Book a store visit" },
+    { "type": "url", "id": "visit_link", "label": "Second button link", "info": "Leave empty to open the store visit booking page." },
+    { "type": "image_picker", "id": "image", "label": "Product photo inside the window (optional)", "info": "Use a cut-out PNG with a transparent background. Leave empty to show the drawn sofa." },
+    { "type": "select", "id": "start_mode", "label": "Starting light", "default": "golden", "options": [
+      { "value": "morning", "label": "Morning" }, { "value": "golden", "label": "Golden hour" }, { "value": "night", "label": "Diya night" } ] },
+    { "type": "checkbox", "id": "auto_mode", "label": "Match the light to the visitor's time of day", "default": true }
+  ],
+  "presets": [{ "name": "Furneview window" }]
+}
+{% endschema %}

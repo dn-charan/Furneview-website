@@ -197,7 +197,7 @@
           <button type="button" class="fv-btn fv-btn--dark" data-buy>Buy now</button>
         </div>
         <p class="fvp__msg" data-msg role="status"></p>
-        <a class="fv-btn fvp__visit" href="{{ section.settings.visit_link | default: '/#fv-visit' }}">Schedule your store visit</a>
+        <a class="fv-btn fvp__visit" href="{{ section.settings.visit_link | default: '/pages/visit' }}">Schedule your store visit</a>
 
         {%- if section.settings.pin_prefixes != blank -%}
         <div class="fvp__pin">
@@ -208,6 +208,37 @@
           </form>
           <span class="fvp__pinmsg" data-pin-msg>Enter your pincode to see delivery and assembly details.</span>
         </div>
+        {%- endif -%}
+
+        <div class="fvp__code" data-code-box>
+          <div class="fvp__codetop">
+            <span><small>Your design code</small><b data-code>FV-{{ product.id | modulo: 100000 }}</b></span>
+            <button type="button" class="fvp__copy" data-copy aria-label="Copy design code">Copy</button>
+          </div>
+          <p>Quote this code on WhatsApp or in the store and we pull up exactly this design and fabric.</p>
+          {%- if section.settings.show_family -%}
+          <a class="fv-btn fvp__family" data-family href="#" target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="8" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M2 20c0-3.5 2.7-6 6-6s6 2.5 6 6M14 20c0-2.5 1.5-4.5 3.5-4.5S21 17.5 21 20"/></svg>
+            Ask the family on WhatsApp</a>
+          {%- endif -%}
+        </div>
+
+        {%- if section.settings.show_fit and D > 0 -%}
+        <details class="fvp__fit" data-fit open>
+          <summary><span class="fvp__fitic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h6M9 3v6M15 21v-6h6"/></svg></span>
+            <span><b>Will it fit?</b><small>Check your room and your door in 30 seconds</small></span></summary>
+          <div class="fvp__fitb">
+            <div class="fvp__fitgrid">
+              <label>Wall length<span><input type="number" inputmode="numeric" min="30" data-fit-in="wall" placeholder="e.g. 320"> cm</span></label>
+              <label>Space in front of wall<span><input type="number" inputmode="numeric" min="30" data-fit-in="depth" placeholder="e.g. 300"> cm</span></label>
+              <label>Narrowest door<span><input type="number" inputmode="numeric" min="30" data-fit-in="door" placeholder="e.g. 90"> cm</span></label>
+              <label>Lift or stairs (optional)<span><input type="number" inputmode="numeric" min="30" data-fit-in="lift" placeholder="e.g. 100"> cm</span></label>
+            </div>
+            <svg class="fvp__plan" data-fit-plan viewBox="0 0 320 200" role="img" aria-label="Room plan from above"></svg>
+            <div class="fvp__fitres" data-fit-res role="status" aria-live="polite"><p class="fvp__fitwait">Enter your wall and door sizes to check.</p></div>
+            <p class="fvp__fitnote">This {{ product.title | escape }} is about {{ L | times: 2.54 | round }} × {{ D | times: 2.54 | round }} × {{ H | times: 2.54 | round }} cm. A comfortable walkway is 75 cm. Not sure? <a href="{{ section.settings.visit_link | default: '/pages/visit' }}">Book a visit</a> and ask us.</p>
+          </div>
+        </details>
         {%- endif -%}
 
         {%- if range -%}
@@ -429,6 +460,49 @@
   $('[data-add]').onclick=function(){add('cart')};
   $('[data-buy]').onclick=function(){add('checkout')};
 
+  /* design code + family share + ?fabric= link */
+  var codeEl=$('[data-code]'), fam=$('[data-family]'), baseCode=codeEl?codeEl.textContent:'';
+  function designCode(){ var f=fabrics[fi]; return baseCode+(f?'-'+f.code:''); }
+  function refreshCode(){
+    if(codeEl) codeEl.textContent=designCode();
+    if(fam){ var f=fabrics[fi], u=location.origin+location.pathname+(f?'?fabric='+encodeURIComponent(f.code):'');
+      var t='Which one do you like for our home? '+P.title+(f?' in '+f.name+' ('+f.code+')':'')+' · design code '+designCode()+'\n'+u;
+      fam.href='https://wa.me/?text='+encodeURIComponent(t); }
+  }
+  var cp=$('[data-copy]'); if(cp) cp.onclick=function(){ var c=designCode();
+    (navigator.clipboard?navigator.clipboard.writeText(c):Promise.reject()).then(function(){cp.textContent='Copied'},function(){cp.textContent=c}); setTimeout(function(){cp.textContent='Copy'},2000); };
+  var _setFab=setFab; setFab=function(i){ _setFab(i); refreshCode(); };
+  try{ var want=new URLSearchParams(location.search).get('fabric'); if(want){ var k=fabrics.findIndex(function(f){return f.code===want});
+    if(k>-1){ var tb=$('.fvp__fabtab[data-tier="'+fabrics[k].tier+'"]'); if(tb) tb.click(); setFab(k); var sw=$('[data-fab="'+k+'"]'); if(sw) sw.scrollIntoView({block:'nearest',inline:'center'}); } } }catch(e){}
+  refreshCode();
+
+  /* will it fit */
+  var fit=$('[data-fit]');
+  if(fit&&data.dims.D){
+    var cm=function(x){return Math.round(x*2.54)}, SW=cm(data.dims.L||data.dims.D), SD=cm(data.dims.D), SH=cm(data.dims.H||data.dims.D), PACK=Math.min(SD,SH)+5;
+    var ins={}; $$('[data-fit-in]').forEach(function(i){ins[i.dataset.fitIn]=i;
+      try{var v=localStorage.getItem('fvfit-'+i.dataset.fitIn); if(v) i.value=v;}catch(e){}
+      i.addEventListener('input',function(){try{localStorage.setItem('fvfit-'+i.dataset.fitIn,i.value)}catch(e){} runFit()});});
+    function num(k){var v=parseFloat(ins[k]&&ins[k].value);return v>0?v:0}
+    function chip(ok,t,n){return '<div class="fvp__fitrow'+(ok?' is-ok':' is-no')+'"><span>'+(ok?'✓':'!')+'</span><div><b>'+t+'</b><small>'+n+'</small></div></div>'}
+    function runFit(){
+      var wall=num('wall'), depth=num('depth'), door=num('door'), lift=num('lift'), out=$('[data-fit-res]'), plan=$('[data-fit-plan]');
+      var rows=[];
+      if(wall) rows.push(chip(wall>=SW+10,'Wall', wall>=SW+10 ? 'Fits with '+(wall-SW)+' cm to spare' : 'Short by '+(SW+10-wall)+' cm. Try a smaller size'));
+      if(depth){ var walk=depth-SD; rows.push(chip(walk>=75,'Walkway', walk>=75 ? walk+' cm free in front, comfortable' : 'Only '+Math.max(0,walk)+' cm in front. 75 cm is comfortable')); }
+      if(door){ var gap=lift?Math.min(door,lift):door; rows.push(chip(gap>=PACK,'Door'+(lift?' and lift':''), gap>=PACK ? 'Goes in easily. Packed depth is about '+PACK+' cm' : 'Narrowest gap is '+gap+' cm, packed depth about '+PACK+' cm. Ask us, we may ship it in parts')); }
+      if(!rows.length){ out.innerHTML='<p class="fvp__fitwait">Enter your wall and door sizes to check.</p>'; plan.innerHTML=''; return; }
+      var all=out.innerHTML=(rows.join('').indexOf('is-no')<0?'<p class="fvp__fitok">It fits</p>':'<p class="fvp__fitbad">Almost. One thing needs a look</p>')+rows.join('');
+      var RW=Math.max(wall||SW+60,SW+10), RD=Math.max(depth||SD+120,SD+20), sc=Math.min(312/RW,192/RD), w=RW*sc, h=RD*sc, sw=SW*sc, sd=SD*sc, x=(320-w)/2, sx=x+(w-sw)/2, wk=Math.min(75,Math.max(0,(depth||0)-SD))*sc;
+      plan.setAttribute('viewBox','0 0 320 '+(h+8));
+      plan.innerHTML='<rect x="'+x+'" y="4" width="'+w+'" height="'+h+'" fill="#FFFDF9" stroke="#1E1A17" stroke-width="3"/>'+
+        (depth?'<rect x="'+sx+'" y="'+(5+sd)+'" width="'+sw+'" height="'+wk+'" fill="'+(depth-SD>=75?'rgba(31,107,59,.18)':'rgba(179,38,30,.18)')+'"/>':'')+
+        '<rect x="'+sx+'" y="5" width="'+sw+'" height="'+sd+'" rx="6" fill="'+(!wall||wall>=SW+10?'#B4553A':'#B3261E')+'"/>'+
+        '<text x="160" y="'+(9+sd/2)+'" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">'+SW+' cm</text>';
+    }
+    runFit();
+  }
+
   /* pincode check */
   var pf=$('[data-pin]');
   if(pf){ var pre={{ section.settings.pin_prefixes | split: ',' | json }}.map(function(x){return x.trim()}).filter(Boolean);
@@ -465,7 +539,9 @@
   "class": "fv-product-section",
   "settings": [
     { "type": "checkbox", "id": "room_tool", "label": "Show \"In your room\" tool", "default": true, "info": "Works best when the product has a cut-out photo (transparent PNG) in the metafield custom.room_cutout." },
-    { "type": "url", "id": "visit_link", "label": "Store visit button link", "info": "Leave empty to open the store visit form on the homepage." },
+    { "type": "url", "id": "visit_link", "label": "Store visit button link", "info": "Leave empty to open the store visit booking page." },
+    { "type": "checkbox", "id": "show_fit", "label": "Show the Will it fit? checker", "default": true, "info": "Shows on products that have length, depth and height filled in." },
+    { "type": "checkbox", "id": "show_family", "label": "Show Ask the family on WhatsApp", "default": true },
     { "type": "header", "content": "Delivery check" },
     { "type": "text", "id": "pin_prefixes", "label": "Pincodes with standard delivery (starting digits, comma separated)", "default": "560,561,562", "info": "Leave empty to hide the pincode check." },
     { "type": "text", "id": "pin_ok", "label": "Message for those pincodes", "default": "Free delivery and assembly. Usually delivered in 7 to 10 days." },

@@ -529,11 +529,16 @@
         "p1",
         "p2"
       ]
+    },
+    "window": {
+      "type": "fv-window",
+      "settings": {}
     }
   },
   "order": [
     "poster",
     "categories",
+    "window",
     "promo",
     "trust",
     "browser",

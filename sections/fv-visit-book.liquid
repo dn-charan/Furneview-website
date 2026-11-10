@@ -1,0 +1,104 @@
+{{ 'furneview.css' | asset_url | stylesheet_tag }}
+<section class="fv fvv" data-fvv>
+  <div class="page-width fvv__in">
+    <div class="fvv__hero">
+      {%- if section.settings.image != blank -%}
+        {{ section.settings.image | image_url: width: 1200 | image_tag: loading: 'eager', alt: section.settings.store_name, sizes: '(min-width: 990px) 520px, 92vw' }}
+      {%- else -%}
+        <img src="{{ 'fv-cat-sofas.jpg' | asset_url }}" alt="{{ section.settings.store_name | escape }}" loading="eager">
+      {%- endif -%}
+      <div class="fvv__herotxt">
+        <b>{{ section.settings.store_name }}</b>
+        <span>{{ section.settings.store_detail }}</span>
+        {%- if section.settings.map_link != blank -%}<a href="{{ section.settings.map_link }}" target="_blank" rel="noopener">Open in Maps</a>{%- endif -%}
+      </div>
+    </div>
+
+    <div class="fvv__panel">
+      <span class="fvw__kicker">{{ section.settings.kicker }}</span>
+      <h1 class="fvv__h">{{ section.settings.heading }}</h1>
+      <p class="fvv__p">{{ section.settings.text }}</p>
+
+      {%- form 'contact', class: 'fvv__form', id: 'fvv-form' -%}
+        {%- if form.posted_successfully? -%}
+          <p class="fvv__ok" role="status">Booked. {{ section.settings.success }}</p>
+        {%- elsif form.errors -%}
+          <p class="fv-err" role="alert">{{ form.errors | default_errors }}</p>
+        {%- endif -%}
+        <input type="hidden" name="contact[subject]" value="Store visit booking">
+        <input type="hidden" name="contact[Store]" value="{{ section.settings.store_name | escape }}">
+        <input type="hidden" name="contact[Visit date]" data-v-date>
+        <input type="hidden" name="contact[Visit time]" data-v-time>
+
+        <fieldset class="fvv__set">
+          <legend>Pick a day</legend>
+          <div class="fvv__days" data-days></div>
+        </fieldset>
+
+        <fieldset class="fvv__set">
+          <legend>Pick a time</legend>
+          <div class="fvv__slots" data-slots>
+            {%- assign slots = section.settings.slots | split: ',' -%}
+            {%- for s in slots -%}{%- assign t = s | strip -%}{%- if t != blank -%}<button type="button" class="fvv__slot" data-slot="{{ t | escape }}" aria-pressed="false">{{ t }}</button>{%- endif -%}{%- endfor -%}
+          </div>
+          {%- if section.settings.slot_note != blank -%}<p class="fvv__small">{{ section.settings.slot_note }}</p>{%- endif -%}
+        </fieldset>
+
+        <label class="fvv__lab">What would you like to try?<textarea name="contact[Want to try]" rows="2" placeholder="e.g. 3 seater sofa in rust, Claro recliner, or a design code like FV-12345-FB-032" data-v-try></textarea></label>
+        {%- if section.settings.show_kit -%}
+        <label class="fvv__check"><input type="checkbox" name="contact[Swatch kit]" value="Yes, please send fabric swatches"> <span><b>Can't come in?</b> Send me fabric swatches at home</span></label>
+        {%- endif -%}
+
+        <div class="fvv__row">
+          <label class="fvv__lab">Name<input name="contact[name]" required autocomplete="name"></label>
+          <label class="fvv__lab">Phone<input name="contact[phone]" type="tel" required autocomplete="tel" inputmode="tel"></label>
+        </div>
+        <label class="fvv__lab">Email<input name="contact[email]" type="email" required autocomplete="email"></label>
+
+        <p class="fvv__sum" data-sum>Choose a day and time.</p>
+        <button class="fv-btn fv-btn--orange fvv__go" type="submit" data-go>Book my visit</button>
+      {%- endform -%}
+    </div>
+  </div>
+</section>
+<script>
+(function(){
+  var root=document.querySelector('[data-fvv]'); if(!root) return;
+  var days=root.querySelector('[data-days]'), dIn=root.querySelector('[data-v-date]'), tIn=root.querySelector('[data-v-time]'), sum=root.querySelector('[data-sum]');
+  var closed={{ section.settings.closed_day | json }}, n={{ section.settings.days_ahead | json }}, W=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'], M=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var d=new Date(), made=0, html='';
+  while(made<n){ if(W[d.getDay()]!==closed){ var lab=(made===0&&d.toDateString()===new Date().toDateString()?'Today':W[d.getDay()]);
+      html+='<button type="button" class="fvv__day" aria-pressed="false" data-day="'+W[d.getDay()]+' '+d.getDate()+' '+M[d.getMonth()]+' '+d.getFullYear()+'"><small>'+lab+'</small><b>'+d.getDate()+'</b><small>'+M[d.getMonth()]+'</small></button>'; made++; }
+    d.setDate(d.getDate()+1); }
+  days.innerHTML=html;
+  function pick(sel,attr,input){ root.addEventListener('click',function(e){ var b=e.target.closest(sel); if(!b) return;
+    root.querySelectorAll(sel).forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')}); input.value=b.getAttribute(attr); upd(); }); }
+  pick('[data-day]','data-day',dIn); pick('[data-slot]','data-slot',tIn);
+  function upd(){ sum.textContent = dIn.value&&tIn.value ? dIn.value+' at '+tIn.value+' · we will call you to confirm' : 'Choose a day and time.'; }
+  try{ var q=new URLSearchParams(location.search).get('try'); if(q) root.querySelector('[data-v-try]').value=q; }catch(e){}
+  root.querySelector('form').addEventListener('submit',function(e){ if(!dIn.value||!tIn.value){ e.preventDefault(); sum.textContent='Please choose a day and a time first.'; sum.classList.add('is-err'); } });
+})();
+</script>
+{% schema %}
+{
+  "name": "Furneview visit booking",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Small label", "default": "Store visit" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Sit on it first" },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Book a slot with a designer. Tell us what you want to try and we keep it ready when you arrive." },
+    { "type": "text", "id": "store_name", "label": "Store name", "default": "Furneview, Banashankari" },
+    { "type": "text", "id": "store_detail", "label": "Address and hours", "default": "Banashankari, Bengaluru" },
+    { "type": "url", "id": "map_link", "label": "Google Maps link" },
+    { "type": "image_picker", "id": "image", "label": "Store photo" },
+    { "type": "text", "id": "slots", "label": "Time slots (comma separated)", "default": "10:30 am, 12:00 pm, 2:00 pm, 4:00 pm, 6:00 pm, 7:30 pm" },
+    { "type": "text", "id": "slot_note", "label": "Note under time slots", "default": "Each visit is about 45 minutes with one designer." },
+    { "type": "range", "id": "days_ahead", "label": "Days to show", "min": 3, "max": 14, "step": 1, "default": 7 },
+    { "type": "select", "id": "closed_day", "label": "Weekly closed day", "default": "none", "options": [
+      {"value":"none","label":"Open every day"},{"value":"Sun","label":"Sunday"},{"value":"Mon","label":"Monday"},{"value":"Tue","label":"Tuesday"},{"value":"Wed","label":"Wednesday"},{"value":"Thu","label":"Thursday"},{"value":"Fri","label":"Friday"},{"value":"Sat","label":"Saturday"}]},
+    { "type": "checkbox", "id": "show_kit", "label": "Offer fabric swatches at home", "default": true },
+    { "type": "text", "id": "success", "label": "Message after booking", "default": "We will call you to confirm your slot." }
+  ],
+  "presets": [{ "name": "Furneview visit booking" }]
+}
+{% endschema %}
