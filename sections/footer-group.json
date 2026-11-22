@@ -18,7 +18,7 @@
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/WhatsApp_Image_2026-11-22_at_16.52.53.jpg",
-            "image_width": 335,
+            "image_width": 400,
             "alignment": "center"
           }
         },
@@ -33,7 +33,7 @@
           "type": "text",
           "settings": {
             "heading": "Our mission",
-            "subtext": "<p>Share contact information, store details, and brand content with your customers.</p>"
+            "subtext": "<p><br/>To make beautiful, functional and personalized furniture accessible to everyone through quality craftsmanship, innovative designs and exceptional customer service.<br/><br/></p>"
           }
         }
       },
