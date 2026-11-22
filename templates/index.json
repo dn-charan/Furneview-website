@@ -258,6 +258,14 @@
     "trust": {
       "type": "fv-stats",
       "blocks": {
+        "benefit_Bb7J4k": {
+          "type": "benefit",
+          "settings": {
+            "icon": "box",
+            "title": "Best quality",
+            "text": "On all orders over ₹10,000"
+          }
+        },
         "b0": {
           "type": "benefit",
           "settings": {
@@ -284,6 +292,7 @@
         }
       },
       "block_order": [
+        "benefit_Bb7J4k",
         "b0",
         "b1",
         "b2"
