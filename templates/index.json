@@ -31,55 +31,6 @@
         "steps": "Wood cut, Frame, Foam, Fabric, Delivered"
       }
     },
-    "image_banner_xXwMRy": {
-      "type": "image-banner",
-      "blocks": {
-        "heading_qJBtFb": {
-          "type": "heading",
-          "settings": {
-            "heading": "&nbsp;Premium L-Shape Sofa – Contemporary Comfort&nbsp;",
-            "heading_size": "h1"
-          }
-        },
-        "text_CLmMHd": {
-          "type": "text",
-          "settings": {
-            "text": "&nbsp;Enhance your living space with this elegant L-shaped sofa, designed to bring together modern style, comfort and sophistication.&nbsp;",
-            "text_style": "body"
-          }
-        },
-        "buttons_NDXEd8": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "Shop",
-            "button_link_1": "",
-            "button_style_secondary_1": false,
-            "button_label_2": "Visit",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": [
-        "heading_qJBtFb",
-        "text_CLmMHd",
-        "buttons_NDXEd8"
-      ],
-      "name": "t:sections.image-banner.presets.name",
-      "settings": {
-        "image": "shopify://shop_images/Furneview__Your_Home_Your_Style.png",
-        "image_overlay_opacity": 0,
-        "image_height": "medium",
-        "image_behavior": "none",
-        "desktop_content_position": "middle-center",
-        "desktop_content_alignment": "center",
-        "show_text_box": true,
-        "color_scheme": "",
-        "stack_images_on_mobile": true,
-        "mobile_content_alignment": "center",
-        "show_text_below": true
-      }
-    },
     "poster": {
       "type": "fv-poster",
       "blocks": {
@@ -693,7 +644,6 @@
   },
   "order": [
     "window",
-    "image_banner_xXwMRy",
     "poster",
     "categories",
     "promo",
