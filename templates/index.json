@@ -455,55 +455,6 @@
             "icon": "bengaluru"
           }
         },
-        "city1": {
-          "type": "city",
-          "settings": {
-            "name": "Mysuru",
-            "icon": "mysuru"
-          }
-        },
-        "city2": {
-          "type": "city",
-          "settings": {
-            "name": "Chennai",
-            "icon": "chennai"
-          }
-        },
-        "city3": {
-          "type": "city",
-          "settings": {
-            "name": "Hyderabad",
-            "icon": "hyderabad"
-          }
-        },
-        "city4": {
-          "type": "city",
-          "settings": {
-            "name": "Mumbai",
-            "icon": "mumbai"
-          }
-        },
-        "city5": {
-          "type": "city",
-          "settings": {
-            "name": "Pune",
-            "icon": "pune"
-          }
-        },
-        "city6": {
-          "type": "city",
-          "settings": {
-            "name": "Delhi",
-            "icon": "delhi"
-          }
-        },
-        "city7": {
-          "type": "city",
-          "settings": {
-            "name": "Kolkata",
-            "icon": "kolkata"
-          }
-        },
         "st0": {
           "type": "store",
           "settings": {
@@ -525,13 +476,6 @@
       },
       "block_order": [
         "city0",
-        "city1",
-        "city2",
-        "city3",
-        "city4",
-        "city5",
-        "city6",
-        "city7",
         "st0",
         "st1"
       ],
