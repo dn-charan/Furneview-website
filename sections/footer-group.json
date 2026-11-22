@@ -17,8 +17,8 @@
         "image_BUJxXm": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/Furneview_Store_Locations_Contact.png",
-            "image_width": 345,
+            "image": "shopify://shop_images/Store_Contact_Details_and_Customer_Enquiries.png",
+            "image_width": 245,
             "alignment": "center"
           }
         },
