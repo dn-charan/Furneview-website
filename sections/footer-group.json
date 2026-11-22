@@ -14,17 +14,18 @@
     "footer": {
       "type": "footer",
       "blocks": {
+        "image_BUJxXm": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Furneview_Store_Locations_Contact.png",
+            "image_width": 345,
+            "alignment": "center"
+          }
+        },
         "footer-0": {
           "type": "link_list",
           "settings": {
             "heading": "<a href=\"https://wa.me/918867705554\" title=\"https://wa.me/918867705554\">What'sapp</a>",
-            "menu": "footer"
-          }
-        },
-        "footer-1": {
-          "type": "link_list",
-          "settings": {
-            "heading": "Info",
             "menu": "footer"
           }
         },
@@ -37,12 +38,12 @@
         }
       },
       "block_order": [
+        "image_BUJxXm",
         "footer-0",
-        "footer-1",
         "footer-2"
       ],
       "settings": {
-        "color_scheme": "scheme-3",
+        "color_scheme": "scheme-5",
         "newsletter_enable": true,
         "newsletter_heading": "Subscribe to our emails",
         "enable_follow_on_shop": true,
