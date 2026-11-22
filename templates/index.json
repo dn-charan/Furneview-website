@@ -9,70 +9,113 @@
  */
 {
   "sections": {
-    "hero": {
-      "type": "fv-hero",
+    "window": {
+      "type": "fv-window",
       "settings": {
-        "eyebrow": "",
-        "heading": "Coming Soon",
-        "text": "Sofas, beds and dining sets delivered and installed free.",
-        "sale_end": "2026-11-05",
-        "button_label": "Shop the sale",
-        "button_link": "",
-        "tile1_eyebrow": "New in",
-        "tile1_title": "Solid sheesham dining sets",
-        "tile1_link_label": "Shop now",
-        "tile1_link": "",
-        "tile2_eyebrow": "Try before you buy",
-        "tile2_title": "Book a free store visit",
-        "tile2_link_label": "Pick a slot",
-        "tile2_link": ""
-      },
-      "disabled": true
+        "kicker": "See it in your light",
+        "heading": "Furniture made for a better view",
+        "text": "Tap morning, golden hour or diya night to see how this sofa looks at home through the day. Pick your size and one of 125 fabrics.",
+        "image_alt": "Sage green 3 seater and 2 seater fabric sofa set with a round wooden coffee table",
+        "design_label": "Shop this sofa",
+        "design_link": "",
+        "visit_label": "Book a store visit",
+        "visit_link": "",
+        "start_mode": "golden",
+        "auto_mode": true,
+        "show_tools": true,
+        "tools_heading": "Buy with confidence",
+        "fit_link": "",
+        "show_steps": true,
+        "steps_kicker": "Made for you, not picked off a shelf",
+        "steps_heading": "How your sofa comes together",
+        "steps": "Wood cut, Frame, Foam, Fabric, Delivered"
+      }
     },
-    "usps": {
-      "type": "fv-usps",
+    "image_banner_xXwMRy": {
+      "type": "image-banner",
       "blocks": {
-        "u0": {
-          "type": "usp",
+        "heading_qJBtFb": {
+          "type": "heading",
           "settings": {
-            "icon": "🚚",
-            "title": "Free delivery & install",
-            "text": "On orders above ₹9,999"
+            "heading": "&nbsp;Premium L-Shape Sofa – Contemporary Comfort&nbsp;",
+            "heading_size": "h1"
           }
         },
-        "u1": {
-          "type": "usp",
+        "text_CLmMHd": {
+          "type": "text",
           "settings": {
-            "icon": "🛡",
-            "title": "Up to 10-year warranty",
-            "text": "On frames and mattresses"
+            "text": "&nbsp;Enhance your living space with this elegant L-shaped sofa, designed to bring together modern style, comfort and sophistication.&nbsp;",
+            "text_style": "body"
           }
         },
-        "u2": {
-          "type": "usp",
+        "buttons_NDXEd8": {
+          "type": "buttons",
           "settings": {
-            "icon": "₹",
-            "title": "No-cost EMI",
-            "text": "From ₹1,499 a month"
-          }
-        },
-        "u3": {
-          "type": "usp",
-          "settings": {
-            "icon": "↺",
-            "title": "30-night trial",
-            "text": "Easy returns on mattresses"
+            "button_label_1": "Shop",
+            "button_link_1": "",
+            "button_style_secondary_1": false,
+            "button_label_2": "Visit",
+            "button_link_2": "",
+            "button_style_secondary_2": false
           }
         }
       },
       "block_order": [
-        "u0",
-        "u1",
-        "u2",
-        "u3"
+        "heading_qJBtFb",
+        "text_CLmMHd",
+        "buttons_NDXEd8"
       ],
-      "settings": {},
-      "disabled": true
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/Furneview__Your_Home_Your_Style.png",
+        "image_overlay_opacity": 0,
+        "image_height": "medium",
+        "image_behavior": "none",
+        "desktop_content_position": "middle-center",
+        "desktop_content_alignment": "center",
+        "show_text_box": true,
+        "color_scheme": "",
+        "stack_images_on_mobile": true,
+        "mobile_content_alignment": "center",
+        "show_text_below": true
+      }
+    },
+    "poster": {
+      "type": "fv-poster",
+      "blocks": {
+        "p1": {
+          "type": "poster",
+          "settings": {
+            "builtin": "fv-grand-opening",
+            "alt": "Furneview Grand Opening: flat 10% off, design it your way",
+            "link": ""
+          }
+        },
+        "p2": {
+          "type": "poster",
+          "settings": {
+            "builtin": "fv-deepavali",
+            "alt": "Deepavali greetings from Furneview",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "p1",
+        "p2"
+      ],
+      "disabled": true,
+      "settings": {
+        "ratio": "3/4",
+        "speed": 5,
+        "eyebrow": "Grand opening",
+        "heading": "Visit our new store",
+        "text": "Flat 10% off. Customise design, size and material at no extra charge, in sheesham and teak wood.",
+        "address": "",
+        "map_link": "",
+        "link": "",
+        "button": "Shop now"
+      }
     },
     "categories": {
       "type": "fv-categories",
@@ -82,8 +125,8 @@
           "settings": {
             "title": "Sofas",
             "collection": "sofa-and-recliners",
-            "icon": "sofa",
-            "photo": "sofas"
+            "photo": "sofas",
+            "icon": "sofa"
           }
         },
         "c1": {
@@ -91,8 +134,8 @@
           "settings": {
             "title": "Beds",
             "collection": "beds-and-mattresses",
-            "icon": "bed",
-            "photo": "beds"
+            "photo": "beds",
+            "icon": "bed"
           }
         },
         "c2": {
@@ -100,8 +143,8 @@
           "settings": {
             "title": "Mattresses",
             "collection": "mattresses",
-            "icon": "mattress",
-            "photo": "mattresses"
+            "photo": "mattresses",
+            "icon": "mattress"
           }
         },
         "c3": {
@@ -109,8 +152,8 @@
           "settings": {
             "title": "Dining",
             "collection": "dining",
-            "icon": "dining",
-            "photo": "dining"
+            "photo": "dining",
+            "icon": "dining"
           }
         },
         "c4": {
@@ -118,8 +161,8 @@
           "settings": {
             "title": "Wardrobes",
             "collection": "wardrobes",
-            "icon": "wardrobe",
-            "photo": "wardrobes"
+            "photo": "wardrobes",
+            "icon": "wardrobe"
           }
         },
         "c5": {
@@ -127,8 +170,8 @@
           "settings": {
             "title": "Recliners",
             "collection": "recliners",
-            "icon": "recliner",
-            "photo": "recliners"
+            "photo": "recliners",
+            "icon": "recliner"
           }
         },
         "c6": {
@@ -136,8 +179,8 @@
           "settings": {
             "title": "TV Units",
             "collection": "tv-units",
-            "icon": "tv",
-            "photo": "tv-units"
+            "photo": "tv-units",
+            "icon": "tv"
           }
         },
         "c7": {
@@ -145,8 +188,8 @@
           "settings": {
             "title": "Coffee Tables",
             "collection": "coffee-tables",
-            "icon": "coffee",
-            "photo": "coffee-tables"
+            "photo": "coffee-tables",
+            "icon": "coffee"
           }
         },
         "c8": {
@@ -154,8 +197,8 @@
           "settings": {
             "title": "Study Tables",
             "collection": "study-tables",
-            "icon": "study",
-            "photo": "study-tables"
+            "photo": "study-tables",
+            "icon": "study"
           }
         },
         "c9": {
@@ -163,26 +206,26 @@
           "settings": {
             "title": "Office Chairs",
             "collection": "office-chairs",
-            "icon": "chair",
-            "photo": "office-chairs"
+            "photo": "office-chairs",
+            "icon": "chair"
           }
         },
         "c_ch": {
           "type": "category",
           "settings": {
             "title": "Chairs",
-            "icon": "chair",
             "collection": "chairs",
-            "photo": "chairs"
+            "photo": "chairs",
+            "icon": "chair"
           }
         },
         "c_st": {
           "type": "category",
           "settings": {
             "title": "Storage",
-            "icon": "wardrobe",
             "collection": "storage",
-            "photo": "storage"
+            "photo": "storage",
+            "icon": "wardrobe"
           }
         }
       },
@@ -201,40 +244,117 @@
         "c_st"
       ],
       "settings": {
-        "eyebrow": "Browse",
-        "heading": "Shop by category",
         "scroll": true,
-        "px_speed": 35
+        "px_speed": 35,
+        "eyebrow": "Browse",
+        "heading": "Shop by category"
       }
     },
-    "bestsellers": {
-      "type": "featured-collection",
-      "settings": {
-        "collection": "all",
-        "products_to_show": 8,
-        "title": "Bestsellers this week",
-        "heading_size": "h2",
-        "description": "",
-        "show_description": false,
-        "description_style": "body",
-        "columns_desktop": 4,
-        "enable_desktop_slider": true,
-        "full_width": false,
-        "show_view_all": true,
-        "view_all_style": "link",
-        "color_scheme": "scheme-1",
-        "image_ratio": "square",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": true,
-        "quick_add": "standard",
-        "columns_mobile": "2",
-        "swipe_on_mobile": true,
-        "padding_top": 36,
-        "padding_bottom": 36
+    "promo": {
+      "type": "fv-promo",
+      "blocks": {
+        "s0": {
+          "type": "slide",
+          "settings": {
+            "theme": "navy",
+            "tag": "Festive offer",
+            "heading": "Flat 15% off on fabric sofas",
+            "text": "Pick from 36 fabrics. Free delivery and installation in Bengaluru.",
+            "badge": "15%|OFF",
+            "button": "Shop now",
+            "link": "",
+            "art": "sofa"
+          }
+        },
+        "s1": {
+          "type": "slide",
+          "settings": {
+            "theme": "green",
+            "tag": "Bed + mattress",
+            "heading": "Extra 20% off a mattress with any storage bed",
+            "text": "Hydraulic and box storage beds in solid wood.",
+            "badge": "20%|OFF",
+            "button": "Shop now",
+            "link": "",
+            "art": "bed"
+          }
+        },
+        "s2": {
+          "type": "slide",
+          "settings": {
+            "theme": "orange",
+            "tag": "New in",
+            "heading": "Solid sheesham dining sets",
+            "text": "4, 6 and 8 seaters, ready to deliver.",
+            "badge": "NEW",
+            "button": "Shop now",
+            "link": "",
+            "art": "dining"
+          }
+        }
       },
-      "disabled": true
+      "block_order": [
+        "s0",
+        "s1",
+        "s2"
+      ],
+      "settings": {
+        "show_live": true,
+        "ends": "2026-11-30",
+        "speed": 6
+      }
+    },
+    "trust": {
+      "type": "fv-stats",
+      "blocks": {
+        "b0": {
+          "type": "benefit",
+          "settings": {
+            "icon": "truck",
+            "title": "Free Shipping",
+            "text": ""
+          }
+        },
+        "b1": {
+          "type": "benefit",
+          "settings": {
+            "icon": "install",
+            "title": "Free Installation",
+            "text": ""
+          }
+        },
+        "b2": {
+          "type": "benefit",
+          "settings": {
+            "icon": "shield",
+            "title": "3-Year Warranty",
+            "text": ""
+          }
+        }
+      },
+      "block_order": [
+        "b0",
+        "b1",
+        "b2"
+      ],
+      "settings": {
+        "stat1_number": "",
+        "stat1_label": "Happy customers",
+        "stat2_number": "",
+        "stat2_label": "Sofa and fabric combinations",
+        "seal_top": "",
+        "seal_bottom": "WARRANTY ON WOOD"
+      }
+    },
+    "browser": {
+      "type": "fv-browser",
+      "settings": {
+        "eyebrow": "Shop",
+        "heading": "Explore all furniture",
+        "placeholder": "Search, e.g. L-shape, recliner, king bed",
+        "collection": "",
+        "limit": 50
+      }
     },
     "rooms": {
       "type": "fv-rooms",
@@ -282,11 +402,11 @@
         "r2",
         "r3"
       ],
+      "disabled": true,
       "settings": {
         "eyebrow": "Get the look",
         "heading": "Shop by room"
-      },
-      "disabled": true
+      }
     },
     "offers": {
       "type": "fv-offers",
@@ -321,11 +441,11 @@
         "o1",
         "o2"
       ],
+      "disabled": true,
       "settings": {
         "eyebrow": "Save more",
         "heading": "Offers & bank deals"
-      },
-      "disabled": true
+      }
     },
     "why": {
       "type": "fv-why",
@@ -365,14 +485,14 @@
         "s2",
         "s3"
       ],
+      "disabled": true,
       "settings": {
         "eyebrow": "Why Furneview",
         "heading": "Furniture made for a better view",
         "text": "Every piece is built from kiln-dried wood and high-resilience foam, checked at our workshop, and installed by our own team. Sit on it in a store first, or order online and try it at home.",
         "button_label": "Our story",
         "button_link": ""
-      },
-      "disabled": true
+      }
     },
     "stores": {
       "type": "fv-stores",
@@ -476,138 +596,104 @@
         "bulk_link": ""
       }
     },
-    "promo": {
-      "type": "fv-promo",
+    "hero": {
+      "type": "fv-hero",
+      "disabled": true,
       "settings": {
-        "show_live": true,
-        "ends": "2026-11-30",
-        "speed": 6
-      },
-      "blocks": {
-        "s0": {
-          "type": "slide",
-          "settings": {
-            "tag": "Festive offer",
-            "heading": "Flat 15% off on fabric sofas",
-            "text": "Pick from 36 fabrics. Free delivery and installation in Bengaluru.",
-            "button": "Shop now",
-            "art": "sofa",
-            "theme": "navy",
-            "badge": "15%|OFF"
-          }
-        },
-        "s1": {
-          "type": "slide",
-          "settings": {
-            "tag": "Bed + mattress",
-            "heading": "Extra 20% off a mattress with any storage bed",
-            "text": "Hydraulic and box storage beds in solid wood.",
-            "button": "Shop now",
-            "art": "bed",
-            "theme": "green",
-            "badge": "20%|OFF"
-          }
-        },
-        "s2": {
-          "type": "slide",
-          "settings": {
-            "tag": "New in",
-            "heading": "Solid sheesham dining sets",
-            "text": "4, 6 and 8 seaters, ready to deliver.",
-            "button": "Shop now",
-            "art": "dining",
-            "theme": "orange",
-            "badge": "NEW"
-          }
-        }
-      },
-      "block_order": [
-        "s0",
-        "s1",
-        "s2"
-      ]
-    },
-    "trust": {
-      "type": "fv-stats",
-      "settings": {
-        "stat1_number": "",
-        "stat2_number": "",
-        "seal_top": "",
-        "why_heading": "Why Furneview?"
-      },
-      "blocks": {
-        "b0": {
-          "type": "benefit",
-          "settings": {
-            "icon": "truck",
-            "title": "Free Shipping",
-            "text": ""
-          }
-        },
-        "b1": {
-          "type": "benefit",
-          "settings": {
-            "icon": "install",
-            "title": "Free Installation",
-            "text": ""
-          }
-        },
-        "b2": {
-          "type": "benefit",
-          "settings": {
-            "icon": "shield",
-            "title": "3-Year Warranty",
-            "text": ""
-          }
-        }
-      },
-      "block_order": [
-        "b0",
-        "b1",
-        "b2"
-      ]
-    },
-    "browser": {
-      "type": "fv-browser",
-      "settings": {
-        "limit": 50
+        "eyebrow": "",
+        "heading": "Coming Soon",
+        "text": "Sofas, beds and dining sets delivered and installed free.",
+        "sale_end": "2026-11-05",
+        "button_label": "Shop the sale",
+        "button_link": "",
+        "tile1_eyebrow": "New in",
+        "tile1_title": "Solid sheesham dining sets",
+        "tile1_link_label": "Shop now",
+        "tile1_link": "",
+        "tile2_eyebrow": "Try before you buy",
+        "tile2_title": "Book a free store visit",
+        "tile2_link_label": "Pick a slot",
+        "tile2_link": ""
       }
     },
-    "poster": {
-      "type": "fv-poster",
-      "settings": {
-        "ratio": "3/4",
-        "speed": 5
-      },
+    "usps": {
+      "type": "fv-usps",
       "blocks": {
-        "p1": {
-          "type": "poster",
+        "u0": {
+          "type": "usp",
           "settings": {
-            "builtin": "fv-grand-opening",
-            "alt": "Furneview Grand Opening: flat 10% off, design it your way"
+            "icon": "🚚",
+            "title": "Free delivery & install",
+            "text": "On orders above ₹9,999"
           }
         },
-        "p2": {
-          "type": "poster",
+        "u1": {
+          "type": "usp",
           "settings": {
-            "builtin": "fv-deepavali",
-            "alt": "Deepavali greetings from Furneview"
+            "icon": "🛡",
+            "title": "Up to 10-year warranty",
+            "text": "On frames and mattresses"
+          }
+        },
+        "u2": {
+          "type": "usp",
+          "settings": {
+            "icon": "₹",
+            "title": "No-cost EMI",
+            "text": "From ₹1,499 a month"
+          }
+        },
+        "u3": {
+          "type": "usp",
+          "settings": {
+            "icon": "↺",
+            "title": "30-night trial",
+            "text": "Easy returns on mattresses"
           }
         }
       },
       "block_order": [
-        "p1",
-        "p2"
+        "u0",
+        "u1",
+        "u2",
+        "u3"
       ],
-      "disabled": true
-    },
-    "window": {
-      "type": "fv-window",
+      "disabled": true,
       "settings": {}
+    },
+    "bestsellers": {
+      "type": "featured-collection",
+      "disabled": true,
+      "settings": {
+        "collection": "all",
+        "products_to_show": 8,
+        "title": "Bestsellers this week",
+        "heading_size": "h2",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "columns_desktop": 4,
+        "enable_desktop_slider": true,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "link",
+        "color_scheme": "scheme-1",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": true,
+        "quick_add": "standard",
+        "columns_mobile": "2",
+        "swipe_on_mobile": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
     }
   },
   "order": [
     "window",
+    "image_banner_xXwMRy",
     "poster",
     "categories",
     "promo",
