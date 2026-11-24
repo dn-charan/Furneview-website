@@ -1,0 +1,74 @@
+{{ 'furneview.css' | asset_url | stylesheet_tag }}
+<section class="fv fvg2">
+  <div class="fvg2__hero">
+    {%- assign gimg = images['ElegantWalnutDiningSetwithFloralCarvings-1.png'] -%}
+    {%- if gimg -%}{{ gimg | image_url: width: 1800 | image_tag: loading: 'eager', alt: '', sizes: '100vw', class: 'fvg2__heroimg' }}{%- endif -%}
+    <div class="page-width fvg2__herotxt">
+      <p class="fvc__k">The Furneview guide</p>
+      <h1 class="fvg2__h1">Know your wood,<br>love it for years</h1>
+      <p>How our woods differ, what each finish looks like, and simple care that keeps your furniture beautiful.</p>
+    </div>
+  </div>
+
+  <div class="page-width">
+    <nav class="fvg2__toc" aria-label="On this page"><a href="#woods">Woods</a><a href="#finishes">Finishes</a><a href="#care">Wood care</a><a href="#fabric">Fabric care</a></nav>
+
+    <h2 class="fv-cap-h" id="woods">Our woods</h2>
+    <div class="fvg2__woods">
+      <article class="fvg2__wood">
+        <span class="fvg2__swatch" style="background:repeating-linear-gradient(100deg,#8A5A35 0 7px,#74492A 7px 10px,#9A6640 10px 16px)"></span>
+        <h3>Sheesham</h3><p class="fvg2__sub">Indian rosewood</p>
+        <p>A dense, strong Indian hardwood with a rich, flowing grain in golden to deep brown tones. Every piece shows its own natural pattern, which is why no two Sheesham tables look exactly alike.</p>
+        <ul><li>Heavy and sturdy</li><li>Bold, characterful grain</li><li>Takes honey and walnut finishes beautifully</li></ul>
+      </article>
+      <article class="fvg2__wood">
+        <span class="fvg2__swatch" style="background:repeating-linear-gradient(100deg,#9C7646 0 8px,#87653B 8px 11px,#A98250 11px 18px)"></span>
+        <h3>Teak</h3><p class="fvg2__sub">The classic premium wood</p>
+        <p>Rich in natural oils, teak handles humidity well and ages gracefully into a warm golden-brown. It is a long-time favourite for heirloom furniture in Indian homes.</p>
+        <ul><li>Natural oils help resist moisture</li><li>Straight, even grain</li><li>Darkens gently with age</li></ul>
+      </article>
+      <article class="fvg2__wood">
+        <span class="fvg2__swatch" style="background:repeating-linear-gradient(100deg,#B08458 0 6px,#946C45 6px 9px,#C0966A 9px 15px)"></span>
+        <h3>Acacia</h3><p class="fvg2__sub">Hard and lively</p>
+        <p>A hard, durable wood with lively colour variation, from light honey to darker streaks. It gives dining tables a natural, contemporary character.</p>
+        <ul><li>Hard-wearing surface</li><li>Varied, striking grain</li><li>Great for everyday dining</li></ul>
+      </article>
+    </div>
+
+    <h2 class="fv-cap-h" id="finishes">Finishes</h2>
+    <div class="fvg2__fin">
+      <div><span style="background:linear-gradient(135deg,#C98B45,#9A5E26)"></span><b>Honey</b><small>Warm golden glow that shows off the grain</small></div>
+      <div><span style="background:linear-gradient(135deg,#7A4A2A,#4F2E19)"></span><b>Walnut</b><small>Deeper brown for a rich, formal look</small></div>
+      <div><span style="background:linear-gradient(135deg,#5B3A26,#2F1D12)"></span><b>Dark honey</b><small>Between the two, warm but deep</small></div>
+      <div><span style="background:linear-gradient(135deg,#D9B987,#B58E5C)"></span><b>Natural</b><small>Light and airy, closest to raw wood</small></div>
+    </div>
+    <p class="fvg2__note">Wood is natural, so colour and grain vary from piece to piece and from what you see on screen. Visit a store to see finishes in person.</p>
+
+    <h2 class="fv-cap-h" id="care">Caring for wood</h2>
+    <ol class="fvg2__care">
+      <li><b>Dust gently</b><span>Use a soft, dry cotton cloth. Wipe along the grain.</span></li>
+      <li><b>Wipe spills straight away</b><span>Blot with a dry cloth. Don't let water sit on the surface.</span></li>
+      <li><b>Use coasters and mats</b><span>Hot dishes and wet glasses can leave rings.</span></li>
+      <li><b>Keep out of harsh sun</b><span>Direct sunlight and AC or heater vents can fade or dry the wood.</span></li>
+      <li><b>Skip harsh cleaners</b><span>No ammonia, bleach or spray cleaners. A slightly damp cloth is enough.</span></li>
+      <li><b>Polish now and then</b><span>A good furniture wax or polish every 6 to 12 months keeps the finish rich.</span></li>
+    </ol>
+
+    <h2 class="fv-cap-h" id="fabric">Caring for fabric</h2>
+    <ol class="fvg2__care">
+      <li><b>Vacuum weekly</b><span>Use a soft brush attachment to lift dust from the weave.</span></li>
+      <li><b>Blot, don't rub</b><span>For spills, blot from the outside in with a clean cloth.</span></li>
+      <li><b>Turn the cushions</b><span>Flip and rotate loose cushions so they wear evenly.</span></li>
+      <li><b>Deep clean yearly</b><span>A professional upholstery clean keeps colours fresh.</span></li>
+    </ol>
+
+    <div class="fvg2__cta">
+      <h2>Still deciding?</h2>
+      <p>Sit on it, touch the finishes and talk to our team.</p>
+      <div><a class="fv-gold-btn" href="/pages/visit">Book a store visit</a><a class="fv-gold-btn fv-gold-btn--line" href="https://wa.me/918867705554" target="_blank" rel="noopener">Ask on WhatsApp</a></div>
+    </div>
+  </div>
+</section>
+{% schema %}
+{ "name": "Furneview wood guide", "tag": "div", "settings": [], "presets": [{ "name": "Furneview wood guide" }] }
+{% endschema %}

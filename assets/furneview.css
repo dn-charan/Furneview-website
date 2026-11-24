@@ -916,3 +916,82 @@ body{background:#F3ECE1}
 .price-item--sale,.price__regular .price-item--regular,.price-item--last{color:#1F5B3A!important;font-weight:600}
 .price__sale .price-item--regular{color:#9A8F83!important}
 .price .badge,.card__badge .badge{background:#1F5B3A!important;color:#F3ECE1!important;border-color:#1F5B3A!important}
+
+/* ===== scroll reveal ===== */
+.fv-reveal{opacity:0;transform:translateY(28px);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.7,.2,1)}
+.fv-reveal.is-in{opacity:1;transform:none}
+
+/* ===== product page trust row + sticky bar ===== */
+.fvp__trust{list-style:none;margin:6px 0 0;padding:14px 4px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;border-top:1px solid #E3D9CA;border-bottom:1px solid #E3D9CA}
+.fvp__trust li{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;font-family:"Jost",sans-serif;font-size:1.15rem;letter-spacing:.06em;line-height:1.3;color:#2B211C}
+.fvp__trust li+li{border-left:1px solid #E3D9CA}
+.fvp__trust svg{width:24px;height:24px;fill:none;stroke:#B8893B;stroke-width:1.5}
+.fvp__guide{display:inline-block;margin-top:4px;font-family:"Jost",sans-serif;font-size:1.25rem;letter-spacing:.14em;text-transform:uppercase;color:#8A5F18!important;border-bottom:1px solid currentColor;padding-bottom:2px}
+.fvp__sticky{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;align-items:center;gap:12px;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:rgba(30,26,23,.96);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#F3ECE1;transform:translateY(110%);transition:transform .35s ease;box-shadow:0 -10px 30px rgba(0,0,0,.18)}
+.fvp__sticky.is-on{transform:none}
+.fvp__sticky-t{flex:1;min-width:0;display:flex;flex-direction:column}
+.fvp__sticky-t small{font-family:"Jost",sans-serif;font-size:1.1rem;color:#BFB3A2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fvp__sticky-t b{font-family:"Jost",sans-serif;font-size:1.9rem;font-weight:600;color:#E2C27E}
+.fvp__sticky-btn{flex:none;min-height:46px;padding:0 22px;border:0;border-radius:99px;background:#C29A4A;color:#1E1A17;font-family:"Jost",sans-serif;font-size:1.25rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;cursor:pointer}
+@media (min-width:990px){.fvp__sticky{display:none}}
+
+/* craft banner second link */
+.fvc__ctas{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.fvc__link{font-family:"Jost",sans-serif;font-size:1.2rem;letter-spacing:.2em;text-transform:uppercase;color:#F3ECE1!important;border-bottom:1px solid rgba(243,236,225,.6);padding-bottom:2px}
+
+/* ===== wood guide page ===== */
+.fvg2{padding-block:0 64px!important}
+.fvg2__hero{position:relative;min-height:62vh;display:flex;align-items:flex-end;background:#2A211B;color:#F3ECE1;overflow:hidden;margin-bottom:28px}
+.fvg2__heroimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.fvg2__hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(30,22,14,.25),rgba(30,22,14,.9))}
+.fvg2__herotxt{position:relative;z-index:1;padding-block:80px 40px!important;display:flex;flex-direction:column;gap:12px;max-width:720px}
+.fvg2__h1{font-family:var(--fv-display);font-weight:500!important;font-size:clamp(4rem,10vw,7rem)!important;line-height:1.02;color:#F7F1E6!important;margin:0}
+.fvg2__herotxt p:last-child{color:#E1D5C2;font-size:1.5rem;line-height:1.7;max-width:46ch}
+.fvg2__toc{display:flex;gap:8px;overflow-x:auto;padding:4px 0 28px;scrollbar-width:none}
+.fvg2__toc a{flex:none;font-family:"Jost",sans-serif;font-size:1.2rem;letter-spacing:.16em;text-transform:uppercase;padding:9px 16px;border:1px solid #D8C7A6;border-radius:99px;color:#2B211C}
+.fvg2 .fv-cap-h{margin-top:28px!important;scroll-margin-top:90px}
+.fvg2__woods{display:grid;gap:16px}
+.fvg2__wood{background:#FBF8F3;border:1px solid #E3D9CA;border-radius:2px;padding:0 0 18px;overflow:hidden}
+.fvg2__swatch{display:block;height:90px}
+.fvg2__wood h3{margin:16px 20px 0!important;font-size:2.8rem!important;font-weight:500!important}
+.fvg2__sub{margin:0 20px!important;font-family:"Jost",sans-serif;font-size:1.1rem;letter-spacing:.22em;text-transform:uppercase;color:#8A5F18}
+.fvg2__wood>p:not(.fvg2__sub){margin:10px 20px 0!important;font-size:1.45rem;line-height:1.7;color:#5F5348}
+.fvg2__wood ul{margin:10px 20px 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
+.fvg2__wood li{display:flex;gap:10px;align-items:center;font-size:1.35rem}
+.fvg2__wood li::before{content:"";width:6px;height:6px;transform:rotate(45deg);background:#C29A4A;flex:none}
+.fvg2__fin{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.fvg2__fin div{display:flex;flex-direction:column;gap:4px}
+.fvg2__fin span{display:block;aspect-ratio:4/3;border-radius:2px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06)}
+.fvg2__fin b{font-family:var(--fv-display);font-size:2.2rem;font-weight:600;margin-top:6px}
+.fvg2__fin small{font-size:1.3rem;color:#7A6E63;line-height:1.5}
+.fvg2__note{margin-top:14px!important;font-size:1.25rem;color:#8F8475;font-style:italic}
+.fvg2__care{list-style:none;margin:0;padding:0;counter-reset:c;display:grid;gap:10px}
+.fvg2__care li{counter-increment:c;display:grid;grid-template-columns:44px 1fr;gap:4px 12px;align-items:start;background:#FBF8F3;border:1px solid #E3D9CA;padding:14px 16px;border-radius:2px}
+.fvg2__care li::before{content:counter(c,decimal-leading-zero);grid-row:span 2;font-family:var(--fv-display);font-size:2.6rem;color:#C29A4A;line-height:1}
+.fvg2__care b{font-family:"Jost",sans-serif;font-weight:600;font-size:1.45rem}
+.fvg2__care span{font-size:1.35rem;color:#5F5348;line-height:1.6}
+.fvg2__cta{margin-top:44px;background:#26312A;color:#F3ECE1;padding:36px 24px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:12px}
+.fvg2__cta h2{color:#F7F1E6!important;font-size:3.4rem!important;font-weight:500!important}
+.fvg2__cta p{color:#D9CFBF}
+.fvg2__cta>div{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:6px}
+.fvg2__cta .fv-gold-btn--line{color:#E2C27E!important}
+@media (min-width:750px){.fvg2__woods{grid-template-columns:repeat(3,minmax(0,1fr))}.fvg2__fin{grid-template-columns:repeat(4,minmax(0,1fr))}.fvg2__care{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* ===== premium collection pages ===== */
+.collection-hero{background:#26312A;color:#F3ECE1;padding:42px 0 36px!important;margin-bottom:12px}
+.collection-hero__inner{text-align:center;justify-content:center}
+.collection-hero__text-wrapper{display:flex;flex-direction:column;align-items:center;gap:8px}
+.collection-hero__text-wrapper::before{content:"Collection";font-family:"Jost",sans-serif;font-size:1.15rem;letter-spacing:.34em;text-transform:uppercase;color:#C29A4A}
+.collection-hero__title{font-family:"Cormorant Garamond",Georgia,serif!important;font-weight:500!important;font-size:clamp(3.8rem,9vw,6rem)!important;color:#F7F1E6!important;margin:0!important}
+.collection-hero__description{color:#D9CFBF!important;max-width:60ch;margin:0 auto}
+.collection-hero__image-container{display:none}
+.facets-container,.facet-filters,.mobile-facets__wrapper{font-family:"Jost",sans-serif}
+.facets__summary,.mobile-facets__open{border:1px solid #D8C7A6;border-radius:99px;padding:8px 16px!important;letter-spacing:.12em;text-transform:uppercase;font-size:1.15rem}
+.product-grid .card-wrapper{background:#FBF8F3;border:1px solid #EAE0D0;padding:8px 8px 12px;border-radius:2px;transition:box-shadow .3s,transform .3s}
+.product-grid .card-wrapper:hover{transform:translateY(-3px);box-shadow:0 16px 30px rgba(30,22,14,.10)}
+.product-grid .card__media img{transition:transform .6s}
+.product-grid .card-wrapper:hover .card__media img{transform:scale(1.04)}
+.card__heading,.card__heading a{font-family:"Jost",Arial,sans-serif!important;font-size:1.4rem!important;font-weight:500!important;line-height:1.4;color:#2B211C!important;letter-spacing:.01em}
+.card-information .price{font-family:"Jost",sans-serif}
+.card-information .price-item--sale,.card-information .price-item--regular:only-child,.card-information .price__regular .price-item{font-size:1.7rem!important}
+@media (max-width:749px){.product-grid{column-gap:10px!important;row-gap:14px!important}.card__heading,.card__heading a{font-size:1.25rem!important}}

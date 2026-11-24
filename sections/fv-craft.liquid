@@ -13,7 +13,7 @@
     <ul class="fvc__list">
       {%- for i in (1..3) -%}{%- assign k = 'point' | append: i -%}{%- if section.settings[k] != blank -%}<li>{{ section.settings[k] }}</li>{%- endif -%}{%- endfor -%}
     </ul>
-    <a class="fv-gold-btn" href="{{ section.settings.link | default: '/collections/dining' }}">{{ section.settings.button }}</a>
+    <div class="fvc__ctas"><a class="fv-gold-btn" href="{{ section.settings.link | default: '/collections/dining' }}">{{ section.settings.button }}</a><a class="fvc__link" href="/pages/wood-guide">Wood &amp; care guide</a></div>
   </div>
 </section>
 {%- assign fp = all_products[section.settings.spot_handle] -%}

@@ -306,6 +306,17 @@
       .fv{--fv-display:"Cormorant Garamond",Garamond,Georgia,serif;--fv-label:"Jost","Futura","Helvetica Neue",Arial,sans-serif}
     </style>
     <script src="{{ 'fv-wishlist.js' | asset_url }}" defer></script>
+    <script>
+      (function(){
+        if(!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        document.addEventListener('DOMContentLoaded',function(){
+          var els=[].slice.call(document.querySelectorAll('#MainContent > .shopify-section, .shopify-section-group-footer-group'));
+          els.forEach(function(el,i){ if(i<2 || el.getBoundingClientRect().top < innerHeight) return; el.classList.add('fv-reveal'); });
+          var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('is-in'); io.unobserve(e.target); } }); },{rootMargin:'0px 0px -8% 0px'});
+          document.querySelectorAll('.fv-reveal').forEach(function(el){ io.observe(el); });
+        });
+      })();
+    </script>
   </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">

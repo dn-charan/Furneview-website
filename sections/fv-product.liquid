@@ -197,6 +197,25 @@
           <button type="button" class="fv-btn fv-btn--dark" data-buy>Buy now</button>
         </div>
         <p class="fvp__msg" data-msg role="status"></p>
+        <ul class="fvp__trust">
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 5 6v6c0 4.5 3 7.5 7 9 4-1.5 7-4.5 7-9V6z"/><path d="m9 12 2 2 4-4"/></svg><span>3-year<br>warranty</span></li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h11v10H3zM14 9h4l3 3v4h-7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg><span>Free delivery<br>&amp; installation</span></li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span>Secure<br>checkout</span></li>
+        </ul>
+        <a class="fvp__guide" href="/pages/wood-guide">Wood, finish &amp; care guide →</a>
+        <div class="fvp__sticky" data-sticky aria-hidden="true">
+          <div class="fvp__sticky-t"><small>{{ product.title | truncate: 34 }}</small><b data-sticky-price>{{ current.price | money_without_trailing_zeros }}</b></div>
+          <button type="button" class="fvp__sticky-btn" data-sticky-add tabindex="-1">Add to bag</button>
+        </div>
+        <script>
+        (function(){
+          var bar=document.querySelector('[data-sticky]'), add=document.querySelector('[data-add]'), price=document.querySelector('[data-price]'), sp=document.querySelector('[data-sticky-price]');
+          if(!bar||!add) return;
+          document.querySelector('[data-sticky-add]').addEventListener('click',function(){ add.click(); });
+          if(price&&sp){ new MutationObserver(function(){ sp.textContent=price.textContent; }).observe(price,{childList:true,characterData:true,subtree:true}); }
+          if('IntersectionObserver' in window){ new IntersectionObserver(function(es){ var show=!es[0].isIntersecting && es[0].boundingClientRect.top<0; bar.classList.toggle('is-on',show); bar.setAttribute('aria-hidden',show?'false':'true'); }).observe(add); }
+        })();
+        </script>
         <a class="fv-btn fvp__visit" href="{{ section.settings.visit_link | default: '/pages/visit' }}">Schedule your store visit</a>
 
         {%- if section.settings.pin_prefixes != blank -%}
