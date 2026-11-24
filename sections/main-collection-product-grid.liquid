@@ -127,6 +127,18 @@
         {%- if collection.products.size == 0 -%}
           <div class="collection collection--empty page-width" id="product-grid" data-id="{{ section.id }}">
             <div class="loading-overlay gradient"></div>
+            {%- if collection.all_products_count == 0 -%}
+            <div class="fv-soon">
+              <span class="fv-soon__k">Launching soon</span>
+              <h2>{{ collection.title }} are on their way</h2>
+              <p>We are crafting this range right now. See it first in our Bengaluru stores, or ask us on WhatsApp and we will share designs and prices.</p>
+              <div class="fv-soon__ctas">
+                <a class="fv-gold-btn" href="https://wa.me/918867705554?text={{ 'Hi Furneview, please share designs for ' | append: collection.title | url_encode }}" target="_blank" rel="noopener">Ask on WhatsApp</a>
+                <a class="fv-gold-btn fv-gold-btn--line" href="/pages/visit">Visit a store</a>
+              </div>
+              <a class="fv-soon__alt" href="/collections/dining">Browse our dining sets →</a>
+            </div>
+            {%- else -%}
             <div class="title-wrapper center">
               <h2 class="title title--primary">
                 {{ 'sections.collection_template.empty' | t -}}
@@ -137,6 +149,7 @@
                 }}
               </h2>
             </div>
+            {%- endif -%}
           </div>
         {%- else -%}
           <div
