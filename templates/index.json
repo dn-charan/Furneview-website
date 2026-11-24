@@ -665,13 +665,6 @@
       "settings": {
         "image": "shopify://shop_images/ElegantWalnutDiningSetwithFloralCarvings-1.png"
       }
-    },
-    "spotlight": {
-      "type": "fv-spotlight",
-      "settings": {
-        "product": "ramugili-sheesham-wood-6-seater-dining-set-in-honey-finish",
-        "subtitle": "The honey finish edition"
-      }
     }
   },
   "order": [
@@ -682,7 +675,6 @@
     "poster",
     "promo",
     "craft",
-    "spotlight",
     "browser",
     "rooms",
     "offers",
