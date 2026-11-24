@@ -57,9 +57,19 @@
           endcase
         -%}
         <div class="fvh__slide{% if i == 1 %} is-on{% endif %}" aria-roledescription="slide" aria-label="{{ i }} of 3">
+          {%- if i == 3 -%}
+          <div class="fvh__media fvh__room" aria-hidden="true">
+            <i class="fvh__room-wall"></i><i class="fvh__room-slats"></i><i class="fvh__room-win"></i><i class="fvh__room-floor"></i><i class="fvh__room-rug"></i>
+            <svg class="fvh__room-lamp" viewBox="0 0 80 300"><path d="M40 70v210" stroke="#B8893B" stroke-width="3"/><path d="M22 282h36" stroke="#B8893B" stroke-width="5" stroke-linecap="round"/><path d="M14 70 26 22h28l12 48z" fill="#EFE3CC"/><ellipse cx="40" cy="70" rx="26" ry="5" fill="#F7EAC8"/></svg>
+            <svg class="fvh__room-plant" viewBox="0 0 120 220"><path d="M38 220h44l-6-60H44z" fill="#6B4A32"/><path d="M60 162C54 110 30 80 6 74c14 30 30 58 54 88zm0 0c4-56 24-96 52-112-4 44-22 84-52 112zm0 0C52 120 58 70 72 40c8 40 2 86-12 122z" fill="#4E6B4A"/></svg>
+            <i class="fvh__room-shadow"></i>
+            {%- if img != blank -%}{{ img | image_url: width: 1400 | image_tag: loading: 'eager', alt: '', sizes: '90vw', class: 'fvh__cut' }}{%- endif -%}
+          </div>
+          {%- else -%}
           <div class="fvh__media">
             {%- if img != blank -%}{{ img | image_url: width: 1800 | image_tag: loading: 'eager', alt: '', sizes: '100vw', class: 'fvh__img' }}{%- else -%}<img class="fvh__img" src="{{ 'fv-window-sofa.jpg' | asset_url }}" alt="" loading="eager">{%- endif -%}
           </div>
+          {%- endif -%}
           <div class="fvh__copy">
             {%- if kk != blank -%}<p class="fvh__kicker">{{ kk }}</p>{%- endif -%}
             {%- if i == 1 -%}<h1 class="fvh__h">{{ hh }}</h1>{%- else -%}<h2 class="fvh__h">{{ hh }}</h2>{%- endif -%}
