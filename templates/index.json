@@ -197,9 +197,10 @@
       ],
       "settings": {
         "scroll": true,
-        "px_speed": 35,
+        "px_speed": 22,
         "eyebrow": "Browse",
-        "heading": "Shop by category"
+        "heading": "Shop by category",
+        "compact": true
       }
     },
     "promo": {
@@ -676,9 +677,9 @@
     }
   },
   "order": [
+    "categories",
     "hero2",
     "trust",
-    "categories",
     "window",
     "poster",
     "promo",

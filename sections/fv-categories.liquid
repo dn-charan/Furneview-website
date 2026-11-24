@@ -1,8 +1,10 @@
 {{ 'furneview.css' | asset_url | stylesheet_tag }}
-<section class="fv" style="padding-block:24px">
+<section class="fv{% if section.settings.compact %} fv-cats--compact{% endif %}" style="padding-block:{% if section.settings.compact %}14px 12px{% else %}24px{% endif %}">
   <div class="page-width">
+    {%- unless section.settings.compact -%}
     <div class="fv-head"><div><span class="fv-eyebrow">{{ section.settings.eyebrow }}</span><h2>{{ section.settings.heading }}</h2></div>
       <a href="{{ routes.collections_url }}">View all categories →</a></div>
+    {%- endunless -%}
     {%- if section.settings.scroll -%}
     <div class="fv-marq-wrap" id="fv-mq-{{ section.id }}">
       <div class="fv-marq" tabindex="0" aria-label="Categories, swipe to see more">
@@ -84,6 +86,7 @@
   "name": "Furneview categories",
   "tag": "div",
   "settings": [
+    { "type": "checkbox", "id": "compact", "label": "Compact row under the header", "default": false, "info": "Small round photos, no heading. Best as the first section." },
     { "type": "checkbox", "id": "scroll", "label": "Scroll tiles right to left", "default": true },
     { "type": "range", "id": "px_speed", "label": "Scroll speed", "min": 10, "max": 80, "step": 5, "default": 35, "info": "Higher is faster. Customers can also swipe either way." },
     { "type": "text", "id": "eyebrow", "label": "Small label", "default": "Browse" },

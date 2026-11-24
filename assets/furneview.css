@@ -726,3 +726,17 @@ body{background:#F3ECE1}
 .fv-why2,.fvb,.fvs__store,.fvsp__media{border-radius:4px}
 .fvh--overlay + * {}
 .fv .fvc__h{font-size:clamp(3.6rem,9vw,6rem);line-height:1.04}
+
+/* compact category row right under the header */
+.fv-cats--compact{background:#F3ECE1;border-bottom:1px solid #E3D9CA}
+.fv-cats--compact .fv-marq .fv-cat{width:84px}
+.fv-cats--compact .fv-marq__track{gap:14px}
+.fv-cats--compact .fv-cat{gap:8px}
+.fv-cats--compact .fv-cat__tile,.fv-cats--compact .fv-cat__tile--photo{width:76px;height:92px;aspect-ratio:auto;padding:3px;border-radius:38px 38px 10px 10px;background:linear-gradient(160deg,#D9B56A,#9C7633);box-shadow:0 6px 14px rgba(43,33,28,.14);overflow:hidden;display:block}
+.fv-cats--compact .fv-cat__tile img{width:100%;height:100%;object-fit:cover;border-radius:35px 35px 8px 8px;display:block;border:2px solid #F3ECE1;box-sizing:border-box;transition:transform .4s}
+.fv-cats--compact .fv-cat:hover .fv-cat__tile img{transform:scale(1.06)}
+.fv-cats--compact .fv-cat__name{font-family:"Jost","Helvetica Neue",Arial,sans-serif!important;font-weight:500!important;font-size:1.1rem!important;letter-spacing:.12em;text-transform:uppercase;color:#2B211C;line-height:1.25;gap:0}
+.fv-cats--compact .fv-cat__name::after{display:none}
+.fv-cats--compact .fv-marq__btn{display:none}
+.fv-cats--compact .fv-marq{padding-block:4px}
+@media (min-width:990px){.fv-cats--compact .fv-marq .fv-cat{width:104px}.fv-cats--compact .fv-cat__tile,.fv-cats--compact .fv-cat__tile--photo{width:92px;height:112px;border-radius:46px 46px 12px 12px}.fv-cats--compact .fv-cat__tile img{border-radius:43px 43px 10px 10px}}
