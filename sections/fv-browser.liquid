@@ -57,6 +57,7 @@
             {%- else -%}{{ 'product-1' | placeholder_svg_tag }}{%- endif -%}
             {%- if product.type != blank -%}<span class="fv-chip fv-chip--type">{{ product.type }}</span>{%- endif -%}
             {%- if product.compare_at_price > product.price -%}<span class="fv-chip fv-chip--sale">{{ product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price }}% off</span>{%- endif -%}
+            {% render 'fv-heart', product: product, extra: 'fv-heart--card' %}
             {%- if L and D and H -%}<span class="fv-chip fv-chip--dim">L {{ L }}" × B {{ D }}" × H {{ H }}"</span>{%- endif -%}
           </div>
           <div class="fv-pcard__row">

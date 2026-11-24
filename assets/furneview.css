@@ -846,3 +846,49 @@ body{background:#F3ECE1}
 }
 .fvb__seal em{font-style:normal;font-family:"Jost",sans-serif;font-size:.9rem;letter-spacing:.28em;text-transform:uppercase;color:#C29A4A;margin-bottom:3px}
 @media (min-width:990px){.fvb__seal em{font-size:1.05rem}}
+
+/* ===== WhatsApp + wishlist ===== */
+.fv-hicon{position:relative}
+.fv-hicon--wa .svg-wrapper svg{width:22px;height:22px}
+.fv-wish-count{position:absolute;top:6px;right:4px;min-width:17px;height:17px;padding:0 4px;border-radius:99px;background:#B8893B;color:#fff;font:600 10px/17px "Jost",Arial,sans-serif;text-align:center}
+.fv-wish-count[hidden]{display:none}
+@media (max-width:749px){
+  .header{position:relative;grid-template-columns:88px 1fr 128px!important}
+  .header__icons .header__icon{width:4rem;height:4.4rem}
+  .header__heading-logo{max-width:100%;height:auto}
+  .header__heading-logo-wrapper{max-width:158px;margin:0 auto}
+  .fv-hicon--wa{position:absolute!important;left:calc(1.5rem + 4.4rem);top:50%;transform:translateY(-50%)}
+}
+.fv-heart{display:inline-grid;place-items:center;width:40px;height:40px;border-radius:50%;border:0;background:rgba(255,253,249,.92);color:#2B211C;cursor:pointer;box-shadow:0 4px 12px rgba(30,22,14,.15);transition:transform .2s,background .2s;padding:0}
+.fv-heart svg path{fill:transparent;stroke:currentColor;stroke-width:1.7;transition:fill .2s,stroke .2s}
+.fv-heart:hover{transform:scale(1.06)}
+.fv-heart.is-on svg path{fill:#D2263B;stroke:#D2263B}
+.fv-heart.is-pop{animation:fvHeart .45s ease}
+@keyframes fvHeart{0%{transform:scale(1)}35%{transform:scale(1.3)}70%{transform:scale(.92)}100%{transform:scale(1)}}
+.fv-heart:focus-visible{outline:2px solid #C29A4A;outline-offset:2px}
+.fv-heart--card{position:absolute;z-index:3;right:10px;bottom:10px}
+.card__media{position:relative}
+.card__media .fv-heart--card{bottom:auto;top:10px}
+.fvp__titlerow{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.fv-heart--page{flex:none;width:44px;height:44px;border:1px solid #E3D9CA;box-shadow:none;background:#FBF8F3}
+#fv-wish-toast{position:fixed;left:50%;bottom:24px;z-index:9999;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:#1E1A17;color:#F3ECE1;padding:12px 18px;border-radius:99px;font:500 13px/1.3 "Jost",Arial,sans-serif;letter-spacing:.04em;box-shadow:0 12px 30px rgba(0,0,0,.25);transition:opacity .25s,transform .25s;white-space:nowrap}
+#fv-wish-toast.is-on{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+#fv-wish-toast a{color:#C29A4A;margin-left:10px;text-decoration:underline}
+@media (prefers-reduced-motion:reduce){.fv-heart.is-pop{animation:none}}
+/* wishlist page */
+.fvw2{padding-block:40px 64px!important}
+.fvw2__k{margin-bottom:8px!important}
+.fvw2__h{text-align:center;font-size:clamp(3.6rem,8vw,5.6rem)!important;font-weight:500!important;margin:0}
+.fvw2__p{text-align:center;color:#7A6E63;margin:8px 0 28px!important}
+.fvw2__grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 12px}
+.fvw2__card{position:relative;display:flex;flex-direction:column;gap:6px}
+.fvw2__img{display:block;aspect-ratio:1;overflow:hidden;background:#E9DFCF;border-radius:2px}
+.fvw2__img img{width:100%;height:100%;object-fit:cover}
+.fvw2__card .fv-heart--card{top:8px;bottom:auto;right:8px;width:36px;height:36px}
+.fvw2__t{font-family:"Jost",Arial,sans-serif;font-size:1.35rem;line-height:1.35;color:#2B211C}
+.fvw2__pr{font-family:"Jost",Arial,sans-serif;font-weight:600;font-size:1.45rem}
+.fvw2__pr s{color:#8F8475;font-weight:400;font-size:1.2rem;margin-left:4px}
+.fvw2__empty{display:flex;flex-direction:column;align-items:center;gap:14px;padding:30px 0;color:#7A6E63}
+.fvw2__empty[hidden],.fvw2__share[hidden]{display:none}
+.fvw2__share{display:flex;justify-content:center;margin-top:28px}
+@media (min-width:750px){.fvw2__grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:28px 20px}}

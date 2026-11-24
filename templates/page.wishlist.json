@@ -1,0 +1,6 @@
+{
+  "sections": {
+    "main": { "type": "fv-wishlist", "settings": {} }
+  },
+  "order": ["main"]
+}

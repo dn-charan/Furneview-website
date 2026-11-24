@@ -1,0 +1,54 @@
+{{ 'furneview.css' | asset_url | stylesheet_tag }}
+<section class="fv fvw2">
+  <div class="page-width">
+    <p class="fv-cap-h fvw2__k">{{ section.settings.kicker }}</p>
+    <h1 class="fvw2__h">{{ section.settings.heading }}</h1>
+    <p class="fvw2__p" data-wl-sub>Tap the heart on any product to save it here.</p>
+    <div class="fvw2__grid" data-wl-grid></div>
+    <div class="fvw2__empty" data-wl-empty hidden>
+      <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="#C29A4A" stroke-width="1.2" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.3-9.4C1.4 7.6 3.6 4 7.1 4c2 0 3.6 1.1 4.9 2.9C13.3 5.1 14.9 4 16.9 4c3.5 0 5.7 3.6 4.4 7.1-1.8 4.8-9.3 9.4-9.3 9.4z"/></svg>
+      <p>Your wishlist is empty.</p>
+      <a class="fv-gold-btn" href="/collections/all">Explore furniture</a>
+    </div>
+    <div class="fvw2__share" data-wl-share hidden>
+      <a class="fv-gold-btn fv-gold-btn--line" data-wl-wa href="#" target="_blank" rel="noopener">Share on WhatsApp</a>
+    </div>
+  </div>
+</section>
+<script>
+(function(){
+  var grid=document.querySelector('[data-wl-grid]'), empty=document.querySelector('[data-wl-empty]'), sub=document.querySelector('[data-wl-sub]'), share=document.querySelector('[data-wl-share]'), wa=document.querySelector('[data-wl-wa]');
+  function money(c){ return '₹' + Math.round(c/100).toLocaleString('en-IN'); }
+  function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]}); }
+  function render(){
+    var list=(window.FVWish?FVWish.read():[]);
+    sub.textContent = list.length ? list.length + (list.length===1?' saved piece':' saved pieces') : 'Tap the heart on any product to save it here.';
+    empty.hidden = list.length>0; share.hidden = list.length===0;
+    if(!list.length){ grid.innerHTML=''; return; }
+    Promise.all(list.map(function(h){ return fetch('/products/'+encodeURIComponent(h)+'.js').then(function(r){return r.ok?r.json():null}).catch(function(){return null}); })).then(function(items){
+      items=items.filter(Boolean);
+      grid.innerHTML = items.map(function(p){
+        var img = p.featured_image ? p.featured_image + (p.featured_image.indexOf('?')>-1?'&':'?') + 'width=600' : '';
+        return '<article class="fvw2__card"><a href="'+p.url+'" class="fvw2__img">'+(img?'<img src="'+img+'" alt="'+esc(p.title)+'" loading="lazy">':'')+'</a>'+
+          '<button type="button" class="fv-heart fv-heart--card is-on" data-wish="'+esc(p.handle)+'" aria-pressed="true" aria-label="Remove '+esc(p.title)+' from wishlist"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.3-9.4C1.4 7.6 3.6 4 7.1 4c2 0 3.6 1.1 4.9 2.9C13.3 5.1 14.9 4 16.9 4c3.5 0 5.7 3.6 4.4 7.1-1.8 4.8-9.3 9.4-9.3 9.4z"/></svg></button>'+
+          '<a href="'+p.url+'" class="fvw2__t">'+esc(p.title)+'</a><p class="fvw2__pr">'+money(p.price)+(p.compare_at_price>p.price?' <s>'+money(p.compare_at_price)+'</s>':'')+'</p></article>';
+      }).join('');
+      var txt='My Furneview wishlist:\n'+items.map(function(p){return '• '+p.title+' – '+location.origin+p.url}).join('\n');
+      wa.href='https://wa.me/?text='+encodeURIComponent(txt);
+    });
+  }
+  document.addEventListener('fv:wish', render);
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', render); else render();
+})();
+</script>
+{% schema %}
+{
+  "name": "Furneview wishlist",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Small label", "default": "Saved for later" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "My wishlist" }
+  ],
+  "presets": [{ "name": "Furneview wishlist" }]
+}
+{% endschema %}

@@ -175,7 +175,7 @@
       <div class="fvp__right">
         <div>
           {%- if product.type != blank -%}<span class="fv-step">{{ product.type }}</span>{%- endif -%}
-          <h1>{{ product.title }}</h1>
+          <div class="fvp__titlerow"><h1>{{ product.title }}</h1>{% render 'fv-heart', product: product, extra: 'fv-heart--page' %}</div>
         </div>
 
         <div class="fvp__price">

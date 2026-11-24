@@ -270,6 +270,14 @@
         {%- endcase -%}
       {%- endfor -%}
 
+      {%- assign fv_wa = settings.whatsapp_number | default: '918867705554' | remove: '+' | remove: ' ' -%}
+      <a href="https://wa.me/{{ fv_wa }}" class="header__icon link focus-inset fv-hicon fv-hicon--wa" target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp">
+        <span class="svg-wrapper"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="#25D366" d="M12 2.2a9.8 9.8 0 0 0-8.4 14.9L2.2 21.8l4.8-1.3A9.8 9.8 0 1 0 12 2.2z"/><path fill="#fff" d="M17.2 14.4c-.3-.1-1.7-.8-1.9-.9-.3-.1-.5-.1-.7.1l-.9 1.1c-.2.2-.3.2-.6.1a7.6 7.6 0 0 1-3.8-3.3c-.3-.5.3-.5.8-1.6.1-.2 0-.4 0-.5l-.9-2c-.2-.5-.4-.5-.6-.5h-.5c-.2 0-.5.1-.7.3-.2.3-1 1-1 2.3s1 2.7 1.2 2.9c.1.2 2 3 4.8 4.2 1.8.8 2.5.8 3.4.7.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3z"/></svg></span>
+      </a>
+      <a href="/pages/wishlist" class="header__icon link focus-inset fv-hicon fv-hicon--wish" aria-label="Wishlist">
+        <span class="svg-wrapper"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.3-9.4C1.4 7.6 3.6 4 7.1 4c2 0 3.6 1.1 4.9 2.9C13.3 5.1 14.9 4 16.9 4c3.5 0 5.7 3.6 4.4 7.1-1.8 4.8-9.3 9.4-9.3 9.4z"/></svg></span>
+        <span class="fv-wish-count" data-wish-count hidden>0</span>
+      </a>
       <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart link focus-inset" id="cart-icon-bubble">
           {% if cart == empty %}
             <span class="svg-wrapper">{{'icon-cart-empty.svg' | inline_asset_content }}</span>
