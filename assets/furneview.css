@@ -1053,3 +1053,5 @@ body{background:#F3ECE1}
 .fvf .fv-greviews{background:rgba(255,255,255,.03);border-color:rgba(243,236,225,.14)}
 .fvf .fv-greviews__txt b{color:#F3ECE1}.fvf .fv-greviews__txt span{color:#B9AD9C}
 .fvf .fv-greviews .fv-gold-btn--line{color:#E2C27E!important}
+.fvp__rows[hidden],[hidden].fvp__rows{display:none!important}
+.fvp__save:empty{display:none!important}
