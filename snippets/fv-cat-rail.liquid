@@ -2,15 +2,34 @@
 {%- assign rail = 'Sofas:sofa-and-recliners:sofas|Beds:beds-and-mattresses:beds|Dining:dining:dining|Recliners:recliners:recliners|Wardrobes:wardrobes:wardrobes|Mattresses:mattresses:mattresses|TV Units:tv-units:tv-units|Coffee Tables:coffee-tables:coffee-tables|Study Tables:study-tables:study-tables|Chairs:chairs:chairs|Office Chairs:office-chairs:office-chairs|Storage:storage:storage' | split: '|' -%}
 <div class="fv fv-cats--compact fv-rail">
   <div class="page-width">
-    <nav class="fv-rail__row" aria-label="Shop by category">
-      {%- for item in rail -%}
-        {%- assign parts = item | split: ':' -%}
-        {%- assign ph = 'fv-cat-' | append: parts[2] | append: '.jpg' -%}
-        <a class="fv-cat" href="/collections/{{ parts[1] }}">
-          <span class="fv-cat__tile fv-cat__tile--photo"><img src="{{ ph | asset_url }}" alt="" width="160" height="200" loading="eager"></span>
-          <span class="fv-cat__name">{{ parts[0] }}</span>
-        </a>
+    <nav class="fv-rail__row" aria-label="Shop by category" data-fv-rail>
+      <div class="fv-rail__track">
+      {%- for pass in (1..2) -%}
+        {%- for item in rail -%}
+          {%- assign parts = item | split: ':' -%}
+          {%- assign ph = 'fv-cat-' | append: parts[2] | append: '.jpg' -%}
+          <a class="fv-cat" href="/collections/{{ parts[1] }}"{% if pass == 2 %} aria-hidden="true" tabindex="-1" data-copy{% endif %}>
+            <span class="fv-cat__tile fv-cat__tile--photo"><img src="{{ ph | asset_url }}" alt="" width="160" height="200" loading="eager"></span>
+            <span class="fv-cat__name">{{ parts[0] }}</span>
+          </a>
+        {%- endfor -%}
       {%- endfor -%}
+      </div>
     </nav>
   </div>
 </div>
+<script>
+(function(){
+  var box=document.querySelector('[data-fv-rail]'); if(!box||box.dataset.on) return; box.dataset.on='1';
+  var track=box.querySelector('.fv-rail__track'), first=track.querySelector('[data-copy]');
+  var speed=28, pos=1, paused=false, last=null, t, still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function half(){ return first ? first.offsetLeft - track.firstElementChild.offsetLeft : track.scrollWidth/2; }
+  function tick(ts){ if(last!==null && !paused && !still){ pos+=speed*(ts-last)/1000; if(pos>=half()) pos-=half(); box.scrollLeft=pos; } last=ts; requestAnimationFrame(tick); }
+  function hold(){ paused=true; clearTimeout(t); }
+  function go(){ clearTimeout(t); t=setTimeout(function(){ pos=box.scrollLeft; paused=false; },2200); }
+  box.addEventListener('scroll',function(){ if(!paused) return; var h=half(), x=box.scrollLeft; if(h>0){ if(x>=h) box.scrollLeft=x-h; else if(x<=0) box.scrollLeft=x+h; } },{passive:true});
+  ['touchstart','pointerdown','mouseenter','focusin','wheel'].forEach(function(e){ box.addEventListener(e,hold,{passive:true}); });
+  ['touchend','pointerup','mouseleave','focusout','wheel'].forEach(function(e){ box.addEventListener(e,go,{passive:true}); });
+  requestAnimationFrame(function(){ box.scrollLeft=1; requestAnimationFrame(tick); });
+})();
+</script>
