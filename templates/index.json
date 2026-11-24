@@ -647,7 +647,10 @@
     },
     "hero2": {
       "type": "fv-hero2",
-      "settings": {}
+      "settings": {
+        "image": "shopify://shop_images/Warm_Minimalist_Sectional_Living_Room.png",
+        "image_alt": "Warm minimalist living room with a cream sectional sofa"
+      }
     }
   },
   "order": [
