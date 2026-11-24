@@ -895,3 +895,24 @@ body{background:#F3ECE1}
 .fv-hicon .svg-wrapper{width:2.2rem!important;height:2.2rem!important;display:inline-flex;align-items:center;justify-content:center}
 .fv-hicon .svg-wrapper svg{width:2.2rem!important;height:2.2rem!important}
 .fv-hicon--wish .svg-wrapper svg{width:2.1rem!important;height:2.1rem!important;stroke-width:1.5}
+
+/* ===== attractive prices ===== */
+.fv{--fv-price:#1F5B3A;--fv-save-bg:#F6EBD3;--fv-save:#8A5F18}
+.fv-pcard__price{display:flex;flex-direction:column;align-items:flex-end;gap:2px;text-align:right}
+.fv-pcard__price small{font-family:"Jost",sans-serif;font-size:1rem;letter-spacing:.18em;color:#8F8475}
+.fv-pcard__price b{font-family:"Jost",sans-serif;font-size:2rem!important;font-weight:600!important;color:var(--fv-price)!important;letter-spacing:.01em;line-height:1.1}
+.fv-pcard__price s{font-family:"Jost",sans-serif;font-size:1.2rem;color:#9A8F83;text-decoration-color:rgba(154,143,131,.8)}
+.fv-save{display:inline-block;font-style:normal;font-family:"Jost",sans-serif;font-size:1.1rem;font-weight:600;letter-spacing:.06em;color:var(--fv-save,#8A5F18);background:var(--fv-save-bg,#F6EBD3);border:1px solid #E7D3A8;border-radius:99px;padding:3px 9px;margin-top:3px;white-space:nowrap}
+.fv-chip--sale{background:#1F5B3A!important;color:#F3ECE1!important}
+/* product page */
+.fvp__price{background:linear-gradient(135deg,#FBF6EC,#F3E8D4)!important;border:1px solid #E7D3A8!important}
+.fvp__price small{font-family:"Jost",sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#8A5F18!important}
+.fvp__price-num{font-family:"Jost",sans-serif!important;font-weight:600!important;color:#1F5B3A!important;font-size:clamp(3.2rem,8vw,4.2rem)!important;letter-spacing:.01em}
+.fvp__rows s{color:#9A8F83}
+.fvp__save{color:#1F5B3A!important;font-weight:700!important;background:#E3EFE6;border-radius:99px;padding:2px 10px}
+/* spotlight + wishlist + Dawn cards */
+.fvsp__price{color:#1F5B3A;font-weight:600!important}
+.fvw2__pr{color:#1F5B3A}
+.price-item--sale,.price__regular .price-item--regular,.price-item--last{color:#1F5B3A!important;font-weight:600}
+.price__sale .price-item--regular{color:#9A8F83!important}
+.price .badge,.card__badge .badge{background:#1F5B3A!important;color:#F3ECE1!important;border-color:#1F5B3A!important}

@@ -63,7 +63,7 @@
           <div class="fv-pcard__row">
             <div><h3>{{ product.title }}</h3>
               <span class="fv-pcard__meta">{% if seat != blank %}{{ seat }}{% if product.variants.size > 1 %} · {% endif %}{% endif %}{% if product.variants.size > 1 %}{{ product.variants.size }} options{% endif %}</span></div>
-            <div class="fv-pcard__price">{% if product.price_varies %}<small>FROM</small>{% endif %}<b>{{ product.price_min | money_without_trailing_zeros }}</b>{% if product.compare_at_price > product.price %}<s>{{ product.compare_at_price | money_without_trailing_zeros }}</s>{% endif %}</div>
+            <div class="fv-pcard__price">{% if product.price_varies %}<small>FROM</small>{% endif %}<b>{{ product.price_min | money_without_trailing_zeros }}</b>{% if product.compare_at_price > product.price %}<s>MRP {{ product.compare_at_price | money_without_trailing_zeros }}</s><em class="fv-save">Save {{ product.compare_at_price | minus: product.price | money_without_trailing_zeros }}</em>{% endif %}</div>
           </div>
         </a>
       {%- else -%}

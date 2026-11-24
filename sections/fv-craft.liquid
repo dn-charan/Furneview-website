@@ -27,7 +27,7 @@
         <h3 class="fvsp__t">{% if section.settings.spot_title != blank %}{{ section.settings.spot_title }}{% else %}{{ fp.title }}{% endif %}</h3>
         {%- if section.settings.spot_sub != blank -%}<p class="fvsp__sub">{{ section.settings.spot_sub }}</p>{%- endif -%}
         <p class="fvsp__d">{{ fp.description | strip_html | truncatewords: 34 }}</p>
-        <p class="fvsp__price">{{ fp.price | money }}{% if fp.compare_at_price > fp.price %} <s>{{ fp.compare_at_price | money }}</s>{% endif %}</p>
+        <p class="fvsp__price">{{ fp.price | money }}{% if fp.compare_at_price > fp.price %} <s>{{ fp.compare_at_price | money }}</s> <em class="fv-save">Save {{ fp.compare_at_price | minus: fp.price | money_without_trailing_zeros }}</em>{% endif %}</p>
         <a class="fv-gold-btn fv-gold-btn--line" href="{{ fp.url }}">View details</a>
       </div>
     </div>
