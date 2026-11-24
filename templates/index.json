@@ -470,8 +470,9 @@
           "settings": {
             "name": "Banashankari",
             "city": "Bengaluru",
-            "detail": "Open 10 AM – 9 PM",
-            "map_link": ""
+            "detail": "74, 100 Feet Road, 5th Block, 3rd Phase, Banashankari 3rd Stage, Bengaluru 560085 · Store: 97416 82002",
+            "map_link": "",
+            "phone": "9741682002"
           }
         },
         "st1": {
@@ -479,8 +480,9 @@
           "settings": {
             "name": "Sarjapura",
             "city": "Bengaluru",
-            "detail": "Open 10 AM – 9 PM",
-            "map_link": ""
+            "detail": "No. 1089/1, SY No. 488, First Floor, Opposite D-Mart, Sarjapura, Bengaluru 562125 · Store: 97416 42002",
+            "map_link": "",
+            "phone": "9741642002"
           }
         }
       },

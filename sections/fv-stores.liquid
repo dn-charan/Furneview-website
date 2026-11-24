@@ -52,7 +52,8 @@
               <span class="fvs__pin" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
               <div class="fvs__sinfo"><b>{{ b.settings.name }}</b>{%- if b.settings.detail != blank -%}<small>{{ b.settings.detail }}</small>{%- endif -%}</div>
               <div class="fvs__acts">
-                {%- if b.settings.map_link != blank -%}<a href="{{ b.settings.map_link }}" target="_blank" rel="noopener">Directions</a>{%- endif -%}
+                {%- if b.settings.phone != blank -%}<a href="tel:+91{{ b.settings.phone | remove: ' ' }}">Call</a>{%- endif -%}
+                {%- if b.settings.map_link != blank -%}<a href="{{ b.settings.map_link }}" target="_blank" rel="noopener">Directions</a>{%- else -%}<a href="https://www.google.com/maps/search/?api=1&query={{ 'Furneview ' | append: b.settings.detail | split: ' · ' | first | url_encode }}" target="_blank" rel="noopener">Directions</a>{%- endif -%}
                 <a class="is-main" href="/pages/visit?store={{ b.settings.name | url_encode }}">Book visit</a>
               </div>
             </div>
@@ -128,7 +129,8 @@ var first=g.querySelector('[data-city]');if(first)first.click();})();
       { "type": "text", "id": "name", "label": "Store name", "default": "Banashankari" },
       { "type": "text", "id": "city", "label": "City", "default": "Bengaluru", "info": "Must match a city tile's name." },
       { "type": "text", "id": "detail", "label": "Address or timings", "default": "Open 10 AM – 9 PM" },
-      { "type": "url", "id": "map_link", "label": "Google Maps link" }
+      { "type": "text", "id": "phone", "label": "Store phone (10 digits)" },
+      { "type": "url", "id": "map_link", "label": "Google Maps link", "info": "Leave empty to search the address in Google Maps." }
     ]}
   ],
   "presets": [{ "name": "Furneview stores", "blocks": [
