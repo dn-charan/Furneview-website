@@ -71,7 +71,7 @@
           {%- endif -%}
           <div class="fvb__text">
             {%- if block.settings.tag != blank -%}<span class="fvb__tag">{{ block.settings.tag }}</span>{%- endif -%}
-            <h2>{{ block.settings.heading }}</h2>
+            <h2>{{ block.settings.heading | replace: 'Flat ', 'Up to ' | replace: 'flat ', 'up to ' | replace: 'Extra ', 'Up to ' }}</h2>
             {%- if block.settings.text != blank -%}<p>{{ block.settings.text }}</p>{%- endif -%}
             {%- if block.settings.button != blank -%}
               <a class="fvb__btn" href="{{ block.settings.link | default: routes.all_products_collection_url }}">{{ block.settings.button }} →</a>
@@ -85,7 +85,7 @@
               {% render 'fv-art', name: block.settings.art %}
             {%- endif -%}
           </div>
-          {%- if block.settings.badge != blank -%}<span class="fvb__seal" aria-hidden="true">{{ block.settings.badge | replace: '|', '<small>' }}{% if block.settings.badge contains '|' %}</small>{% endif %}</span>{%- endif -%}
+          {%- if block.settings.badge != blank -%}<span class="fvb__seal" aria-hidden="true">{% if block.settings.badge contains '%' %}<em>Up to</em>{% endif %}{{ block.settings.badge | replace: '|', '<small>' }}{% if block.settings.badge contains '|' %}</small>{% endif %}</span>{%- endif -%}
         </div>
       {%- endfor -%}
       {%- if section.blocks.size > 1 -%}
@@ -128,7 +128,7 @@
   "blocks": [{ "type": "slide", "name": "Offer slide", "settings": [
     { "type": "select", "id": "theme", "label": "Colour", "default": "navy", "options": [{"value":"navy","label":"Navy and copper"},{"value":"green","label":"Forest green"},{"value":"orange","label":"Furneview orange"}] },
     { "type": "text", "id": "tag", "label": "Small tag", "default": "Festive offer" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Flat 15% off on sofas" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Up to 15% off on sofas" },
     { "type": "text", "id": "text", "label": "Text (hidden on phones)", "default": "Choose any design and fabric. Free delivery and installation." },
     { "type": "text", "id": "badge", "label": "Badge", "default": "15%|OFF", "info": "Use | for a line break, e.g. 15%|OFF. Leave empty to hide." },
     { "type": "text", "id": "button", "label": "Button label", "default": "Shop now" },
@@ -139,8 +139,8 @@
       {"value":"wardrobe","label":"Wardrobe"},{"value":"recliner","label":"Recliner"},{"value":"tv","label":"TV unit"},{"value":"study","label":"Study"}]}
   ]}],
   "presets": [{ "name": "Furneview offer banner", "blocks": [
-    { "type": "slide", "settings": { "theme": "navy", "tag": "Festive offer", "heading": "Flat 15% off on fabric sofas", "badge": "15%|OFF", "art": "sofa" } },
-    { "type": "slide", "settings": { "theme": "green", "tag": "Bed + mattress", "heading": "Extra 20% off a mattress with any storage bed", "badge": "20%|OFF", "art": "bed" } },
+    { "type": "slide", "settings": { "theme": "navy", "tag": "Festive offer", "heading": "Up to 15% off on fabric sofas", "badge": "15%|OFF", "art": "sofa" } },
+    { "type": "slide", "settings": { "theme": "green", "tag": "Bed + mattress", "heading": "Up to 20% off a mattress with any storage bed", "badge": "20%|OFF", "art": "bed" } },
     { "type": "slide", "settings": { "theme": "orange", "tag": "New in", "heading": "Solid sheesham dining sets", "badge": "NEW", "art": "dining" } }
   ]}]
 }

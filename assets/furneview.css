@@ -844,3 +844,5 @@ body{background:#F3ECE1}
   .fvb__seal{top:32px;right:40px;width:110px;height:110px;font-size:3.4rem}
   .fv .fvb--lux .fvb__dots{left:56px;bottom:32px}
 }
+.fvb__seal em{font-style:normal;font-family:"Jost",sans-serif;font-size:.9rem;letter-spacing:.28em;text-transform:uppercase;color:#C29A4A;margin-bottom:3px}
+@media (min-width:990px){.fvb__seal em{font-size:1.05rem}}

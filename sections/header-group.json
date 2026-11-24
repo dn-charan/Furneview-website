@@ -8,7 +8,7 @@
         "announcement-bar-0": {
           "type": "announcement",
           "settings": {
-            "text": "Festive Home Sale: up to 55% off + extra 10% with code FURNEVIEW10",
+            "text": "Festive Home Sale: up to 55% off + up to 10% extra with code FURNEVIEW10",
             "text_alignment": "center",
             "color_scheme": "scheme-3",
             "link": ""

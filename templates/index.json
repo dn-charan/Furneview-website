@@ -39,7 +39,7 @@
           "type": "poster",
           "settings": {
             "builtin": "fv-grand-opening",
-            "alt": "Furneview Grand Opening: flat 10% off, design it your way",
+            "alt": "Furneview Grand Opening: up to 10% off, design it your way",
             "link": ""
           }
         },
@@ -62,7 +62,7 @@
         "speed": 5,
         "eyebrow": "Grand opening",
         "heading": "Visit our new store",
-        "text": "Flat 10% off. Customise design, size and material at no extra charge, in sheesham and teak wood.",
+        "text": "Up to 10% off. Customise design, size and material at no extra charge, in sheesham and teak wood.",
         "address": "",
         "map_link": "",
         "link": "",
@@ -211,7 +211,7 @@
           "settings": {
             "theme": "navy",
             "tag": "Festive offer",
-            "heading": "Flat 15% off on fabric sofas",
+            "heading": "Up to 15% off on fabric sofas",
             "text": "Pick from 36 fabrics. Free delivery and installation in Bengaluru.",
             "badge": "15%|OFF",
             "button": "Shop now",
@@ -224,7 +224,7 @@
           "settings": {
             "theme": "green",
             "tag": "Bed + mattress",
-            "heading": "Extra 20% off a mattress with any storage bed",
+            "heading": "Up to 20% off a mattress with any storage bed",
             "text": "Hydraulic and box storage beds in solid wood.",
             "badge": "20%|OFF",
             "button": "Shop now",
@@ -376,7 +376,7 @@
         "o0": {
           "type": "offer",
           "settings": {
-            "title": "Extra 10% off",
+            "title": "Up to 10% off",
             "text": "On your first order, up to ₹3,000",
             "code": "FURNEVIEW10"
           }
