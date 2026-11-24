@@ -650,8 +650,27 @@
     "hero2": {
       "type": "fv-hero2",
       "settings": {
-        "image": "shopify://shop_images/Warm_Minimalist_Sectional_Living_Room.png",
-        "image_alt": "Warm minimalist living room with a cream sectional sofa"
+        "image": "shopify://shop_images/WarmMahoganyDiningSetwithFurneviewDetails-5.png",
+        "image_alt": "Solid wood dining set in a warm mahogany finish",
+        "style": "overlay",
+        "kicker": "Furneview · Bengaluru",
+        "heading": "Craftsmanship in every detail",
+        "text": "Solid sheesham dining sets, sofas and recliners, made to your size and finish.",
+        "button_label": "Explore collection",
+        "button2_label": "Visit a store"
+      }
+    },
+    "craft": {
+      "type": "fv-craft",
+      "settings": {
+        "image": "shopify://shop_images/ElegantWalnutDiningSetwithFloralCarvings-1.png"
+      }
+    },
+    "spotlight": {
+      "type": "fv-spotlight",
+      "settings": {
+        "product": "ramugili-sheesham-wood-6-seater-dining-set-in-honey-finish",
+        "subtitle": "The honey finish edition"
       }
     }
   },
@@ -662,6 +681,8 @@
     "window",
     "poster",
     "promo",
+    "craft",
+    "spotlight",
     "browser",
     "rooms",
     "offers",
