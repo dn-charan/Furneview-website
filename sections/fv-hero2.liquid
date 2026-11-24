@@ -1,34 +1,107 @@
 {{ 'furneview.css' | asset_url | stylesheet_tag }}
 {%- assign btn_url = section.settings.button_link | default: '/collections/all' -%}
 {%- unless section.settings.hide_cats -%}{% render 'fv-cat-rail' %}{%- endunless -%}
-<section class="fv fvh fvh--{{ section.settings.style }}">
+{%- liquid
+  assign n = 0
+  for blk in section.blocks
+    if blk.type == 'slide'
+      assign n = n | plus: 1
+    endif
+  endfor
+-%}
+<section class="fv fvh fvh--{{ section.settings.style }} fvh--slider" data-fvh data-speed="{{ section.settings.speed | default: 6 }}" aria-roledescription="carousel" aria-label="Featured furniture">
   <div class="fvh__in">
-    <div class="fvh__media">
-      {%- if section.settings.image != blank -%}
-        {{ section.settings.image | image_url: width: 1800 | image_tag: loading: 'eager', fetchpriority: 'high', alt: section.settings.image_alt, sizes: '(min-width: 990px) 62vw, 100vw', class: 'fvh__img' }}
-      {%- else -%}
-        <img class="fvh__img" src="{{ 'fv-window-sofa.jpg' | asset_url }}" srcset="{{ 'fv-window-sofa-sm.jpg' | asset_url }} 900w, {{ 'fv-window-sofa.jpg' | asset_url }} 1672w" sizes="(min-width: 990px) 62vw, 100vw" width="1672" height="941" alt="{{ section.settings.image_alt | escape }}" loading="eager" fetchpriority="high">
-      {%- endif -%}
-    </div>
-    <div class="fvh__copy">
-      {%- if section.settings.kicker != blank -%}<p class="fvh__kicker">{{ section.settings.kicker }}</p>{%- endif -%}
-      <h1 class="fvh__h">{{ section.settings.heading | newline_to_br }}</h1>
-      {%- if section.settings.text != blank -%}<p class="fvh__p">{{ section.settings.text }}</p>{%- endif -%}
-      <div class="fvh__ctas">
-        <a class="fvh__btn" href="{{ btn_url }}">{{ section.settings.button_label }}
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-        {%- if section.settings.button2_label != blank -%}
-          <a class="fvh__link" href="{{ section.settings.button2_link | default: '/pages/visit' }}">{{ section.settings.button2_label }}</a>
-        {%- endif -%}
-      </div>
+    {%- if n > 0 -%}
+      {%- for blk in section.blocks -%}
+        <div class="fvh__slide{% if forloop.first %} is-on{% endif %}" {{ blk.shopify_attributes }} aria-roledescription="slide" aria-label="{{ forloop.index }} of {{ n }}">
+          <div class="fvh__media">{%- if blk.settings.image != blank -%}{{ blk.settings.image | image_url: width: 1800 | image_tag: loading: 'eager', alt: blk.settings.heading, sizes: '100vw', class: 'fvh__img' }}{%- endif -%}</div>
+          <div class="fvh__copy">
+            {%- if blk.settings.kicker != blank -%}<p class="fvh__kicker">{{ blk.settings.kicker }}</p>{%- endif -%}
+            <h2 class="fvh__h">{{ blk.settings.heading | newline_to_br }}</h2>
+            {%- if blk.settings.text != blank -%}<p class="fvh__p">{{ blk.settings.text }}</p>{%- endif -%}
+            <div class="fvh__ctas"><a class="fvh__btn" href="{{ blk.settings.link | default: btn_url }}">{{ blk.settings.button }} <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+              <a class="fvh__link" href="{{ section.settings.button2_link | default: '/pages/visit' }}">{{ section.settings.button2_label }}</a></div>
+          </div>
+        </div>
+      {%- endfor -%}
+    {%- else -%}
+      {%- liquid
+        assign d1 = images['Warm_Minimalist_Sectional_Living_Room.png']
+        assign d3 = images['8BFF54E1-1844-4FEE-A996-A2BF12DA660E.png']
+        assign n = 3
+      -%}
+      {%- for i in (1..3) -%}
+        {%- liquid
+          case i
+            when 1
+              assign img = d1
+              assign kk = 'Sofas · Made to order'
+              assign hh = 'Sofas that define<br>your space'
+              assign tt = 'L-shapes, 3-seaters and sofa sets in 125 fabrics, made to your size.'
+              assign bb = 'Shop sofas'
+              assign ll = '/collections/sofa-and-recliners'
+            when 2
+              assign img = section.settings.image
+              assign kk = section.settings.kicker
+              assign hh = section.settings.heading | newline_to_br
+              assign tt = section.settings.text
+              assign bb = 'Shop dining sets'
+              assign ll = '/collections/dining'
+            else
+              assign img = d3
+              assign kk = 'Recliners'
+              assign hh = 'Sink in.<br>Recline in comfort'
+              assign tt = 'Manual and motorised recliners in rich leatherette and soft fabrics.'
+              assign bb = 'Shop recliners'
+              assign ll = '/collections/recliners'
+          endcase
+        -%}
+        <div class="fvh__slide{% if i == 1 %} is-on{% endif %}" aria-roledescription="slide" aria-label="{{ i }} of 3">
+          <div class="fvh__media">
+            {%- if img != blank -%}{{ img | image_url: width: 1800 | image_tag: loading: 'eager', alt: '', sizes: '100vw', class: 'fvh__img' }}{%- else -%}<img class="fvh__img" src="{{ 'fv-window-sofa.jpg' | asset_url }}" alt="" loading="eager">{%- endif -%}
+          </div>
+          <div class="fvh__copy">
+            {%- if kk != blank -%}<p class="fvh__kicker">{{ kk }}</p>{%- endif -%}
+            {%- if i == 1 -%}<h1 class="fvh__h">{{ hh }}</h1>{%- else -%}<h2 class="fvh__h">{{ hh }}</h2>{%- endif -%}
+            {%- if tt != blank -%}<p class="fvh__p">{{ tt }}</p>{%- endif -%}
+            <div class="fvh__ctas"><a class="fvh__btn" href="{{ ll }}">{{ bb }} <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+              <a class="fvh__link" href="{{ section.settings.button2_link | default: '/pages/visit' }}">{{ section.settings.button2_label | default: 'Visit a store' }}</a></div>
+          </div>
+        </div>
+      {%- endfor -%}
+    {%- endif -%}
+    <div class="fvh__nav">
+      <div class="fvh__dots">{%- for i in (1..n) -%}<button type="button" data-go="{{ forloop.index0 }}" aria-label="Show slide {{ i }}"{% if forloop.first %} class="is-on"{% endif %}><i></i></button>{%- endfor -%}</div>
+      <span class="fvh__count"><b data-cur>01</b> / {{ n | prepend: '0' | slice: -2, 2 }}</span>
     </div>
   </div>
 </section>
+<script>
+(function(){
+  var root=document.currentScript.previousElementSibling; if(!root||!root.hasAttribute('data-fvh')) return;
+  var slides=root.querySelectorAll('.fvh__slide'), dots=root.querySelectorAll('[data-go]'), cur=root.querySelector('[data-cur]');
+  if(slides.length<2){ var nv=root.querySelector('.fvh__nav'); if(nv) nv.hidden=true; return; }
+  var i=0, ms=(+root.dataset.speed||6)*1000, t, still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  root.style.setProperty('--fvh-ms', ms+'ms');
+  function go(k){ i=(k+slides.length)%slides.length;
+    slides.forEach(function(s,j){ s.classList.toggle('is-on', j===i); s.setAttribute('aria-hidden', j===i?'false':'true'); });
+    dots.forEach(function(d,j){ d.classList.toggle('is-on', j===i); });
+    if(cur) cur.textContent=('0'+(i+1)).slice(-2); restart(); }
+  function restart(){ clearTimeout(t); if(!still) t=setTimeout(function(){ go(i+1); }, ms); }
+  dots.forEach(function(d){ d.addEventListener('click', function(){ go(+d.dataset.go); }); });
+  var x0=null; root.addEventListener('touchstart',function(e){x0=e.touches[0].clientX; clearTimeout(t);},{passive:true});
+  root.addEventListener('touchend',function(e){ if(x0===null) return; var dx=e.changedTouches[0].clientX-x0; x0=null; if(Math.abs(dx)>40) go(i+(dx<0?1:-1)); else restart(); },{passive:true});
+  root.addEventListener('mouseenter',function(){clearTimeout(t)}); root.addEventListener('mouseleave',restart);
+  document.addEventListener('visibilitychange',function(){ if(document.hidden) clearTimeout(t); else restart(); });
+  go(0);
+})();
+</script>
 {% schema %}
 {
   "name": "Furneview top banner",
   "tag": "div",
   "settings": [
+    { "type": "range", "id": "speed", "label": "Seconds per slide", "min": 3, "max": 12, "step": 1, "default": 6 },
     { "type": "checkbox", "id": "hide_cats", "label": "Hide the category row above the banner", "default": false },
     { "type": "select", "id": "style", "label": "Layout", "default": "split", "options": [{ "value": "split", "label": "Photo beside text" }, { "value": "overlay", "label": "Text on a dark photo" }] },
     { "type": "image_picker", "id": "image", "label": "Photo", "info": "A wide room photo. Leave empty to use the sage sofa photo." },
@@ -41,6 +114,15 @@
     { "type": "text", "id": "button2_label", "label": "Second link label", "default": "Visit a store" },
     { "type": "url", "id": "button2_link", "label": "Second link", "info": "Leave empty to open the store visit page." }
   ],
+  "blocks": [{ "type": "slide", "name": "Slide", "settings": [
+    { "type": "image_picker", "id": "image", "label": "Photo" },
+    { "type": "text", "id": "kicker", "label": "Small line" },
+    { "type": "textarea", "id": "heading", "label": "Heading", "default": "Craftsmanship in every detail" },
+    { "type": "textarea", "id": "text", "label": "Text" },
+    { "type": "text", "id": "button", "label": "Button", "default": "Shop now" },
+    { "type": "url", "id": "link", "label": "Button link" }
+  ]}],
+  "max_blocks": 6,
   "presets": [{ "name": "Furneview top banner" }]
 }
 {% endschema %}
