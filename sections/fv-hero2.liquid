@@ -1,5 +1,6 @@
 {{ 'furneview.css' | asset_url | stylesheet_tag }}
 {%- assign btn_url = section.settings.button_link | default: '/collections/all' -%}
+{%- unless section.settings.hide_cats -%}{% render 'fv-cat-rail' %}{%- endunless -%}
 <section class="fv fvh fvh--{{ section.settings.style }}">
   <div class="fvh__in">
     <div class="fvh__media">
@@ -28,6 +29,7 @@
   "name": "Furneview top banner",
   "tag": "div",
   "settings": [
+    { "type": "checkbox", "id": "hide_cats", "label": "Hide the category row above the banner", "default": false },
     { "type": "select", "id": "style", "label": "Layout", "default": "split", "options": [{ "value": "split", "label": "Photo beside text" }, { "value": "overlay", "label": "Text on a dark photo" }] },
     { "type": "image_picker", "id": "image", "label": "Photo", "info": "A wide room photo. Leave empty to use the sage sofa photo." },
     { "type": "text", "id": "image_alt", "label": "Photo description", "default": "Sage green fabric sofa set in a bright living room" },

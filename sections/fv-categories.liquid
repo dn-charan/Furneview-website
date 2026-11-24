@@ -1,4 +1,5 @@
 {{ 'furneview.css' | asset_url | stylesheet_tag }}
+{%- if section.settings.show_big -%}
 <section class="fv{% if section.settings.compact %} fv-cats--compact{% endif %}" style="padding-block:{% if section.settings.compact %}14px 12px{% else %}24px{% endif %}">
   <div class="page-width">
     {%- unless section.settings.compact -%}
@@ -81,11 +82,13 @@
     {%- endif -%}
   </div>
 </section>
+{%- endif -%}
 {% schema %}
 {
   "name": "Furneview categories",
   "tag": "div",
   "settings": [
+    { "type": "checkbox", "id": "show_big", "label": "Show this large category strip", "default": false, "info": "The compact category row already shows above the top banner." },
     { "type": "checkbox", "id": "compact", "label": "Compact row under the header", "default": false, "info": "Small round photos, no heading. Best as the first section." },
     { "type": "checkbox", "id": "scroll", "label": "Scroll tiles right to left", "default": true },
     { "type": "range", "id": "px_speed", "label": "Scroll speed", "min": 10, "max": 80, "step": 5, "default": 35, "info": "Higher is faster. Customers can also swipe either way." },

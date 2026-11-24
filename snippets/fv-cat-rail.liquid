@@ -1,0 +1,16 @@
+{%- comment -%} Compact category row with built-in photos. Rendered from the top banner section. {%- endcomment -%}
+{%- assign rail = 'Sofas:sofa-and-recliners:sofas|Beds:beds-and-mattresses:beds|Dining:dining:dining|Recliners:recliners:recliners|Wardrobes:wardrobes:wardrobes|Mattresses:mattresses:mattresses|TV Units:tv-units:tv-units|Coffee Tables:coffee-tables:coffee-tables|Study Tables:study-tables:study-tables|Chairs:chairs:chairs|Office Chairs:office-chairs:office-chairs|Storage:storage:storage' | split: '|' -%}
+<div class="fv fv-cats--compact fv-rail">
+  <div class="page-width">
+    <nav class="fv-rail__row" aria-label="Shop by category">
+      {%- for item in rail -%}
+        {%- assign parts = item | split: ':' -%}
+        {%- assign ph = 'fv-cat-' | append: parts[2] | append: '.jpg' -%}
+        <a class="fv-cat" href="/collections/{{ parts[1] }}">
+          <span class="fv-cat__tile fv-cat__tile--photo"><img src="{{ ph | asset_url }}" alt="" width="160" height="200" loading="eager"></span>
+          <span class="fv-cat__name">{{ parts[0] }}</span>
+        </a>
+      {%- endfor -%}
+    </nav>
+  </div>
+</div>

@@ -16,6 +16,24 @@
     <a class="fv-gold-btn" href="{{ section.settings.link | default: '/collections/dining' }}">{{ section.settings.button }}</a>
   </div>
 </section>
+{%- assign fp = all_products[section.settings.spot_handle] -%}
+{%- if section.settings.show_spot and fp != blank and fp.id -%}
+<section class="fv fvsp">
+  <div class="page-width">
+    <h2 class="fv-cap-h">{{ section.settings.spot_heading }}</h2>
+    <div class="fvsp__in">
+      <a class="fvsp__media" href="{{ fp.url }}">{%- if fp.featured_image != blank -%}<img src="{{ fp.featured_image | image_url: width: 1200 }}" alt="{{ fp.title | escape }}" loading="lazy" width="1200" height="900">{%- endif -%}</a>
+      <div class="fvsp__copy">
+        <h3 class="fvsp__t">{% if section.settings.spot_title != blank %}{{ section.settings.spot_title }}{% else %}{{ fp.title }}{% endif %}</h3>
+        {%- if section.settings.spot_sub != blank -%}<p class="fvsp__sub">{{ section.settings.spot_sub }}</p>{%- endif -%}
+        <p class="fvsp__d">{{ fp.description | strip_html | truncatewords: 34 }}</p>
+        <p class="fvsp__price">{{ fp.price | money }}{% if fp.compare_at_price > fp.price %} <s>{{ fp.compare_at_price | money }}</s>{% endif %}</p>
+        <a class="fv-gold-btn fv-gold-btn--line" href="{{ fp.url }}">View details</a>
+      </div>
+    </div>
+  </div>
+</section>
+{%- endif -%}
 {% schema %}
 {
   "name": "Furneview craft banner",
@@ -29,7 +47,13 @@
     { "type": "text", "id": "point2", "label": "Point 2", "default": "Carved and cane details" },
     { "type": "text", "id": "point3", "label": "Point 3", "default": "Honey and walnut finishes" },
     { "type": "text", "id": "button", "label": "Button", "default": "Explore dining sets" },
-    { "type": "url", "id": "link", "label": "Button link" }
+    { "type": "url", "id": "link", "label": "Button link" },
+    { "type": "header", "content": "Spotlight below" },
+    { "type": "checkbox", "id": "show_spot", "label": "Show a product spotlight below", "default": true },
+    { "type": "text", "id": "spot_heading", "label": "Spotlight heading", "default": "In the spotlight" },
+    { "type": "text", "id": "spot_handle", "label": "Product handle", "default": "ramugili-sheesham-wood-6-seater-dining-set-in-honey-finish", "info": "The last part of the product's web address." },
+    { "type": "text", "id": "spot_title", "label": "Short name", "default": "Ramugili" },
+    { "type": "text", "id": "spot_sub", "label": "Italic line", "default": "The honey finish edition" }
   ],
   "presets": [{ "name": "Furneview craft banner" }]
 }

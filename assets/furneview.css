@@ -740,3 +740,8 @@ body{background:#F3ECE1}
 .fv-cats--compact .fv-marq__btn{display:none}
 .fv-cats--compact .fv-marq{padding-block:4px}
 @media (min-width:990px){.fv-cats--compact .fv-marq .fv-cat{width:104px}.fv-cats--compact .fv-cat__tile,.fv-cats--compact .fv-cat__tile--photo{width:92px;height:112px;border-radius:46px 46px 12px 12px}.fv-cats--compact .fv-cat__tile img{border-radius:43px 43px 10px 10px}}
+.fv-rail{padding-block:12px 10px!important}
+.fv-rail__row{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:none;padding:2px 2px 4px}
+.fv-rail__row::-webkit-scrollbar{display:none}
+.fv-rail .fv-cat{flex:none;width:84px;scroll-snap-align:start}
+@media (min-width:990px){.fv-rail__row{justify-content:center;flex-wrap:wrap}.fv-rail .fv-cat{width:104px}}
