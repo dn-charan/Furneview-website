@@ -49,9 +49,23 @@
 </style>
 <section class="fv" style="padding-block:16px">
   <div class="page-width">
-    <div class="fvb" id="fv-promo-{{ section.id }}" aria-roledescription="carousel">
+    <div class="fvb fvb--lux" id="fv-promo-{{ section.id }}" aria-roledescription="carousel">
       {%- for block in section.blocks -%}
         <div class="fvb__slide fvb__slide--{{ block.settings.theme | default: 'navy' }}{% if forloop.first %} is-on{% endif %}" {{ block.shopify_attributes }}>
+          {%- liquid
+            assign bgimg = block.settings.image
+            if bgimg == blank
+              case block.settings.art
+                when 'sofa'
+                  assign bgimg = images['Warm_Minimalist_Sectional_Living_Room.png']
+                when 'dining'
+                  assign bgimg = images['ElegantWalnutDiningSetwithBotanicalAccents.png']
+              endcase
+            endif
+          -%}
+          <div class="fvb__bg" aria-hidden="true">
+            {%- if bgimg != blank -%}{{ bgimg | image_url: width: 1400 | image_tag: loading: 'lazy', alt: '', sizes: '100vw' }}{%- elsif block.settings.art == 'bed' -%}<img src="{{ 'fv-cat-beds.jpg' | asset_url }}" alt="" loading="lazy">{%- elsif block.settings.art == 'recliner' -%}<img src="{{ 'fv-hero-recliner-sm.jpg' | asset_url }}" alt="" loading="lazy">{%- endif -%}
+          </div>
           {%- if section.settings.show_live -%}
             <span class="fvb__live"><b><i></i>LIVE</b>{%- if section.settings.ends != blank -%}<span data-fv-ends="{{ section.settings.ends }}">Ends in …</span>{%- endif -%}</span>
           {%- endif -%}
@@ -70,9 +84,8 @@
             {%- else -%}
               {% render 'fv-art', name: block.settings.art %}
             {%- endif -%}
-            {%- if block.settings.badge != blank -%}<span class="fvb__badge" aria-hidden="true">{{ block.settings.badge | replace: '|', '
-' }}</span>{%- endif -%}
           </div>
+          {%- if block.settings.badge != blank -%}<span class="fvb__seal" aria-hidden="true">{{ block.settings.badge | replace: '|', '<small>' }}{% if block.settings.badge contains '|' %}</small>{% endif %}</span>{%- endif -%}
         </div>
       {%- endfor -%}
       {%- if section.blocks.size > 1 -%}
