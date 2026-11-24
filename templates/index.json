@@ -658,7 +658,8 @@
         "heading": "Craftsmanship in every detail",
         "text": "Solid sheesham dining sets, sofas and recliners, made to your size and finish.",
         "button_label": "Explore collection",
-        "button2_label": "Visit a store"
+        "button2_label": "Visit a store",
+        "speed": 6
       }
     },
     "craft": {
