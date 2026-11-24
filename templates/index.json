@@ -29,7 +29,8 @@
         "steps_kicker": "Made for you, not picked off a shelf",
         "steps_heading": "How your sofa comes together",
         "steps": "Wood cut, Frame, Foam, Fabric, Delivered"
-      }
+      },
+      "disabled": true
     },
     "poster": {
       "type": "fv-poster",
