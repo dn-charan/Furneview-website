@@ -1,0 +1,77 @@
+{{ 'furneview.css' | asset_url | stylesheet_tag }}
+<section class="fv fvf">
+  <div class="page-width">
+    <div class="fvf__top">
+      <div class="fvf__brand">
+        {%- if section.settings.logo != blank -%}
+          {{ section.settings.logo | image_url: width: 400 | image_tag: class: 'fvf__logo', alt: shop.name, loading: 'lazy' }}
+        {%- else -%}
+          <span class="fvf__word">Furneview</span>
+        {%- endif -%}
+        <span class="fvf__tag">{{ section.settings.tagline }}</span>
+        {%- if section.settings.mission != blank -%}<p class="fvf__mission">{{ section.settings.mission }}</p>{%- endif -%}
+      </div>
+
+      <div class="fvf__enq">
+        <span class="fvf__k">{{ section.settings.enq_label }}</span>
+        <a class="fvf__big" href="tel:+91{{ section.settings.enq_phone | remove: ' ' }}">{{ section.settings.enq_phone }}</a>
+        <div class="fvf__btns">
+          <a class="fvf__btn fvf__btn--gold" href="tel:+91{{ section.settings.enq_phone | remove: ' ' }}">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Call us</a>
+          {%- if section.settings.whatsapp != blank -%}
+          <a class="fvf__btn" href="https://wa.me/{{ section.settings.whatsapp | remove: '+' | remove: ' ' }}" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.3-4A8 8 0 1 1 8 18.7z"/><path d="M9 9.5c.5 2 2 3.5 4 4l1-1 2 .8c-.2 1-1 1.7-2 1.7A6 6 0 0 1 8 9c0-1 .7-1.8 1.7-2l.8 2z"/></svg>WhatsApp</a>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+
+    <div class="fvf__rule"><i></i><span>{{ section.settings.stores_heading }}</span><i></i></div>
+
+    <div class="fvf__stores">
+      {%- for block in section.blocks -%}
+        <div class="fvf__store" {{ block.shopify_attributes }}>
+          <span class="fvf__pin" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+          <h3>{{ block.settings.name }}</h3>
+          <p>{{ block.settings.address | newline_to_br }}</p>
+          {%- if block.settings.hours != blank -%}<small>{{ block.settings.hours }}</small>{%- endif -%}
+          <div class="fvf__sacts">
+            {%- if block.settings.phone != blank -%}<a href="tel:+91{{ block.settings.phone | remove: ' ' }}">Store: {{ block.settings.phone }}</a>{%- endif -%}
+            {%- liquid
+              assign murl = block.settings.map_link
+              if murl == blank
+                assign q = 'Furneview ' | append: block.settings.address | url_encode
+                assign murl = 'https://www.google.com/maps/search/?api=1&query=' | append: q
+              endif
+            -%}
+            <a href="{{ murl }}" target="_blank" rel="noopener">Directions →</a>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Furneview footer contact",
+  "tag": "div",
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo (light version for dark background)", "info": "Leave empty to show the name in text." },
+    { "type": "text", "id": "tagline", "label": "Tagline", "default": "Furniture made for a better view" },
+    { "type": "textarea", "id": "mission", "label": "Short about text", "default": "Beautiful, functional and personalised furniture for every home, through quality craftsmanship, thoughtful design and caring service." },
+    { "type": "text", "id": "enq_label", "label": "Enquiry label", "default": "Customer enquiries" },
+    { "type": "text", "id": "enq_phone", "label": "Enquiry phone (10 digits)", "default": "8867705554" },
+    { "type": "text", "id": "whatsapp", "label": "WhatsApp number with country code", "default": "918867705554" },
+    { "type": "text", "id": "stores_heading", "label": "Stores heading", "default": "Visit our stores" }
+  ],
+  "blocks": [{ "type": "store", "name": "Store", "settings": [
+    { "type": "text", "id": "name", "label": "Store name", "default": "Banashankari store" },
+    { "type": "textarea", "id": "address", "label": "Address" },
+    { "type": "text", "id": "phone", "label": "Phone" },
+    { "type": "text", "id": "hours", "label": "Timings", "default": "Open 10 AM – 9 PM, all days" },
+    { "type": "url", "id": "map_link", "label": "Google Maps link", "info": "Leave empty to search the address." }
+  ]}],
+  "max_blocks": 6,
+  "presets": [{ "name": "Furneview footer contact" }]
+}
+{% endschema %}
