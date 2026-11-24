@@ -642,15 +642,21 @@
         "stack_images_on_mobile": true,
         "mobile_content_alignment": "center",
         "show_text_below": true
-      }
+      },
+      "disabled": true
+    },
+    "hero2": {
+      "type": "fv-hero2",
+      "settings": {}
     }
   },
   "order": [
+    "hero2",
+    "trust",
+    "categories",
     "window",
     "poster",
-    "categories",
     "promo",
-    "trust",
     "browser",
     "rooms",
     "offers",
