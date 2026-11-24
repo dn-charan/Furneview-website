@@ -1,0 +1,69 @@
+{{ 'furneview.css' | asset_url | stylesheet_tag }}
+{%- liquid
+  assign hero = images['WarmMahoganyDiningSetwithFurneviewDetails-5.png']
+  assign craft = images['ElegantWalnutDiningSetwithFloralCarvings-1.png']
+  assign sofa = images['Warm_Minimalist_Sectional_Living_Room.png']
+-%}
+<section class="fv fva">
+  <div class="fva__hero">
+    {%- if hero -%}{{ hero | image_url: width: 1800 | image_tag: loading: 'eager', alt: '', sizes: '100vw', class: 'fva__bg' }}{%- endif -%}
+    <div class="page-width fva__herotxt">
+      <p class="fvc__k">Our story</p>
+      <h1>Fifteen years of craft,<br>now under our own name</h1>
+      <p>Furneview began in 2026, built on more than 15 years of experience in the furniture industry. We make custom sofas and furniture end to end, in our own factories.</p>
+    </div>
+  </div>
+
+  <div class="page-width">
+    <div class="fva__facts">
+      <div><b>15+</b><span>years in furniture</span></div>
+      <div><b>2</b><span>own factories</span></div>
+      <div><b>2</b><span>Bengaluru stores</span></div>
+      <div><b>100%</b><span>made to order</span></div>
+    </div>
+
+    <div class="fva__split">
+      <div class="fva__img">{%- if craft -%}{{ craft | image_url: width: 1200 | image_tag: loading: 'lazy', alt: 'Carved sheesham wood dining set made by Furneview', sizes: '(min-width: 990px) 50vw, 100vw' }}{%- endif -%}</div>
+      <div class="fva__copy">
+        <p class="fva__k">From our factory to your home</p>
+        <h2>Made by us, start to finish</h2>
+        <p>We are not resellers. Every piece is built in our own factories in <strong>Rajasthan</strong> and <strong>Kengeri, Bengaluru</strong>, where our craftsmen work with sheesham, teak and acacia, and upholster sofas to your size and fabric.</p>
+        <p>Because we control every step, from choosing the wood to the final polish, we can make exactly what you ask for and stand behind it with real warranties.</p>
+      </div>
+    </div>
+
+    <h2 class="fv-cap-h fva__h2">How your piece is made</h2>
+    <ol class="fva__steps">
+      <li><b>Tell us your idea</b><span>Visit a store, WhatsApp us or pick a design online. Share your size, fabric and finish.</span></li>
+      <li><b>We design &amp; confirm</b><span>Our team confirms measurements, materials and the final look with you before we start.</span></li>
+      <li><b>Crafted in our factory</b><span>Your piece is made to order in Rajasthan or Kengeri by our own craftsmen.</span></li>
+      <li><b>Delivered &amp; installed</b><span>Within about 10 days, our team delivers, installs and places it in your home.</span></li>
+    </ol>
+
+    <div class="fva__promise">
+      <div class="fva__promise-txt">
+        <p class="fvc__k">Our promise</p>
+        <h2>Built to last, backed by us</h2>
+        <ul>
+          <li><b>3-year warranty</b> on sagging, frame and stitching</li>
+          <li><b>Lifetime warranty</b> against termites</li>
+          <li><b>Same-day return</b> if anything arrives damaged</li>
+          <li><b>Free delivery &amp; installation</b> in Bengaluru</li>
+        </ul>
+        <a class="fvc__link" href="/pages/returns-refunds-warranty">Read warranty details</a>
+      </div>
+      <div class="fva__promise-img">{%- if sofa -%}{{ sofa | image_url: width: 1000 | image_tag: loading: 'lazy', alt: 'Custom sofa in a Bengaluru living room', sizes: '(min-width: 990px) 40vw, 100vw' }}{%- endif -%}</div>
+    </div>
+
+    {% render 'fv-google-reviews' %}
+
+    <div class="fvg2__cta">
+      <h2>Let's make something for your home</h2>
+      <p>Visit our Banashankari or Sarjapura store, or start on WhatsApp.</p>
+      <div><a class="fv-gold-btn" href="/pages/visit">Book a store visit</a><a class="fv-gold-btn fv-gold-btn--line" href="https://wa.me/918867705554" target="_blank" rel="noopener">Chat on WhatsApp</a></div>
+    </div>
+  </div>
+</section>
+{% schema %}
+{ "name": "Furneview about", "tag": "div", "settings": [], "presets": [{ "name": "Furneview about" }] }
+{% endschema %}

@@ -1468,5 +1468,27 @@
         "default": "Chat with us"
       }
     ]
+  },
+  {
+    "name": "Furneview reviews",
+    "settings": [
+      {
+        "type": "text",
+        "id": "google_rating",
+        "label": "Google star rating",
+        "info": "For example 4.8. Leave empty to hide the stars."
+      },
+      {
+        "type": "text",
+        "id": "google_review_count",
+        "label": "Number of Google reviews",
+        "info": "For example 120."
+      },
+      {
+        "type": "url",
+        "id": "google_reviews_url",
+        "label": "Google reviews link"
+      }
+    ]
   }
 ]
